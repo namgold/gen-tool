@@ -1,12 +1,12 @@
 name = ['ds', 'tap', 'su']
 
 schema = {
-    'SHCC': { 'type': 'text' },
-    'NAM': { 'type': 'number' },
-    'NV1_GIO_CHUAN_D_MUC':  { 'type': 'number' },
-    'NV2_GIO_LAM_VIEC_D_MUC': { 'type': 'number' },
-    'NV3_GIO_LAM_VIEC_D_MUC': { 'type': 'number' },
-    'GHI_CHU': { 'type': 'text' },
+    'SHCC': 'text',
+    'NAM': 'number',
+    'NV1_GIO_CHUAN_D_MUC': 'number',
+    'NV2_GIO_LAM_VIEC_D_MUC': 'number',
+    'NV3_GIO_LAM_VIEC_D_MUC': 'number',
+    'GHI_CHU': 'text',
 };
 
 #-----------------------------------------------------
@@ -40,7 +40,8 @@ typeMongoMap = {
     "number": "Number",
     "date": "Date"
 }
-schemaMongo = {i: typeMongoMap[schema[i]['type']] for i in schema}
+schemaReact = {i: {'type':schema[i]} for i in schema}
+schemaMongo = {i: typeMongoMap[schema[i]] for i in schema}
 formatItems = {
     'url' : url,
     'UpperCamel' : UpperCamel,
@@ -48,7 +49,7 @@ formatItems = {
     'menuNum': menuNum,
     'upperSnake': upperSnake,
     'schemaArray': list(schema.keys()),
-    'schema': json.dumps(schema, indent='    '),
+    'schema': json.dumps(schemaReact, indent='    '),
     'schemaMongo': json.dumps(schemaMongo, indent=8)
 }
 
