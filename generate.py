@@ -27,6 +27,17 @@ def initFolder():
         os.makedirs('output/src/view/admin')
     if not os.path.exists('output/src/view/redux'):
         os.makedirs('output/src/view/redux')
+    if not os.path.exists('output_add'):
+        os.makedirs('output_add')
+    if not os.path.exists('output_add/src'):
+        os.makedirs('output_add/src')
+    if not os.path.exists('output_add/src/controller'):
+        os.makedirs('output_add/src/controller')
+    if not os.path.exists('output_add/src/view'):
+        os.makedirs('output_add/src/view')
+    if not os.path.exists('output_add/src/view/admin'):
+        os.makedirs('output_add/src/view/admin')
+
 initFolder()
 name = [i.lower() for i in name]
 url = '-'.join(name)
@@ -54,14 +65,14 @@ formatItems = {
 }
 
 mapping = {
-    "_init.js": "src/controller/_init.js",
-    "controller.js": 'src/controller/{}.js'.format(lowerCamel),
-    "model.js": 'src/model/{}.js'.format(lowerCamel),
-    "redux.js": 'src/view/redux/{}.jsx'.format(lowerCamel),
-    "admin.jsx": 'src/view/admin/admin.jsx',
-    "page.jsx": 'src/view/admin/{}Page.jsx'.format(UpperCamel),
-    "importpage.jsx": 'src/view/admin/{}ImportPage.jsx'.format(UpperCamel),
+    "_init.js": "output_add/src/controller/_init.js",
+    "controller.js": 'output/src/controller/{}.js'.format(lowerCamel),
+    "model.js": 'output/src/model/{}.js'.format(lowerCamel),
+    "redux.js": 'output/src/view/redux/{}.jsx'.format(lowerCamel),
+    "admin.jsx": 'output_add/src/view/admin/admin.jsx',
+    "page.jsx": 'output/src/view/admin/{}Page.jsx'.format(UpperCamel),
+    "importpage.jsx": 'output/src/view/admin/{}ImportPage.jsx'.format(UpperCamel),
 }
 
 for i in mapping:
-    open("output/" + mapping[i], 'w', encoding="utf8").write(open(i, 'r', encoding="utf8").read().format(**formatItems))
+    open(mapping[i], 'w', encoding="utf8").write(open(i, 'r', encoding="utf8").read().format(**formatItems))
