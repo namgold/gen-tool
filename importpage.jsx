@@ -192,7 +192,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                         </div>
                     ) : null}}
                 </div>
-                <Link to='/user/{url}' className='btn btn-secondary btn-circle' style={{{{ position: 'fixed', bottom: '10px' }}}}>
+                <Link to='/user/summary/{url}' className='btn btn-secondary btn-circle' style={{{{ position: 'fixed', bottom: '10px' }}}}>
                     <i className='fa fa-lg fa-reply' />
                 </Link>
                 <button type='button' className='btn btn-primary btn-circle'
