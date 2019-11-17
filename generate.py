@@ -56,7 +56,7 @@ mapping = {
     "_init.js": "src/controller/_init.js",
     "controller.js": 'src/controller/{}.js'.format(lowerCamel),
     "model.js": 'src/model/{}.js'.format(lowerCamel),
-    "redux.js": 'src/view/redux/{}.js'.format(lowerCamel),
+    "redux.js": 'src/view/redux/{}.jsx'.format(lowerCamel),
     "admin.jsx": 'src/view/admin/admin.jsx',
     "page.jsx": 'src/view/admin/{}Page.jsx'.format(UpperCamel),
     "importpage.jsx": 'src/view/admin/{}ImportPage.jsx'.format(UpperCamel),
