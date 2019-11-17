@@ -1,4 +1,15 @@
-name = ['ds', 'tap', 'su']
+# name = ['ds', 'tap', 'su']
+
+# schema = {
+#     'SHCC': 'text',
+#     'NAM': 'number',
+#     'NV1_GIO_CHUAN_D_MUC': 'number',
+#     'NV2_GIO_LAM_VIEC_D_MUC': 'number',
+#     'NV3_GIO_LAM_VIEC_D_MUC': 'number',
+#     'GHI_CHU': 'text',
+# };
+
+name = ['qt', 'tap', 'su']
 
 schema = {
     'SHCC': 'text',
@@ -27,6 +38,10 @@ def initFolder():
         os.makedirs('output/src/view/admin')
     if not os.path.exists('output/src/view/redux'):
         os.makedirs('output/src/view/redux')
+    if not os.path.exists('output/public'):
+        os.makedirs('output/public')
+    if not os.path.exists('output/public/download'):
+        os.makedirs('output/public/download')
     if not os.path.exists('output_add'):
         os.makedirs('output_add')
     if not os.path.exists('output_add/src'):
@@ -76,3 +91,4 @@ mapping = {
 
 for i in mapping:
     open(mapping[i], 'w', encoding="utf8").write(open(i, 'r', encoding="utf8").read().format(**formatItems))
+open("output/public/download/SampleUpload{}.xlsx".format(UpperCamel), 'w').write('hi')
