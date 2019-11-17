@@ -113,7 +113,7 @@ class {UpperCamel}ImportPage extends React.Component {{
         e.preventDefault();
         this.props.createMultiPoint(this.state.points, () => {{
             T.notify('Cập nhật điểm thành công!', 'success');
-            this.props.history.push('/user/{url}');
+            this.props.history.push('/user/summary/{url}');
         }})
     }};
 

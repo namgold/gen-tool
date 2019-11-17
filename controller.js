@@ -42,7 +42,7 @@ module.exports = app => {{
 
     const {lowerCamel}ImportData = (req, fields, files, params, done) => {{
         if (fields.userData && fields.userData[0] && fields.userData[0] == '{lowerCamel}ImportData' && files.PointFile && files.PointFile.length > 0) {{
-            app.upload{lowerCamel}File(req, files.PointFile[0].path, done);
+            app.upload{UpperCamel}File(req, files.PointFile[0].path, done);
         }}
     }};
 
