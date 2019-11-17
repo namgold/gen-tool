@@ -144,7 +144,7 @@ class {UpperCamel}Page extends React.Component {{
                 <div className='row tile'>{{table}}</div>
                 <Pagination name='{lowerCamel}Page' pageNumber={{pageNumber}} pageSize={{pageSize}} pageTotal={{pageTotal}} totalItem={{totalItem}}
                     getPage={{this.props.get{UpperCamel}InPage}} />
-                <Link to='/user/sumarry/{url}/upload' className='btn btn-success btn-circle' style={{{{ position: 'fixed', right: '10px', bottom: '10px' }}}}>
+                <Link to='/user/summary/{url}/upload' className='btn btn-success btn-circle' style={{{{ position: 'fixed', right: '10px', bottom: '10px' }}}}>
                     <i className='fa fa-lg fa-cloud-upload'/>
                 </Link>
                 <PointModal ref={{this.bonusModal}} updatePoint={{this.props.updatePoint}} />
