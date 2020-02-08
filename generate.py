@@ -90,5 +90,5 @@ mapping = {
 }
 
 for i in mapping:
-    open(mapping[i], 'w', encoding="utf8").write(open(i, 'r', encoding="utf8").read().format(**formatItems))
+    open(mapping[i], 'w', encoding="utf8").write(open('template/' + i, 'r', encoding="utf8").read().format(**formatItems))
 open("output/public/download/SampleUpload{}.xlsx".format(UpperCamel), 'w').write('hi')
