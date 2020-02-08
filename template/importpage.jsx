@@ -2,11 +2,11 @@ import React from 'react';
 import {{ connect }} from 'react-redux';
 import {{ Link }} from 'react-router-dom';
 import FileBox from '../common/FileBox.jsx';
-import {{ createMultiPoint }} from '../redux/{lowerCamel}.jsx';
+import {{ createMulti{UpperCamel} }} from '../redux/{lowerCamel}.jsx';
 
 const schema = {schema};
 
-class PointModal extends React.Component {{
+class {UpperCamel}Modal extends React.Component {{
     constructor(props) {{
         super(props);
 
@@ -199,7 +199,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                         style={{{{ position: 'fixed', right: '10px', bottom: '10px' }}}} onClick={{this.save}}>
                     <i className='fa fa-lg fa-save'/>
                 </button>
-                <PointModal ref={{this.editModal}} update={{this.update}}/>
+                <{UpperCamel}Modal ref={{this.editModal}} update={{this.update}}/>
             </main>
         );
     }}

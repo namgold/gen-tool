@@ -1,0 +1,1 @@
+Edit info in main.py and run the file.
