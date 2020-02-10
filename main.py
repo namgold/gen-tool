@@ -1,15 +1,16 @@
 from generate import *
 
-name = ['ngach', 'luong']
-
+fullname= 'Danh mục ngạch lương'
+name = 'Ngạch lương'
+keyword = ['dm', 'ngach', 'luong']
 schema = {
-    'SHCC': 'text',
-    'NAM': 'number',
-    'NV1_GIO_CHUAN_D_MUC': 'number',
-    'NV2_GIO_LAM_VIEC_D_MUC': 'number',
-    'NV3_GIO_LAM_VIEC_D_MUC': 'number',
-    'GHI_CHU': 'text',
+    'MA_NGACH': 'text',
+    'MASO_CDNN': 'text',
+    'TEN_NGACH/CDNN': 'text',
+    'HESO_LUONG': 'text',
+    'BAC_LG': 'text',
+    'NHOM_NGACH': 'text',
 };
 
-generate(name, schema)
-print("Done")
+generate(name, fullname, keyword, schema)
+print("Done!")

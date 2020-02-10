@@ -1,12 +1,13 @@
 import random, os, json
 from lib.SafeOpen import SafeOpen
 
-def generate(name,schema):
-    name = [i.lower() for i in name]
-    url = '-'.join(name)
-    UpperCamel = ''.join(map(lambda x: x.capitalize(), name))
-    lowerCamel = UpperCamel[0].lower() + UpperCamel[1:]
-    upperSnake = '_'.join(map(lambda x: x.upper(), name))
+def generate(name, fullname, keyword, schema):
+    keyword = [i.lower() for i in keyword]
+    url = '-'.join(keyword)
+    UpperCamel = ''.join(map(lambda x: x.upper() if x in ['dm', 'qt'] else x.capitalize(), keyword))
+    lowerCamel = keyword[0].lower() + ''.join(map(lambda x: x.capitalize(), keyword[1:]))
+    UPPER_SNAKE = '_'.join(map(lambda x: x.upper(), keyword))
+    lowername = name.lower()
 
     typeMongoMap = {
         'text': "String",
@@ -20,10 +21,13 @@ def generate(name,schema):
         'UpperCamel' : UpperCamel,
         'lowerCamel' : lowerCamel,
         'menuNum': random.randint(200, 999),
-        'upperSnake': upperSnake,
+        'UPPER_SNAKE': UPPER_SNAKE,
         'schemaArray': list(schema.keys()),
         'schema': json.dumps(schemaReact, indent='    '),
-        'schemaMongo': json.dumps(schemaMongo, indent=8)
+        'schemaMongo': json.dumps(schemaMongo, indent=8),
+        'name': name,
+        'fullname': fullname,
+        'lowername': lowername,
     }
 
     mapping = {
@@ -32,12 +36,10 @@ def generate(name,schema):
         "redux.js":       'output/src/view/redux/{}.jsx'.format(lowerCamel),
         "page.jsx":       'output/src/view/admin/tchc/{}Page.jsx'.format(UpperCamel),
         "importpage.jsx": 'output/src/view/admin/tchc/{}ImportPage.jsx'.format(UpperCamel),
-        "_init.js":       'output_add/src/module/tchc/controller/_init.js',
-        "admin.jsx":      'output_add/src/view/admin/tchc/admin.jsx'
+        "_init.js":       'output_add/src/controller/_init.js',
+        "admin.jsx":      'output_add/src/view/admin/admin.jsx'
     }
 
     for i in mapping:
-        SafeOpen(mapping[i], 'w', encoding="utf8").write(
-            SafeOpen('template/' + i, 'r', encoding="utf8").read().format(**formatItems)
-        )
+        SafeOpen(mapping[i], 'w', encoding="utf8").write(SafeOpen('template/' + i, 'r', encoding="utf8").read().format(**formatItems))
     SafeOpen("output/public/download/SampleUpload{}.xlsx".format(UpperCamel), 'w').write('hi')

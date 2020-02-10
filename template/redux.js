@@ -1,11 +1,11 @@
 import T from '../common/js/common';
 
 // Reducer ------------------------------------------------------------------------------------------------------------
-const {upperSnake}_IN_PAGE = 'user:get{UpperCamel}InPage';
+const {UPPER_SNAKE}_IN_PAGE = 'user:get{UpperCamel}InPage';
 
 export default function {lowerCamel}Reducer(state = null, data) {{
     switch (data.type) {{
-        case {upperSnake}_IN_PAGE:
+        case {UPPER_SNAKE}_IN_PAGE:
             return Object.assign({{}}, state, {{ page: data.page }});
 
         default:
@@ -25,13 +25,13 @@ export function get{UpperCamel}InPage(pageNumber, pageSize, done) {{
                 console.error('GET: ' + url + '. ' + data.error);
             }} else {{
                 if (done) done(data.page);
-                dispatch({{ type: {upperSnake}_IN_PAGE, page: data.page }});
+                dispatch({{ type: {UPPER_SNAKE}_IN_PAGE, page: data.page }});
             }}
         }}, error => T.notify('Lấy dữ liệu bị lỗi!', 'danger'));
     }}
 }}
 
-export function updatePoint(_id, changes, done) {{
+export function update{UpperCamel}(_id, changes, done) {{
     return dispatch => {{
         const url = '/api/{url}';
         T.put(url, {{ _id, changes }}, data => {{
@@ -46,10 +46,10 @@ export function updatePoint(_id, changes, done) {{
     }}
 }}
 
-export function createMultiPoint(points, done) {{
+export function createMulti{UpperCamel}({lowerCamel}s, done) {{
     return dispatch => {{
         const url = '/api/{url}/multiple';
-        T.post(url, {{ points }}, data => {{
+        T.post(url, {{ {lowerCamel}s }}, data => {{
             if (data.error && data.error.length) {{
                 T.notify('Cập nhật dữ liệu bị lỗi!', 'danger');
                 console.error('PUT: ' + url + '. ' + data.error.toString());

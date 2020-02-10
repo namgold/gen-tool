@@ -1,12 +1,12 @@
 import React from 'react';
 import {{ connect }} from 'react-redux';
-import {{ get{UpperCamel}InPage, updatePoint }} from '../redux/{lowerCamel}.jsx';
+import {{ get{UpperCamel}InPage, create{UpperCamel}, update{UpperCamel}, delete{UpperCamel} }} from '../../redux/{lowerCamel}.jsx';
 import {{ Link }} from 'react-router-dom';
-import Pagination from '../common/Pagination.jsx';
+import Pagination from '../../common/Pagination.jsx';
 
 const schema = {schema};
 
-class PointModal extends React.Component {{
+class {UpperCamel}Modal extends React.Component {{
     constructor(props) {{
         super(props);
         this.state = {{ _id: null }};
@@ -36,7 +36,7 @@ class PointModal extends React.Component {{
         e.preventDefault();
         const changes = {{}};
         Object.keys(schema).forEach(key => changes[key] = $(this[key].current).val());
-        this.props.updatePoint(this.state._id, changes, () => {{
+        this.props.update{UpperCamel}(this.state._id, changes, () => {{
             T.notify('Cập nhật điểm thành công!', 'success');
             $(this.modal.current).modal('hide');
         }});
@@ -76,9 +76,8 @@ class PointModal extends React.Component {{
 class {UpperCamel}Page extends React.Component {{
     constructor(props) {{
         super(props);
-        this.state = {{ }};
-
-        this.bonusModal = React.createRef();
+        this.state = {{ isSearching: false }};
+        this.modal = React.createRef();
     }}
 
     componentDidMount() {{
@@ -86,10 +85,26 @@ class {UpperCamel}Page extends React.Component {{
         T.ready();
     }}
 
-    edit = (e, item) => {{
-        this.bonusModal.current.show(item);
+    create = (e) => {{
+        this.modal.current.show();
         e.preventDefault();
     }};
+
+    edit = (e, item) => {{
+        this.modal.current.show(item);
+        e.preventDefault();
+    }};
+
+    delete = (e, item) => {{
+        T.confirm('{name}', 'Bạn có chắc bạn muốn xóa danh mục này?', 'warning', true, isConfirm =>
+            isConfirm && this.props.delete{UpperCamel}(item._id));
+        e.preventDefault();
+    }};
+
+    clearInputSearch = (e) => {{
+        $('#searchTextBox').val('');
+        this.search(e);
+    }}
 
     render() {{
         let {{ pageNumber, pageSize, pageTotal, totalItem, list }} = this.props.{lowerCamel} && this.props.{lowerCamel}.page ?
@@ -101,8 +116,7 @@ class {UpperCamel}Page extends React.Component {{
                     <thead>
                         <tr>
                             <th style={{{{ width: 'auto', textAlign: 'center' }}}}>#</th>
-                            {{/* <th style={{{{ width: 'auto' }}}}>SHCC</th> */}}
-                            {{Object.keys(schema).map((key, index) => (<th key={{index}} style={{{{ width: 'auto' }}}}>{{key}}</th>))}}
+                            {{Object.keys(schema).map((key, index) => (<th key={{index}} style={{{{ width: 'auto', whiteSpace: 'nowrap' }}}}>{{key}}</th>))}}
                             <th style={{{{ width: 'auto', textAlign: 'center', whiteSpace: 'nowrap' }}}}>Thao tác</th>
                         </tr>
                     </thead>
@@ -131,28 +145,33 @@ class {UpperCamel}Page extends React.Component {{
             <main className='app-content'>
                 <div className='app-title'>
                     <div>
-                        <h1><i className='fa fa-user' /> Danh sách đéo gì đấy tự sửa đi</h1>
+                        <h1><i className='fa fa-user' />{fullname}</h1>
                         <p/>
                     </div>
                     <ul className='app-breadcrumb breadcrumb'>
                         <li className='breadcrumb-item'>
                             <Link to='/user'><i className='fa fa-home fa-lg' /></Link>
                         </li>
-                        <li className='breadcrumb-item'> Danh sách đéo gì đấy tự sửa đi</li>
+                        <li className='breadcrumb-item'>{name}</li>
                     </ul>
                 </div>
                 <div className='row tile'>{{table}}</div>
                 <Pagination name='{lowerCamel}Page' pageNumber={{pageNumber}} pageSize={{pageSize}} pageTotal={{pageTotal}} totalItem={{totalItem}}
                     getPage={{this.props.get{UpperCamel}InPage}} />
-                <Link to='/user/summary/{url}/upload' className='btn btn-success btn-circle' style={{{{ position: 'fixed', right: '10px', bottom: '10px' }}}}>
+                <Link to='/user/summary/{url}/upload' className='btn btn-success btn-circle' style={{{{ position: 'fixed', right: '70px', bottom: '10px' }}}}>
                     <i className='fa fa-lg fa-cloud-upload'/>
                 </Link>
-                <PointModal ref={{this.bonusModal}} updatePoint={{this.props.updatePoint}} />
+
+                <a href='#' className='btn btn-primary btn-circle' onClick={{e => this.create(e, null)}} style={{{{ position: 'fixed', right: '10px', bottom: '10px' }}}}>
+                    <i className='fa fa-lg fa-plus' />
+                </a>
+
+                <{UpperCamel}Modal ref={{this.modal}} create{UpperCamel}={{this.props.create{UpperCamel}}} update{UpperCamel}={{this.props.update{UpperCamel}}} />
             </main>
         );
     }}
 }}
 
 const mapStateToProps = state => ({{ {lowerCamel}: state.{lowerCamel} }});
-const mapActionsToProps = {{ get{UpperCamel}InPage, updatePoint }};
+const mapActionsToProps = {{ get{UpperCamel}InPage, create{UpperCamel}, update{UpperCamel}, delete{UpperCamel} }};
 export default connect(mapStateToProps, mapActionsToProps)({UpperCamel}Page);

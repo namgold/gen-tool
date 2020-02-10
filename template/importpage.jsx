@@ -1,8 +1,8 @@
 import React from 'react';
 import {{ connect }} from 'react-redux';
 import {{ Link }} from 'react-router-dom';
-import FileBox from '../common/FileBox.jsx';
-import {{ createMulti{UpperCamel} }} from '../redux/{lowerCamel}.jsx';
+import FileBox from '../../common/FileBox.jsx';
+import {{ createMulti{UpperCamel} }} from '../../redux/{lowerCamel}.jsx';
 
 const schema = {schema};
 
@@ -76,7 +76,7 @@ class {UpperCamel}Modal extends React.Component {{
 class {UpperCamel}ImportPage extends React.Component {{
     constructor(props) {{
         super(props);
-        this.state = {{ points: [], message: '' }};
+        this.state = {{ {lowerCamel}s: [], message: '' }};
 
         this.editModal = React.createRef();
     }}
@@ -86,7 +86,7 @@ class {UpperCamel}ImportPage extends React.Component {{
     }}
 
     onSuccess = (response) => {{
-        this.setState({{ points: response.points, message: <p className='text-center' style={{{{ color: 'green'}}}}>{{response.points.length}} hàng được tải lên thành công</p> }});
+        this.setState({{ {lowerCamel}s: response.{lowerCamel}s, message: <p className='text-center' style={{{{ color: 'green'}}}}>{{response.{lowerCamel}s.length}} hàng được tải lên thành công</p> }});
     }};
 
     showEdit = (e, index, item) => {{
@@ -95,32 +95,32 @@ class {UpperCamel}ImportPage extends React.Component {{
     }};
 
     update = (index, changes, done) => {{
-        const points = this.state.points, currentValue = points[index];
+        const {lowerCamel}s = this.state.{lowerCamel}s, currentValue = {lowerCamel}s[index];
         const updateValue = Object.assign({{}}, currentValue, changes);
-        points.splice(index, 1, updateValue);
-        this.setState({{ points }});
+        {lowerCamel}s.splice(index, 1, updateValue);
+        this.setState({{ {lowerCamel}s }});
         done && done();
     }};
 
     delete = (e, index) => {{
         e.preventDefault();
-        const points = this.state.points;
-        points.splice(index, 1);
-        this.setState({{ points }});
+        const {lowerCamel}s = this.state.{lowerCamel}s;
+        {lowerCamel}s.splice(index, 1);
+        this.setState({{ {lowerCamel}s }});
     }};
 
     save = (e) => {{
         e.preventDefault();
-        this.props.createMultiPoint(this.state.points, () => {{
+        this.props.createMulti{UpperCamel}(this.state.{lowerCamel}s, () => {{
             T.notify('Cập nhật điểm thành công!', 'success');
             this.props.history.push('/user/summary/{url}');
         }})
     }};
 
     render() {{
-        const {{ points }} = this.state;
+        const {{ {lowerCamel}s }} = this.state;
         let table = null;
-        if (points && points.length > 0) {{
+        if ({lowerCamel}s && {lowerCamel}s.length > 0) {{
             table = (
                 <table className='table table-hover table-bordered table-responsive' style={{{{ maxHeight: '600px', overflow: 'scroll' }}}}>
                     <thead>
@@ -133,7 +133,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                         </tr>
                     </thead>
                     <tbody>
-                        {{points.map((item, index) => (
+                        {{{lowerCamel}s.map((item, index) => (
                             <tr key={{index}}>
                                 <td style={{{{ textAlign: 'right' }}}}>{{index + 1}}</td>
                                 {{Object.keys(schema).map((key, i) => (
@@ -162,21 +162,21 @@ class {UpperCamel}ImportPage extends React.Component {{
             <main className='app-content'>
                 <div className='app-title'>
                     <div>
-                        <h1><i className='fa fa-user' /> Tải lên file cập nhật điểm</h1>
+                        <h1><i className='fa fa-user' /> Tải lên file cập nhật {lowername}</h1>
                         <p />
                     </div>
                     <ul className='app-breadcrumb breadcrumb'>
                         <li className='breadcrumb-item'>
                             <Link to='/user'><i className='fa fa-home fa-lg' /></Link>
                         </li>
-                        <li className='breadcrumb-item'>Tải lên file cập nhật điểm</li>
+                        <li className='breadcrumb-item'>Tải lên file cập nhật {lowername}</li>
                     </ul>
                 </div>
                 <div className='row'>
                     <div className='col-12 col-md-6 offset-md-3'>
                         <div className='tile'>
                             <div className='tile-body'>
-                                <FileBox ref={{this.fileBox}} postUrl='/user/upload' uploadType='PointFile' userData='{lowerCamel}ImportData' style={{{{ width: '100%', backgroundColor: '#fdfdfd' }}}} success={{this.onSuccess}}/>
+                                <FileBox ref={{this.fileBox}} postUrl='/user/upload' uploadType='{UpperCamel}File' userData='{lowerCamel}ImportData' style={{{{ width: '100%', backgroundColor: '#fdfdfd' }}}} success={{this.onSuccess}}/>
                                 {{this.state.message}}
                             </div>
                             <div className='tile-footer text-right'>
@@ -186,7 +186,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                     </div>
                 </div>
                 <div className='row'>
-                    {{points && points.length ? (
+                    {{{lowerCamel}s && {lowerCamel}s.length ? (
                         <div className='tile col-12'>
                             {{table}}
                         </div>
@@ -206,5 +206,5 @@ class {UpperCamel}ImportPage extends React.Component {{
 }}
 
 const mapStateToProps = state => ({{ }});
-const mapActionsToProps = {{ createMultiPoint }};
+const mapActionsToProps = {{ createMulti{UpperCamel} }};
 export default connect(mapStateToProps, mapActionsToProps)({UpperCamel}ImportPage);
