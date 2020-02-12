@@ -13,6 +13,6 @@ schema = {
 };
 key="MA_NGACH"
 repo = "C:\\Thesis\\hcmut"
-copyFilesToRepo = True
+copyFilesToRepo = False
 generate(name, fullname, keyword, schema, key, repo, copyFilesToRepo)
-print("Generated!")
+print("TCHC Generated!")
