@@ -11,6 +11,8 @@ schema = {
     'BAC_LG': 'text',
     'NHOM_NGACH': 'text',
 };
-
-generate(name, fullname, keyword, schema)
-print("Done!")
+key="MA_NGACH"
+repo = "C:\\Thesis\\hcmut"
+copyFilesToRepo = True
+generate(name, fullname, keyword, schema, key, repo, copyFilesToRepo)
+print("Generated!")

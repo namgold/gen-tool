@@ -46,10 +46,10 @@ export function update{UpperCamel}(_id, changes, done) {{
     }}
 }}
 
-export function createMulti{UpperCamel}({lowerCamel}s, done) {{
+export function createMulti{UpperCamel}({lowerCamel}, done) {{
     return dispatch => {{
         const url = '/api/{url}/multiple';
-        T.post(url, {{ {lowerCamel}s }}, data => {{
+        T.post(url, {{ {lowerCamel} }}, data => {{
             if (data.error && data.error.length) {{
                 T.notify('Cập nhật dữ liệu bị lỗi!', 'danger');
                 console.error('PUT: ' + url + '. ' + data.error.toString());
@@ -57,5 +57,36 @@ export function createMulti{UpperCamel}({lowerCamel}s, done) {{
                 done && done(data.item);
             }}
         }}, () => T.notify('Cập nhật dữ liệu bị lỗi!', 'danger'))
+    }}
+}}
+
+export function create{UpperCamel}({lowerCamel}, done) {{
+    return dispatch => {{
+        const url = '/api/{url}';
+        T.post(url, {{ {lowerCamel} }}, data => {{
+            if (data.error) {{
+                T.notify(data.error.message ? data.error.message : 'Tạo mới bị lỗi!', 'danger');
+                console.error('POST: ' + url + '. ' + data.error);
+            }} else {{
+                dispatch(get{UpperCamel}InPage());
+                if (done) done(data);
+            }}
+        }}, error => T.notify('Tạo mới bị lỗi!', 'danger'));
+    }}
+}}
+
+export function delete{UpperCamel}(_id, done) {{
+    return dispatch => {{
+        const url = '/api/{url}';
+        T.delete(url, {{ _id }}, data => {{
+            if (data.error) {{
+                T.notify('Xóa bị lỗi!', 'danger');
+                console.error('DELETE: ' + url + '. ' + data.error);
+            }} else {{
+                T.alert('Xóa thành công!', 'success', false, 800);
+                dispatch(get{UpperCamel}InPage());
+            }}
+            done && done();
+        }}, error => T.notify('Xóa bị lỗi!', 'danger'));
     }}
 }}

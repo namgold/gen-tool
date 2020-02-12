@@ -24,11 +24,11 @@ module.exports = app => {{
 
     app.post('/api/{url}', app.permission.check('{lowerCamel}:write'), (req, res) => {{
         const body = req.body.{lowerCamel};
-        app.model.{lowerCamel}.get({{ _id: body._id }}, (error, item) => {{
+        app.model.{lowerCamel}.get({{ {key}: body.{key} }}, (error, item) => {{
             if (error) {{
                 res.send({{ error }});
             }} else if (item) {{
-                res.send({{ exist: true }});
+                res.send({{ error: {{ exist: true, message: "{name} " + body.{key} + " đã tồn tại" }}}});
             }} else {{
                 app.model.{lowerCamel}.create(body, (error, item) => res.send({{ error, item }}));
             }}

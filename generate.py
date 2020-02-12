@@ -1,7 +1,14 @@
-import random, os, json
+import random, os, json, shutil
 from lib.SafeOpen import SafeOpen
+from lib.Copytree import Copytree
 
-def generate(name, fullname, keyword, schema):
+typeMongoMap = {
+    'text': "String",
+    "number": "Number",
+    "date": "Date"
+}
+
+def generate(name, fullname, keyword, schema, key, repo="", copy=False):
     keyword = [i.lower() for i in keyword]
     url = '-'.join(keyword)
     UpperCamel = ''.join(map(lambda x: x.upper() if x in ['dm', 'qt'] else x.capitalize(), keyword))
@@ -9,11 +16,6 @@ def generate(name, fullname, keyword, schema):
     UPPER_SNAKE = '_'.join(map(lambda x: x.upper(), keyword))
     lowername = name.lower()
 
-    typeMongoMap = {
-        'text': "String",
-        "number": "Number",
-        "date": "Date"
-    }
     schemaReact = {i: {'type':schema[i]} for i in schema}
     schemaMongo = {i: typeMongoMap[schema[i]] for i in schema}
     formatItems = {
@@ -28,6 +30,7 @@ def generate(name, fullname, keyword, schema):
         'name': name,
         'fullname': fullname,
         'lowername': lowername,
+        'key': key
     }
 
     mapping = {
@@ -42,4 +45,18 @@ def generate(name, fullname, keyword, schema):
 
     for i in mapping:
         SafeOpen(mapping[i], 'w', encoding="utf8").write(SafeOpen('template/' + i, 'r', encoding="utf8").read().format(**formatItems))
-    SafeOpen("output/public/download/SampleUpload{}.xlsx".format(UpperCamel), 'w').write('hi')
+    excelSrc = "excel/SampleUpload{}.xlsx".format(UpperCamel)
+    excelDst = "output/public/download/SampleUpload{}.xlsx".format(UpperCamel)
+    if os.path.isfile(excelSrc):
+        SafeOpen("output/public/download/SampleUpload{}.xlsx".format(UpperCamel), 'w').write('ahihi')
+        shutil.copy(excelSrc,excelDst)
+        print("Excel file found")
+    else:
+        SafeOpen("output/public/download/SampleUpload{}.xlsx".format(UpperCamel), 'w').write('ahihi')
+
+    if copy:
+        if os.path.isdir(repo):
+            Copytree("output\\public", repo+"\\public")
+            Copytree("output\\src", repo+"\\src")
+            shutil.rmtree("output")
+            print("Copied files to {}".format(repo))

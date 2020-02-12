@@ -4,13 +4,13 @@ module.exports = app => {{
 
     app.model.{lowerCamel} = {{
         create: (data, done) => {{
-            model.findOne({{ SHCC: data.SHCC }}, (error, item) => {{
+            model.findOne({{ {key}: data.{key} }}, (error, item) => {{
                 if (error) {{
                     done && done(error);
                 }} else if (!item) {{
                     model.create(data, done);
                 }} else {{
-                    done && done(error, item);
+                    done && done({{ exist: true, message: "{name} " + body.{key} + " đã tồn tại" }});
                 }}
             }});
         }},
@@ -37,14 +37,14 @@ module.exports = app => {{
                 model.findById(condition, done), // condition is _id
 
         update: (_id, changes, done) => {{
-            if (changes.SHCC) {{
-                model.findOne({{ SHCC: changes.SHCC }}, (error, item) => {{
+            if (changes.{key}) {{
+                model.findOne({{ {key}: changes.{key} }}, (error, item) => {{
                     if (error) {{
                         done && done(error);
                     }} else if (!item || item._id == _id) {{
                         model.findOneAndUpdate({{ _id }}, {{ $set: changes }}, {{ new: true }}, done)
                     }} else {{
-                        done && done('SHCC is duplicated');
+                        done && done('{key} is duplicated');
                     }}
                 }});
             }} else {{

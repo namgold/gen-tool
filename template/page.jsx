@@ -6,10 +6,10 @@ import Pagination from '../../common/Pagination.jsx';
 
 const schema = {schema};
 
-class {UpperCamel}Modal extends React.Component {{
+class EditModal extends React.Component {{
     constructor(props) {{
         super(props);
-        this.state = {{ _id: null }};
+        this.state = {{ _id: null, isUpdate: true }};
         this.modal = React.createRef();
         Object.keys(schema).forEach(key => this[key] = React.createRef());
     }}
@@ -17,7 +17,7 @@ class {UpperCamel}Modal extends React.Component {{
     componentDidMount() {{
         $(document).ready(() => {{
             $(this.modal.current).on('hidden.bs.modal', () => {{
-                this.setState({{ _id: null }})
+                this.setState({{ _id: null, isUpdate: true }})
             }});
         }})
     }}
@@ -27,8 +27,21 @@ class {UpperCamel}Modal extends React.Component {{
             Object.keys(schema).forEach(key => {{
                 $(this[key].current).val(item[key] ? item[key] : null);
             }});
+            this.setState({{
+                _id: item && item._id ? item._id : null,
+                isUpdate: true
+            }});
+
         }}
-        this.setState({{ _id: item && item._id ? item._id : null }});
+        else {{
+            Object.keys(schema).forEach(key => {{
+                $(this[key].current).val('');
+            }});
+            this.setState({{
+                _id: null,
+                isUpdate: false
+            }});
+        }}
         $(this.modal.current).modal('show');
     }};
 
@@ -36,10 +49,17 @@ class {UpperCamel}Modal extends React.Component {{
         e.preventDefault();
         const changes = {{}};
         Object.keys(schema).forEach(key => changes[key] = $(this[key].current).val());
-        this.props.update{UpperCamel}(this.state._id, changes, () => {{
-            T.notify('Cập nhật điểm thành công!', 'success');
-            $(this.modal.current).modal('hide');
-        }});
+        if (this.state.isUpdate) {{
+            this.props.update(this.state._id, changes, () => {{
+                T.notify('Cập nhật {lowername} thành công!', 'success');
+                $(this.modal.current).modal('hide');
+            }});
+        }} else {{
+            this.props.create(changes, () => {{
+                T.notify('Tạo mới {lowername} thành công!', 'success');
+                $(this.modal.current).modal('hide');
+            }});
+        }}
     }};
 
     render() {{
@@ -48,7 +68,7 @@ class {UpperCamel}Modal extends React.Component {{
                 <form className='modal-dialog modal-lg' role='document'>
                     <div className='modal-content'>
                         <div className='modal-header'>
-                            <h5 className='modal-title'>Cập nhật điểm</h5>
+                            <h5 className='modal-title'>{{this.state.isUpdate ? 'Cập nhật' : "Tạo mới"}} {lowername}</h5>
                             <button type='button' className='close' data-dismiss='modal' aria-label='Close'>
                                 <span aria-hidden='true'>&times;</span>
                             </button>
@@ -126,9 +146,12 @@ class {UpperCamel}Page extends React.Component {{
                                 <td style={{{{ textAlign: 'right' }}}}>{{(pageNumber - 1) * pageSize + index + 1}}</td>
                                 {{Object.keys(schema).map((key, index) => (<td key={{index}} style={{{{ width: 'auto' }}}}>{{item[key]}}</td>))}}
                                 <td>
-                                    <div className=''>
+                                    <div className='btn-group' style={{{{ display: 'flex' }}}}>
                                         <a className='btn btn-primary' href='#' onClick={{e => this.edit(e, item)}}>
                                             <i className='fa fa-lg fa-edit' />
+                                        </a>
+                                        <a className='btn btn-danger' href='#' onClick={{e => this.delete(e, item)}}>
+                                            <i className='fa fa-lg fa-trash' />
                                         </a>
                                     </div>
                                 </td>
@@ -162,11 +185,12 @@ class {UpperCamel}Page extends React.Component {{
                     <i className='fa fa-lg fa-cloud-upload'/>
                 </Link>
 
-                <a href='#' className='btn btn-primary btn-circle' onClick={{e => this.create(e, null)}} style={{{{ position: 'fixed', right: '10px', bottom: '10px' }}}}>
+                <button type='button' className='btn btn-primary btn-circle'
+                    style={{{{ position: 'fixed', right: '10px', bottom: '10px' }}}} onClick={{this.create}}>
                     <i className='fa fa-lg fa-plus' />
-                </a>
+                </button>
 
-                <{UpperCamel}Modal ref={{this.modal}} create{UpperCamel}={{this.props.create{UpperCamel}}} update{UpperCamel}={{this.props.update{UpperCamel}}} />
+                <EditModal ref={{this.modal}} create={{this.props.create{UpperCamel}}} update={{this.props.update{UpperCamel}}} />
             </main>
         );
     }}
