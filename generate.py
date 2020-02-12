@@ -9,6 +9,7 @@ typeMongoMap = {
 }
 
 def generate(name, fullname, keyword, schema, key, repo="", copy=False):
+    # Initing names
     keyword = [i.lower() for i in keyword]
     url = '-'.join(keyword)
     UpperCamel = ''.join(map(lambda x: x.upper() if x in ['dm', 'qt'] else x.capitalize(), keyword))
@@ -16,6 +17,7 @@ def generate(name, fullname, keyword, schema, key, repo="", copy=False):
     UPPER_SNAKE = '_'.join(map(lambda x: x.upper(), keyword))
     lowername = name.lower()
 
+    # 
     schemaReact = {i: {'type':schema[i]} for i in schema}
     schemaMongo = {i: typeMongoMap[schema[i]] for i in schema}
     formatItems = {
@@ -43,20 +45,27 @@ def generate(name, fullname, keyword, schema, key, repo="", copy=False):
         "admin.jsx":      'output_add/src/view/admin/admin.jsx'
     }
 
+    # Creating files
     for i in mapping:
         SafeOpen(mapping[i], 'w', encoding="utf8").write(SafeOpen('template/' + i, 'r', encoding="utf8").read().format(**formatItems))
+
+    # Excel
     excelSrc = f"excel/SampleUpload{UpperCamel}.xlsx"
     excelDst = f"output/public/download/SampleUpload{UpperCamel}.xlsx"
+    defaultExcelContent = 'No content.'
     if os.path.isfile(excelSrc):
-        SafeOpen(excelDst, 'w').write('ahihi')
-        shutil.copy(excelSrc, excelDst)
-        print(f"Excel file {os.path.basename(excelSrc)} found.")
+        if open(excelSrc).read() == defaultExcelContent:
+            print(f"Excel file {excelSrc} have not edited. Please edit this file!")
+            SafeOpen(excelDst, 'w').write(defaultExcelContent)
+        else:
+            SafeOpen(excelDst, 'w').write(defaultExcelContent)
+            shutil.copy(excelSrc, excelDst)
     else:
-        SafeOpen(excelDst, 'w').write('ahihi')
-        SafeOpen(excelSrc, 'w').write('ahihi')
-        print(f"Excel file {os.path.basename(excelSrc)} not found, sample file created.")
+        SafeOpen(excelDst, 'w').write(defaultExcelContent)
+        SafeOpen(excelSrc, 'w').write(defaultExcelContent)
+        print(f"Excel file {excelSrc} not found, sample file created.")
 
-
+    # Copying to repo
     if copy:
         if os.path.isdir(repo):
             Copytree("output\\public", repo+"\\public")
