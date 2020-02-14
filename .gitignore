@@ -2,3 +2,4 @@ output
 output_add
 **/__pycache__
 **/.placeholder
+.vscode/settings.json

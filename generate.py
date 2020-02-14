@@ -73,5 +73,17 @@ def generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, 
         if os.path.isdir(repo):
             Copytree("output\\public", repo+"\\public")
             Copytree("output\\src", repo+"\\src")
-            shutil.rmtree("output")
+            addInit(formatItems, mapping['_init.js'], repo)
+            addAdmin(formatItems, mapping, repo)
             print(f"Copied output files to {repo}")
+
+def addInit(formatItems, src, repo):
+    dst = repo + '/src/controller/_init.js'
+    dstContent = open(dst, 'r', encoding="utf8").read()
+    if dstContent.find(f'app.upload{formatItems["UpperCamel"]}File') == -1:
+        pos = dstContent.rfind('}')
+        open(dst, 'w', encoding="utf8").write(dstContent[:pos].rstrip() + '\n\n' + open(src, 'r', encoding="utf8").read() + '\n\n' + dstContent[pos:].lstrip())
+        print('Appended to _init.js')
+
+def addAdmin(formatItems, mapping, repo):
+    pass
