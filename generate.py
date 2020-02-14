@@ -72,18 +72,41 @@ def generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, 
     if copy:
         if os.path.isdir(repo):
             Copytree("output\\public", repo+"\\public")
-            Copytree("output\\src", repo+"\\src")
-            addInit(formatItems, mapping['_init.js'], repo)
-            addAdmin(formatItems, mapping, repo)
+            Copytree("output\\src", repo + "\\src")
+            addInit(formatItems, mapping['_init.js'], repo + '/src/controller/_init.js')
+            addAdmin(formatItems, mapping['admin.jsx'], repo + '/src/view/admin/admin.jsx')
             print(f"Copied output files to {repo}")
 
-def addInit(formatItems, src, repo):
-    dst = repo + '/src/controller/_init.js'
+def addInit(formatItems, src, dst):
     dstContent = open(dst, 'r', encoding="utf8").read()
     if dstContent.find(f'app.upload{formatItems["UpperCamel"]}File') == -1:
         pos = dstContent.rfind('}')
         open(dst, 'w', encoding="utf8").write(dstContent[:pos].rstrip() + '\n\n' + open(src, 'r', encoding="utf8").read() + '\n\n' + dstContent[pos:].lstrip())
         print('Appended to _init.js')
 
-def addAdmin(formatItems, mapping, repo):
-    pass
+def addAdmin(formatItems, src, dst):
+    items = [
+        "import {lowerCamel} from '../redux/{lowerCamel}.jsx';".format(**formatItems),
+        ', {lowerCamel}'.format(**formatItems),
+        '''            {{ path: '/user/summary/{url}/upload', component: Loadable({{ loading: Loading, loader: () => import('./tchc/{UpperCamel}ImportPage.jsx') }}) }},
+            {{ path: '/user/summary/{url}', component: Loadable({{ loading: Loading, loader: () => import('./tchc/{UpperCamel}Page.jsx') }}) }},'''.format(**formatItems)
+    ]
+    dstContent = open(dst, 'r', encoding="utf8").read()
+    if dstContent.find(items[1]) == -1:
+        pos = dstContent.find('\n', dstContent.rfind('redux/'))
+        dstContent = dstContent[:pos].rstrip() + '\n' + items[0] + '\n\n' + dstContent[pos:].lstrip()
+        print("Appended import to admin.jsx")
+
+    reducerStart = dstContent.find("const reducers =")
+    reducerEnd = dstContent.find("};", reducerStart)
+    if dstContent.find(f'{formatItems["lowerCamel"]}', reducerStart, reducerEnd) == -1:
+        dstContent = dstContent[:reducerEnd].rstrip() + items[1] + '\n' + dstContent[reducerEnd:].lstrip()
+        print("Appended reducer to admin.jsx")
+
+    if dstContent.find(formatItems['url']) == -1:
+        pos = dstContent.find("{ path: '/user/summary/dm-chucvu', component: Loadable({ loading: Loading, loader: () => import('./tchc/DmChucVuPage.jsx') }) },")
+        pos = dstContent.find('\n', pos)
+        dstContent = dstContent[:pos] + '\n' + items[2]  + dstContent[pos:]
+        print("Appended path to admin.jsx")
+
+    open(dst, 'w', encoding="utf8").write(dstContent)

@@ -10,7 +10,7 @@ module.exports = app => {{
                 }} else if (!item) {{
                     model.create(data, done);
                 }} else {{
-                    done && done({{ exist: true, message: "{name} " + body.{key} + " đã tồn tại" }});
+                    done && done({{ exist: true, message: "{name} " + data.{key} + " đã tồn tại" }});
                 }}
             }});
         }},
