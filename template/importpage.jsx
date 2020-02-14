@@ -4,6 +4,7 @@ import {{ Link }} from 'react-router-dom';
 import FileBox from '../../common/FileBox.jsx';
 import {{ createMulti{UpperCamel} }} from '../../redux/{lowerCamel}.jsx';
 
+const width = (100 / 6) + '%';
 const schema = {schema};
 
 class {UpperCamel}Modal extends React.Component {{
@@ -122,12 +123,12 @@ class {UpperCamel}ImportPage extends React.Component {{
         let table = null;
         if ({lowerCamel} && {lowerCamel}.length > 0) {{
             table = (
-                <table className='table table-hover table-bordered table-responsive' style={{{{ maxHeight: '600px', overflow: 'scroll' }}}}>
+                <table className='table table-hover table-bordered table-responsive' style={{{{ maxHeight: '600px', overflow: 'auto' }}}}>
                     <thead>
                         <tr>
                             <th style={{{{ width: 'auto' }}}}>#</th>
                             {{Object.keys(schema).map((key, index) => (
-                                <th key={{index}} style={{{{ width: 'auto', textAlign: 'center' }}}}>{{key}}</th>
+                                <th key={{index}} style={{{{ width: width, textAlign: 'center' }}}}>{{key}}</th>
                             ))}}
                             <th style={{{{ width: 'auto', textAlign: 'center', whiteSpace: 'nowrap' }}}}>Thao tác</th>
                         </tr>

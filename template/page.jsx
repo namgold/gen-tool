@@ -4,6 +4,7 @@ import {{ get{UpperCamel}InPage, create{UpperCamel}, update{UpperCamel}, delete{
 import {{ Link }} from 'react-router-dom';
 import Pagination from '../../common/Pagination.jsx';
 
+const width = (100 / 6) + '%';
 const schema = {schema};
 
 class EditModal extends React.Component {{
@@ -148,7 +149,7 @@ class {UpperCamel}Page extends React.Component {{
                     <thead>
                         <tr>
                             <th style={{{{ width: 'auto', textAlign: 'center' }}}}>#</th>
-                            {{Object.keys(schema).map((key, index) => (<th key={{index}} style={{{{ width: 'auto', whiteSpace: 'nowrap' }}}}>{{key}}</th>))}}
+                            {{Object.keys(schema).map((key, index) => (<th key={{index}} style={{{{ width: width, whiteSpace: 'nowrap' }}}}>{{key}}</th>))}}
                             <th style={{{{ width: 'auto', textAlign: 'center', whiteSpace: 'nowrap' }}}}>Thao tác</th>
                         </tr>
                     </thead>
@@ -156,7 +157,7 @@ class {UpperCamel}Page extends React.Component {{
                         {{list.map((item, index) => (
                             <tr key={{index}}>
                                 <td style={{{{ textAlign: 'right' }}}}>{{(pageNumber - 1) * pageSize + index + 1}}</td>
-                                {{Object.keys(schema).map((key, index) => (<td key={{index}} style={{{{ width: 'auto' }}}}>{{item[key]}}</td>))}}
+                                {{Object.keys(schema).map((key, index) => (<td key={{index}} style={{{{ width: width }}}}>{{item[key]}}</td>))}}
                                 <td>
                                     <div className='btn-group' style={{{{ display: 'flex' }}}}>
                                         <a className='btn btn-primary' href='#' onClick={{e => this.edit(e, item)}}>

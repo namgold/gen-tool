@@ -15,7 +15,7 @@ schema = {
 key = "STT"
 searchFields = ['MA_NGACH', 'MASO_CDNN'] # Note: only search on text field
 repoDirectory = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = False
+copyOutputFilesToRepo = True
 ExcelStartRow = 2
 
 generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, repoDirectory, copyOutputFilesToRepo)
