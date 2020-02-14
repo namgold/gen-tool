@@ -12,11 +12,11 @@ schema = {
     'BAC_LG': 'text',
     'NHOM_NGACH': 'text',
 };
-key="STT"
-searchFields = ['MA_NGACH', 'MASO_CDNN'] # Note: do not search on number field
-repo = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = True
+key = "STT"
+searchFields = ['MA_NGACH', 'MASO_CDNN'] # Note: only search on text field
+repoDirectory = "C:\\Thesis\\hcmut"
+copyOutputFilesToRepo = False
 ExcelStartRow = 2
 
-generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo, copyOutputFilesToRepo)
+generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, repoDirectory, copyOutputFilesToRepo)
 print("Done!", end="")
