@@ -58,8 +58,7 @@ class {UpperCamel}Modal extends React.Component {{
                                 {{Object.keys(schema).map((key, index) => (
                                     <div key={{index}} className='form-group col-12 col-md-6'>
                                         <label>{{key}}</label>
-                                        <input ref={{this[key]}} className='form-control' type={{schema[key].type}} step={{schema[key].step}}
-                                               placeholder={{key}}/>
+                                        <input ref={{this[key]}} className='form-control' type={{schema[key].type}} step={{schema[key].step}} placeholder={{schema[key].title}}/>
                                     </div>
                                 ))}}
                             </div>

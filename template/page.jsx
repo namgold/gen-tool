@@ -75,11 +75,10 @@ class EditModal extends React.Component {{
                         </div>
                         <div className='modal-body row'>
                             {{Object.keys(schema).map((key, index) => (
-                                    <div key={{index}} className='form-group col-12 col-md-6'>
-                                        <label>{{key}}</label>
-                                        <input ref={{this[key]}} className='form-control' type={{schema[key].type}} step={{schema[key].step}}
-                                               placeholder={{key}}/>
-                                    </div>
+                                <div key={{index}} className='form-group col-12 col-md-6'>
+                                    <label>{{key}}</label>
+                                    <input ref={{this[key]}} className='form-control' type={{schema[key].type}} step={{schema[key].step}} placeholder={{schema[key].title}}/>
+                                </div>
                             ))}}
                         </div>
                         <div className='modal-footer'>

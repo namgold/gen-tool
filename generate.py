@@ -19,8 +19,7 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
     searchFields = ', '.join('{{ {}: value }}'.format(i) for i in searchFields )
 
     # 
-    schemaReact = {i: {'type':schema[i]} for i in schema}
-    schemaMongo = {i: typeMongoMap[schema[i]] for i in schema}
+    schemaMongo = {i: typeMongoMap[schema[i]['type']] for i in schema}
     formatItems = {
         'url' : url,
         'UpperCamel' : UpperCamel,
@@ -28,7 +27,7 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         'menuNum': menuNum,
         'UPPER_SNAKE': UPPER_SNAKE,
         'schemaArray': list(schema.keys()),
-        'schema': json.dumps(schemaReact, indent='    '),
+        'schema': json.dumps(schema, indent='    '),
         'schemaMongo': json.dumps(schemaMongo, indent=8),
         'name': name,
         'fullname': fullname,
