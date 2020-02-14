@@ -8,7 +8,7 @@ typeMongoMap = {
     "date": "Date"
 }
 
-def generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo="", copy=False):
+def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo="", copy=False):
     # Initing names
     keyword = [i.lower() for i in keyword]
     url = '-'.join(keyword)
@@ -25,7 +25,7 @@ def generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, 
         'url' : url,
         'UpperCamel' : UpperCamel,
         'lowerCamel' : lowerCamel,
-        'menuNum': random.randint(200, 999),
+        'menuNum': menuNum,
         'UPPER_SNAKE': UPPER_SNAKE,
         'schemaArray': list(schema.keys()),
         'schema': json.dumps(schemaReact, indent='    '),
@@ -71,11 +71,17 @@ def generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, 
     # Copying to repo
     if copy:
         if os.path.isdir(repo):
-            Copytree("output\\public", repo+"\\public")
-            Copytree("output\\src", repo + "\\src")
+            for dirpath, dirnames, filenames in os.walk('output'):
+                if filenames != [] :
+                    for i in filenames:
+                        if i != '.placeholder':
+                            src = os.path.join(dirpath, i)
+                            dst = os.path.join(repo, *dirpath.split('\\')[1:], i)
+                            if not os.path.exists(dst) or open(src, 'rb').read() != open(dst, 'rb').read():
+                                shutil.copy(src, dst)
+                                print("Copied",src)
             addInit(formatItems, mapping['_init.js'], repo + '/src/controller/_init.js')
             addAdmin(formatItems, mapping['admin.jsx'], repo + '/src/view/admin/admin.jsx')
-            print(f"Copied output files to {repo}")
 
 def addInit(formatItems, src, dst):
     dstContent = open(dst, 'r', encoding="utf8").read()
