@@ -48,7 +48,7 @@ class {UpperCamel}Modal extends React.Component {{
                     <form className='modal-dialog modal-lg' role='document'>
                         <div className='modal-content'>
                             <div className='modal-header'>
-                                <h5 className='modal-title'>Cập nhật điểm</h5>
+                                <h5 className='modal-title'>Cập nhật {lowername}</h5>
                                 <button type='button' className='close' data-dismiss='modal' aria-label='Close'>
                                     <span aria-hidden='true'>&times;</span>
                                 </button>
@@ -76,17 +76,17 @@ class {UpperCamel}Modal extends React.Component {{
 class {UpperCamel}ImportPage extends React.Component {{
     constructor(props) {{
         super(props);
-        this.state = {{ {lowerCamel}s: [], message: '' }};
+        this.state = {{ {lowerCamel}: [], message: '' }};
 
         this.editModal = React.createRef();
     }}
 
     componentDidMount() {{
-        T.ready('/user/ds-giam-dinh-muc');
+        T.ready('/user/summary/{url}');
     }}
 
     onSuccess = (response) => {{
-        this.setState({{ {lowerCamel}s: response.{lowerCamel}s, message: <p className='text-center' style={{{{ color: 'green'}}}}>{{response.{lowerCamel}s.length}} hàng được tải lên thành công</p> }});
+        this.setState({{ {lowerCamel}: response.{lowerCamel}, message: <p className='text-center' style={{{{ color: 'green'}}}}>{{response.{lowerCamel}.length}} hàng được tải lên thành công</p> }});
     }};
 
     showEdit = (e, index, item) => {{
@@ -95,32 +95,32 @@ class {UpperCamel}ImportPage extends React.Component {{
     }};
 
     update = (index, changes, done) => {{
-        const {lowerCamel}s = this.state.{lowerCamel}s, currentValue = {lowerCamel}s[index];
+        const {lowerCamel} = this.state.{lowerCamel}, currentValue = {lowerCamel}[index];
         const updateValue = Object.assign({{}}, currentValue, changes);
-        {lowerCamel}s.splice(index, 1, updateValue);
-        this.setState({{ {lowerCamel}s }});
+        {lowerCamel}.splice(index, 1, updateValue);
+        this.setState({{ {lowerCamel} }});
         done && done();
     }};
 
     delete = (e, index) => {{
         e.preventDefault();
-        const {lowerCamel}s = this.state.{lowerCamel}s;
-        {lowerCamel}s.splice(index, 1);
-        this.setState({{ {lowerCamel}s }});
+        const {lowerCamel} = this.state.{lowerCamel};
+        {lowerCamel}.splice(index, 1);
+        this.setState({{ {lowerCamel} }});
     }};
 
     save = (e) => {{
         e.preventDefault();
-        this.props.createMulti{UpperCamel}(this.state.{lowerCamel}s, () => {{
-            T.notify('Cập nhật điểm thành công!', 'success');
+        this.props.createMulti{UpperCamel}(this.state.{lowerCamel}, () => {{
+            T.notify('Cập nhật {lowername} thành công!', 'success');
             this.props.history.push('/user/summary/{url}');
         }})
     }};
 
     render() {{
-        const {{ {lowerCamel}s }} = this.state;
+        const {{ {lowerCamel} }} = this.state;
         let table = null;
-        if ({lowerCamel}s && {lowerCamel}s.length > 0) {{
+        if ({lowerCamel} && {lowerCamel}.length > 0) {{
             table = (
                 <table className='table table-hover table-bordered table-responsive' style={{{{ maxHeight: '600px', overflow: 'scroll' }}}}>
                     <thead>
@@ -133,7 +133,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                         </tr>
                     </thead>
                     <tbody>
-                        {{{lowerCamel}s.map((item, index) => (
+                        {{{lowerCamel}.map((item, index) => (
                             <tr key={{index}}>
                                 <td style={{{{ textAlign: 'right' }}}}>{{index + 1}}</td>
                                 {{Object.keys(schema).map((key, i) => (
@@ -155,7 +155,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                 </table>
             );
         }} else {{
-            table = <p>Không có người dùng!</p>;
+            table = <p>Không có dữ liệu!</p>;
         }}
 
         return (
@@ -176,7 +176,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                     <div className='col-12 col-md-6 offset-md-3'>
                         <div className='tile'>
                             <div className='tile-body'>
-                                <FileBox ref={{this.fileBox}} postUrl='/user/upload' uploadType='{UpperCamel}File' userData='{lowerCamel}ImportData' style={{{{ width: '100%', backgroundColor: '#fdfdfd' }}}} success={{this.onSuccess}}/>
+                                <FileBox ref={{this.fileBox}} postUrl='/user/upload' uploadType='{UpperCamel}File' userData='{lowerCamel}ImportData' style={{{{ width: '100%', backgroundColor: '#fdfdfd' }}}} success={{this.onSuccess}} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                                 {{this.state.message}}
                             </div>
                             <div className='tile-footer text-right'>
@@ -186,7 +186,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                     </div>
                 </div>
                 <div className='row'>
-                    {{{lowerCamel}s && {lowerCamel}s.length ? (
+                    {{{lowerCamel} && {lowerCamel}.length ? (
                         <div className='tile col-12'>
                             {{table}}
                         </div>

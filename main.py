@@ -4,6 +4,7 @@ fullname= 'Danh mục ngạch lương'
 name = 'Ngạch lương'
 keyword = ['dm', 'ngach', 'luong']
 schema = {
+    'STT': 'number',
     'MA_NGACH': 'text',
     'MASO_CDNN': 'text',
     'TEN_NGACH/CDNN': 'text',
@@ -11,9 +12,11 @@ schema = {
     'BAC_LG': 'text',
     'NHOM_NGACH': 'text',
 };
-key="MA_NGACH"
+key="STT"
+searchFields = ['MA_NGACH', 'MASO_CDNN'] # Note: do not search on number field
 repo = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = False
+copyOutputFilesToRepo = True
+ExcelStartRow = 2
 
-generate(name, fullname, keyword, schema, key, repo, copyOutputFilesToRepo)
+generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo, copyOutputFilesToRepo)
 print("Done!", end="")

@@ -15,15 +15,16 @@ export default function {lowerCamel}Reducer(state = null, data) {{
 
 // Actions ------------------------------------------------------------------------------------------------------------
 T.initCookiePage('{lowerCamel}Page', true);
-export function get{UpperCamel}InPage(pageNumber, pageSize, done) {{
-    const page = T.updatePage('{lowerCamel}Page', pageNumber, pageSize);
+export function get{UpperCamel}InPage(pageNumber, pageSize, pageCondition, done) {{
+    const page = T.updatePage('{lowerCamel}Page', pageNumber, pageSize, pageCondition);
     return dispatch => {{
         const url = `/api/{url}/page/${{page.pageNumber}}/${{page.pageSize}}`;
-        T.get(url, data => {{
+        T.get(url, {{ condition: page.pageCondition ? JSON.parse(page.pageCondition) : {{}} }}, data => {{
             if (data.error) {{
                 T.notify('Lấy dữ liệu bị lỗi!', 'danger');
                 console.error('GET: ' + url + '. ' + data.error);
             }} else {{
+                if (page.pageCondition) data.page.pageCondition = JSON.parse(page.pageCondition);
                 if (done) done(data.page);
                 dispatch({{ type: {UPPER_SNAKE}_IN_PAGE, page: data.page }});
             }}

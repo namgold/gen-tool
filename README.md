@@ -1,4 +1,3 @@
-
 # TCHC generation tool
 How to use:
 1. Add sample excel file to [excel](./excel).

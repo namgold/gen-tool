@@ -59,6 +59,6 @@ module.exports = app => {{
     }};
 
     app.uploadHooks.add('{lowerCamel}ImportData', (req, fields, files, params, done) =>
-        app.permission.has(req, () => {lowerCamel}ImportData(req, fields, files, params, done), done, '{lowerCamel}:select'));
+        app.permission.has(req, () => {lowerCamel}ImportData(req, fields, files, params, done), done, '{lowerCamel}:write'));
 
 }};

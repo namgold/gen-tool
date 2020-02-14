@@ -16,7 +16,7 @@
                         handleUpload(index + 1);
                     }}
                 }};
-                handleUpload();
+                handleUpload({ExcelStartRow});
             }} else {{
                 app.deleteFile(srcPath);
                 sendResponse({{ error: 'Error' }});

@@ -8,7 +8,7 @@ typeMongoMap = {
     "date": "Date"
 }
 
-def generate(name, fullname, keyword, schema, key, repo="", copy=False):
+def generate(name, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo="", copy=False):
     # Initing names
     keyword = [i.lower() for i in keyword]
     url = '-'.join(keyword)
@@ -16,6 +16,7 @@ def generate(name, fullname, keyword, schema, key, repo="", copy=False):
     lowerCamel = keyword[0].lower() + ''.join(map(lambda x: x.capitalize(), keyword[1:]))
     UPPER_SNAKE = '_'.join(map(lambda x: x.upper(), keyword))
     lowername = name.lower()
+    searchFields = ', '.join('{{ {}: value }}'.format(i) for i in searchFields )
 
     # 
     schemaReact = {i: {'type':schema[i]} for i in schema}
@@ -32,7 +33,9 @@ def generate(name, fullname, keyword, schema, key, repo="", copy=False):
         'name': name,
         'fullname': fullname,
         'lowername': lowername,
-        'key': key
+        'key': key,
+        'ExcelStartRow': ExcelStartRow,
+        'searchFields': searchFields
     }
 
     mapping = {
@@ -54,7 +57,7 @@ def generate(name, fullname, keyword, schema, key, repo="", copy=False):
     excelDst = f"output/public/download/SampleUpload{UpperCamel}.xlsx"
     defaultExcelContent = 'No content.'
     if os.path.isfile(excelSrc):
-        if open(excelSrc).read() == defaultExcelContent:
+        if open(excelSrc, 'rb').read() == defaultExcelContent:
             print(f"Excel file {excelSrc} have not edited. Please edit this file!")
             SafeOpen(excelDst, 'w').write(defaultExcelContent)
         else:

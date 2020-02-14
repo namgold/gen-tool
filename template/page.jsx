@@ -31,7 +31,6 @@ class EditModal extends React.Component {{
                 _id: item && item._id ? item._id : null,
                 isUpdate: true
             }});
-
         }}
         else {{
             Object.keys(schema).forEach(key => {{
@@ -101,7 +100,7 @@ class {UpperCamel}Page extends React.Component {{
     }}
 
     componentDidMount() {{
-        this.props.get{UpperCamel}InPage();
+        this.props.get{UpperCamel}InPage(1, 50, {{}});
         T.ready();
     }}
 
@@ -126,9 +125,22 @@ class {UpperCamel}Page extends React.Component {{
         this.search(e);
     }}
 
+    search = (e) => {{
+        e.preventDefault();
+        const condition = {{}};
+        let value = $('#searchTextBox').val();
+        if (value) {{
+            value = {{ $regex: `.*${{value}}.*`, $options: 'i' }};
+            condition['$or'] = [
+                {searchFields}
+            ]
+        }}
+        this.props.get{UpperCamel}InPage(undefined, undefined, (condition), () => this.setState({{ isSearching: value != '' }}));
+    }};
+
     render() {{
-        let {{ pageNumber, pageSize, pageTotal, totalItem, list }} = this.props.{lowerCamel} && this.props.{lowerCamel}.page ?
-            this.props.{lowerCamel}.page : {{ pageNumber: 1, pageSize: 50, pageTotal: 1, totalItem: 0, list }};
+        let {{ pageNumber, pageSize, pageTotal, totalItem, pageCondition, list }} = this.props.{lowerCamel} && this.props.{lowerCamel}.page ?
+            this.props.{lowerCamel}.page : {{ pageNumber: 1, pageSize: 50, pageTotal: 1, totalItem: 0, pageCondition: {{}}, list }};
         let table = null;
         if (list && list.length > 0) {{
             table = (
@@ -172,14 +184,23 @@ class {UpperCamel}Page extends React.Component {{
                         <p/>
                     </div>
                     <ul className='app-breadcrumb breadcrumb'>
-                        <li className='breadcrumb-item'>
-                            <Link to='/user'><i className='fa fa-home fa-lg' /></Link>
-                        </li>
-                        <li className='breadcrumb-item'>{name}</li>
+                        <form style={{{{ position: 'relative', border: '1px solid #ddd', marginRight: 6 }}}} onSubmit={{e => this.search(e)}}>
+                            <input className='app-search__input' id='searchTextBox' type='search' placeholder='Search' />
+                            <a href='#' style={{{{ position: 'absolute', top: 6, right: 9 }}}} onClick={{e => this.search(e)}}>
+                                <i className='fa fa-search' />
+                            </a>
+                        </form>
+                        {{
+                            this.state.isSearching ?
+                            <a href='#' onClick={{e => $('#searchTextBox').val('') && this.search(e)}} style={{{{ color: 'red', marginRight: 12, marginTop: 6 }}}}>
+                                <i className='fa fa-trash' />
+                            </a> :
+                            null
+                        }}
                     </ul>
                 </div>
                 <div className='row tile'>{{table}}</div>
-                <Pagination name='{lowerCamel}Page' pageNumber={{pageNumber}} pageSize={{pageSize}} pageTotal={{pageTotal}} totalItem={{totalItem}}
+                <Pagination name='{lowerCamel}Page' pageNumber={{pageNumber}} pageSize={{pageSize}} pageTotal={{pageTotal}} totalItem={{totalItem}} pageCondition={{pageCondition}}
                     getPage={{this.props.get{UpperCamel}InPage}} />
                 <Link to='/user/summary/{url}/upload' className='btn btn-success btn-circle' style={{{{ position: 'fixed', right: '70px', bottom: '10px' }}}}>
                     <i className='fa fa-lg fa-cloud-upload'/>
