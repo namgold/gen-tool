@@ -10,4 +10,4 @@ searchFields = ['MA_LOAIVC'] # Note: only search on text field
 repoDirectory = "C:\\Thesis\\hcmut"
 copyOutputFilesToRepo = True
 ExcelStartRow = 2
-menuNum = 301 #random.randint(200, 999)
+menuNum = __name__[-3:]

@@ -16,7 +16,7 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
     lowerCamel = keyword[0].lower() + ''.join(map(lambda x: x.capitalize(), keyword[1:]))
     UPPER_SNAKE = '_'.join(map(lambda x: x.upper(), keyword))
     lowername = name.lower()
-    searchFields = ', '.join('{{ {}: value }}'.format(i) for i in searchFields )
+    searchFields = ', '.join("{{ '{}': value }}".format(i) for i in searchFields )
 
     # 
     schemaMongo = {i: typeMongoMap[schema[i]['type']] for i in schema}
