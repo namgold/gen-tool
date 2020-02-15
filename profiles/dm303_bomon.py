@@ -17,4 +17,4 @@ searchFields = ['MS_BM', 'TEN_BM', 'TEN_TIENG_ANH'] # Note: only search on text 
 repoDirectory = "C:\\Thesis\\hcmut"
 copyOutputFilesToRepo = True
 ExcelStartRow = 2
-menuNum = __name__[-3:]
+menuNum = __name__[11:14]

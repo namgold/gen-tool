@@ -1,10 +1,14 @@
 from generate import *
-# from profiles.dmngach_299 import *
-# from profiles.dmngachluong_300 import *
-# from profiles.loaivienchuc_301 import *
-# from profiles.dmdienchinhsach_302 import *
-# from profiles.dmbomon_303 import *
-from profiles.dmtinhthanhpho_304 import *
+# from profiles.dm299_ngach import *
+# from profiles.dm300_ngachluong import *
+# from profiles.dm301_loaivienchuc import *
+# from profiles.dm302_dienchinhsach import *
+# from profiles.dm303_bomon import *
+# from profiles.dm304_tinhthanhpho import *
+# from profiles.dm305_chucdanhkh import *
+# from profiles.dm306_chucvukiemnhiem import *
+from profiles.dm307_quocgia import *
+# from profiles.dm308_chau import *
 
 generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, repoDirectory, copyOutputFilesToRepo)
-print("Done!", end="")
+print("Done",menuNum,name, end="")

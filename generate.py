@@ -5,7 +5,8 @@ from lib.Copytree import Copytree
 typeMongoMap = {
     'text': "String",
     "number": "Number",
-    "date": "Date"
+    "date": "Date",
+    'boolean': 'Boolean'
 }
 
 def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo="", copy=False):

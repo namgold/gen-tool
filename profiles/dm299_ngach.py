@@ -12,4 +12,4 @@ searchFields = ['MA_NGACH', 'MASO_CDNN', 'TEN_NGACH/CDNN'] # Note: only search o
 repoDirectory = "C:\\Thesis\\hcmut"
 copyOutputFilesToRepo = True
 ExcelStartRow = 2
-menuNum = __name__[-3:]
+menuNum = __name__[11:14]
