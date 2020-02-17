@@ -5,9 +5,9 @@ schema = {
     'MA_LOAIVC': { 'type': 'text', 'title': 'Mã loại viên chức'},
     'DIEN_GIAI': { 'type': 'text', 'title': 'Diễn giải'}
 };
-key = "MA_LOAIVC"
-searchFields = ['MA_LOAIVC'] # Note: only search on text field
+key = "MA_LOAIVC" # If there is no key, type "_id"
+searchFields = ['MA_LOAIVC', 'DIEN_GIAI'] # Note: only search on text field
 repoDirectory = "C:\\Thesis\\hcmut"
 copyOutputFilesToRepo = True
 ExcelStartRow = 2
-menuNum = 301 #random.randint(200, 999)
+menuNum = __name__[11:14]
