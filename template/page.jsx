@@ -156,7 +156,16 @@ class {UpperCamel}Page extends React.Component {{
                         {{list.map((item, index) => (
                             <tr key={{index}}>
                                 <td style={{{{ textAlign: 'right' }}}}>{{(pageNumber - 1) * pageSize + index + 1}}</td>
-                                {{Object.keys(schema).map((key, index) => (<td key={{index}} style={{{{ width: width }}}}>{{item[key]}}</td>))}}
+                                {{Object.keys(schema).map((key, index) =>
+                                    schema[key].type == 'bool' ?
+                                    <td className='toggle' style={{{{ textAlign: 'center' }}}}>
+                                        <label>
+                                            <input type='checkbox' checked={{item[key].trim().toUpperCase() == 'TRUE'}} onChange={{() => this.changeActive(item, index)}} />
+                                            <span className='button-indecator' />
+                                        </label>
+                                    </td> :
+                                    <td key={{index}} style={{{{ width: width }}}}>{{item[key]}}</td>
+                                )}}
                                 <td>
                                     <div className='btn-group' style={{{{ display: 'flex' }}}}>
                                         <a className='btn btn-primary' href='#' onClick={{e => this.edit(e, item)}}>
