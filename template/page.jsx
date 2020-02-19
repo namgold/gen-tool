@@ -157,7 +157,7 @@ class {UpperCamel}Page extends React.Component {{
                             <tr key={{index}}>
                                 <td style={{{{ textAlign: 'right' }}}}>{{(pageNumber - 1) * pageSize + index + 1}}</td>
                                 {{Object.keys(schema).map((key, index) =>
-                                    schema[key].type == 'bool' ?
+                                    schema[key].type === 'bool' ?
                                     <td className='toggle' style={{{{ textAlign: 'center' }}}}>
                                         <label>
                                             <input type='checkbox' checked={{item[key].trim().toUpperCase() == 'TRUE'}} onChange={{() => this.changeActive(item, index)}} />
