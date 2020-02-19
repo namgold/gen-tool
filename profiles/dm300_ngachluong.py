@@ -9,7 +9,5 @@ schema = {
 };
 key = "_id" # If there is no key, type "_id"
 searchFields = ['MA_NGACH', 'MASO_CDNN'] # Note: only search on text field
-repoDirectory = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = True
 ExcelStartRow = 2
 menuNum = __name__[11:14]

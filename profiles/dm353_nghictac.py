@@ -7,7 +7,5 @@ schema = {
 };
 key = "MS_NGHI"
 searchFields = ['MA_PL','DIEN_GIAI'] # Note: only search on text field
-repoDirectory = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = False
 ExcelStartRow = 2
-menuNum = 353 #random.randint(200, 999)
+menuNum = __name__[11:14]

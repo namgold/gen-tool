@@ -8,7 +8,5 @@ schema = {
 };
 key = "MA_DTUONG"
 searchFields = ['TEN_DOI_TUONG','GHI_CHU'] # Note: only search on text field
-repoDirectory = "/home/lap11618/Personal/LuanVan/hcmut"
-copyOutputFilesToRepo = False
 ExcelStartRow = 2
-menuNum = 374 #random.randint(200, 999)
+menuNum = __name__[11:14]

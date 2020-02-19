@@ -7,7 +7,5 @@ schema = {
 };
 key = "MA_CS" # If there is no key, type "_id"
 searchFields = ['MA_CS', 'TEN_CHINH_SACH'] # Note: only search on text field
-repoDirectory = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = True
 ExcelStartRow = 2
 menuNum = __name__[11:14]

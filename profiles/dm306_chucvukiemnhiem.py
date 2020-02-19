@@ -15,7 +15,5 @@ schema = {
 };
 key = "SO_KYHIEU_QD_KNHIEM" # If there is no key, type "_id"
 searchFields = ['SHCC', 'MS_KNHIEM', 'SO_KYHIEU_QD_KNHIEM', 'BO_MON_KNHIEM'] # Note: only search on text field
-repoDirectory = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = True
 ExcelStartRow = 2
 menuNum = __name__[11:14]

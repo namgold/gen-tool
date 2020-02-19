@@ -7,7 +7,5 @@ schema = {
 };
 key = "MA_TDO"
 searchFields = ['TEN_TRINH_DO'] # Note: only search on text field
-repoDirectory = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = False
 ExcelStartRow = 2
-menuNum = 355 #random.randint(200, 999)
+menuNum = __name__[11:14]
