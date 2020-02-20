@@ -6,7 +6,7 @@ typeMongoMap = {
     'text': "String",
     "number": "Number",
     "date": "Date",
-    'boolean': 'Boolean'
+    'bool': 'Boolean'
 }
 
 def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo="", copy=False):
@@ -94,8 +94,8 @@ def addAdmin(formatItems, src, dst):
     items = [
         "import {lowerCamel} from '../redux/{lowerCamel}.jsx';".format(**formatItems),
         ', {lowerCamel}'.format(**formatItems),
-        '''            {{ path: '/user/summary/{url}/upload', component: Loadable({{ loading: Loading, loader: () => import('./tchc/{UpperCamel}ImportPage.jsx') }}) }},
-            {{ path: '/user/summary/{url}', component: Loadable({{ loading: Loading, loader: () => import('./tchc/{UpperCamel}Page.jsx') }}) }},'''.format(**formatItems)
+        '''            {{ path: '/user/{url}/upload', component: Loadable({{ loading: Loading, loader: () => import('./tchc/{UpperCamel}ImportPage.jsx') }}) }},
+            {{ path: '/user/{url}', component: Loadable({{ loading: Loading, loader: () => import('./tchc/{UpperCamel}Page.jsx') }}) }},'''.format(**formatItems)
     ]
     dstContent = open(dst, 'r', encoding="utf8").read()
     if dstContent.find(items[1]) == -1:
@@ -110,7 +110,7 @@ def addAdmin(formatItems, src, dst):
         print("Appended reducer to admin.jsx")
 
     if dstContent.find(formatItems['url']) == -1:
-        pos = dstContent.find("{ path: '/user/summary/dm-chucvu', component: Loadable({ loading: Loading, loader: () => import('./tchc/DmChucVuPage.jsx') }) },")
+        pos = dstContent.find("{ path: '/user/dm-chucvu', component: Loadable({ loading: Loading, loader: () => import('./tchc/DmChucVuPage.jsx') }) },")
         pos = dstContent.find('\n', pos)
         dstContent = dstContent[:pos] + '\n' + items[2]  + dstContent[pos:]
         print("Appended path to admin.jsx")

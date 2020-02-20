@@ -10,10 +10,8 @@ const schema = {schema};
 class {UpperCamel}Modal extends React.Component {{
     constructor(props) {{
         super(props);
-
         this.state = {{ index: -1 }};
         this.modal = React.createRef();
-
         Object.keys(schema).forEach(key => this[key] = React.createRef());
     }}
 
@@ -25,10 +23,21 @@ class {UpperCamel}Modal extends React.Component {{
         }})
     }}
 
-
     show = (index, item) => {{
         Object.keys(schema).forEach(key => {{
-           $(this[key].current).val(item[key] ? item[key] : null);
+            if (schema[key].type === 'bool')
+                $(this[key].current).prop('checked', schema[key].default ? schema[key].default : false);
+            else
+                $(this[key].current).val('');
+
+        }});
+        Object.keys(schema).forEach(key => {{
+            if (item[key]) {{
+                if (schema[key].type === 'bool')
+                    $(this[key].current).prop('checked', item[key]);
+                else
+                    $(this[key].current).val(item[key] ? item[key] : null);
+            }}
         }});
         this.setState({{ index }});
         $(this.modal.current).modal('show');
@@ -37,8 +46,16 @@ class {UpperCamel}Modal extends React.Component {{
     save = (e) => {{
         e.preventDefault();
         const changes = {{}};
-        Object.keys(schema).forEach(key => changes[key] = $(this[key].current).val());
+        Object.keys(schema).forEach(key => {{
+            if (schema[key].type === 'bool')
+                changes[key] = this[key].current.checked
+            else if (schema[key].type === 'datetime')
+                changes[key] = this[key].val() ? T.formatDate(this[key].val()) : null
+            else
+                changes[key] = $(this[key].current).val().trim()
+        }});
         this.props.update(this.state.index, changes, () => {{
+            T.notify('Cập nhật bộ môn thành công!', 'success');
             $(this.modal.current).modal('hide');
         }});
     }};
@@ -56,8 +73,18 @@ class {UpperCamel}Modal extends React.Component {{
                             </div>
                             <div className='modal-body row'>
                                 {{Object.keys(schema).map((key, index) => (
+                                    schema[key].type === 'bool' ?
+                                    <div key={{index}} className='form-group col-12 col-md-6' style={{{{ display: 'inline-flex', width: '100%' }}}}>
+                                        <label htmlFor={{key+'CheckBox'}}>{{ schema[key].title }}</label>&nbsp;&nbsp;
+                                            <div className='toggle'>
+                                                <label>
+                                                    <input ref={{this[key]}} type='checkbox' id={{key+'CheckBox'}}/>
+                                                    <span className='button-indecator' />
+                                                </label>
+                                            </div>
+                                    </div> :
                                     <div key={{index}} className='form-group col-12 col-md-6'>
-                                        <label>{{key}}</label>
+                                        <label>{{schema[key].title}}</label>
                                         <input ref={{this[key]}} className='form-control' type={{schema[key].type}} step={{schema[key].step}} placeholder={{schema[key].title}}/>
                                     </div>
                                 ))}}
@@ -76,17 +103,16 @@ class {UpperCamel}Modal extends React.Component {{
 class {UpperCamel}ImportPage extends React.Component {{
     constructor(props) {{
         super(props);
-        this.state = {{ {lowerCamel}: [], message: '' }};
-
+        this.state = {{ data: [], message: '' }};
         this.editModal = React.createRef();
     }}
 
     componentDidMount() {{
-        T.ready('/user/summary/{url}');
+        T.ready('/user/{url}');
     }}
 
     onSuccess = (response) => {{
-        this.setState({{ {lowerCamel}: response.{lowerCamel}, message: <p className='text-center' style={{{{ color: 'green'}}}}>{{response.{lowerCamel}.length}} hàng được tải lên thành công</p> }});
+        this.setState({{ data: response.data, message: <p className='text-center' style={{{{ color: 'green'}}}}>{{response.data.length}} hàng được tải lên thành công</p> }});
     }};
 
     showEdit = (e, index, item) => {{
@@ -95,49 +121,66 @@ class {UpperCamel}ImportPage extends React.Component {{
     }};
 
     update = (index, changes, done) => {{
-        const {lowerCamel} = this.state.{lowerCamel}, currentValue = {lowerCamel}[index];
+        const data = this.state.data, currentValue = data[index];
         const updateValue = Object.assign({{}}, currentValue, changes);
-        {lowerCamel}.splice(index, 1, updateValue);
-        this.setState({{ {lowerCamel} }});
+        data.splice(index, 1, updateValue);
+        this.setState({{ data }});
         done && done();
     }};
 
     delete = (e, index) => {{
         e.preventDefault();
-        const {lowerCamel} = this.state.{lowerCamel};
-        {lowerCamel}.splice(index, 1);
-        this.setState({{ {lowerCamel} }});
+        const data = this.state.data;
+        data.splice(index, 1);
+        this.setState({{ data }});
     }};
 
     save = (e) => {{
         e.preventDefault();
-        this.props.createMulti{UpperCamel}(this.state.{lowerCamel}, () => {{
+        this.props.createMulti{UpperCamel}(this.state.data, () => {{
             T.notify('Cập nhật {lowername} thành công!', 'success');
-            this.props.history.push('/user/summary/{url}');
+            this.props.history.push('/user/{url}');
         }})
     }};
 
+    changeActive = (index, item, key) => {{
+        let change = {{}}
+        change[key] = !item[key];
+        this.update(index, change, () => {{
+            T.notify('Cập nhật bộ môn thành công!', 'success');
+        }});
+    }};
+
     render() {{
-        const {{ {lowerCamel} }} = this.state;
+        const {{ data }} = this.state;
         let table = null;
-        if ({lowerCamel} && {lowerCamel}.length > 0) {{
+        if (data && data.length > 0) {{
             table = (
                 <table className='table table-hover table-bordered table-responsive' style={{{{ maxHeight: '600px', overflow: 'auto' }}}}>
                     <thead>
                         <tr>
                             <th style={{{{ width: 'auto' }}}}>#</th>
                             {{Object.keys(schema).map((key, index) => (
-                                <th key={{index}} style={{{{ width: width, textAlign: 'center' }}}}>{{key}}</th>
+                                <th key={{index}} style={{{{ width: width, whiteSpace: 'nowrap' }}}}>{{schema[key].title}}</th>
                             ))}}
                             <th style={{{{ width: 'auto', textAlign: 'center', whiteSpace: 'nowrap' }}}}>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{{lowerCamel}.map((item, index) => (
+                        {{data.map((item, index) => (
                             <tr key={{index}}>
                                 <td style={{{{ textAlign: 'right' }}}}>{{index + 1}}</td>
-                                {{Object.keys(schema).map((key, i) => (
-                                    <td key={{i}}>{{key == 'shcc' ? <a href='#' onClick={{e => this.showEdit(e, index, item)}}>{{item[key]}}</a> : item[key]}}</td>
+                                {{Object.keys(schema).map((key, colIndex) => (
+                                    schema[key].type === 'bool' ?
+                                    <td key={{colIndex}} className='toggle' style={{{{ textAlign: 'center' }}}}>
+                                        <label>
+                                            <input type='checkbox' checked={{item[key]}} onChange={{() => this.changeActive(index, item, key)}} />
+                                            <span className='button-indecator' />
+                                        </label>
+                                    </td> :
+                                    <td key={{colIndex}} style={{{{ width: width }}}}>
+                                        {{key == 'MS_BM' ? <a href='#' onClick={{e => this.showEdit(e, index, item)}}>{{item[key]}}</a> : item[key]}}
+                                    </td>
                                 ))}}
                                 <td>
                                     <div className='btn-group'>
@@ -186,13 +229,13 @@ class {UpperCamel}ImportPage extends React.Component {{
                     </div>
                 </div>
                 <div className='row'>
-                    {{{lowerCamel} && {lowerCamel}.length ? (
+                    {{data && data.length ? (
                         <div className='tile col-12'>
                             {{table}}
                         </div>
                     ) : null}}
                 </div>
-                <Link to='/user/summary/{url}' className='btn btn-secondary btn-circle' style={{{{ position: 'fixed', bottom: '10px' }}}}>
+                <Link to='/user/{url}' className='btn btn-secondary btn-circle' style={{{{ position: 'fixed', bottom: '10px' }}}}>
                     <i className='fa fa-lg fa-reply' />
                 </Link>
                 <button type='button' className='btn btn-primary btn-circle'

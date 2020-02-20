@@ -2,15 +2,15 @@ module.exports = app => {{
     const parentMenu = {{ index: 3000, title: 'Danh mục', icon: 'fa-pagelines' }},
         menu = {{
             parentMenu,
-            menus: {{ 3{menuNum}: {{ title: '{name}', link: '/user/summary/{url}' }} }},
+            menus: {{ 3{menuNum}: {{ title: '{name}', link: '/user/{url}' }} }},
         }};
     app.permission.add(
         {{ name: '{lowerCamel}:read', menu: menu }},
         {{ name: '{lowerCamel}:write', menu: menu }}
     );
 
-    app.get('/user/summary/{url}', app.permission.check('{lowerCamel}:read'), app.templates.admin);
-    app.get('/user/summary/{url}/upload', app.permission.check('{lowerCamel}:write'), app.templates.admin);
+    app.get('/user/{url}', app.permission.check('{lowerCamel}:read'), app.templates.admin);
+    app.get('/user/{url}/upload', app.permission.check('{lowerCamel}:write'), app.templates.admin);
 
     // APIs -----------------------------------------------------------------------------------------------------------------------------------------
     app.get('/api/{url}/page/:pageNumber/:pageSize', app.permission.check('{lowerCamel}:read'), (req, res) => {{
@@ -54,7 +54,7 @@ module.exports = app => {{
 
     const {lowerCamel}ImportData = (req, fields, files, params, done) => {{
         if (fields.userData && fields.userData[0] && fields.userData[0] == '{lowerCamel}ImportData' && files.{UpperCamel}File && files.{UpperCamel}File.length > 0) {{
-            app.upload{UpperCamel}File(req, files.{UpperCamel}File[0].path, done);
+            app.uploadTCHCFile(files.{UpperCamel}File[0].path, done, {schemaArray}, {ExcelStartRow});
         }}
     }};
 
