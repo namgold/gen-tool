@@ -1,7 +1,7 @@
-import T from '../common/js/common';
+import T from "../common/js/common";
 
 // Reducer ------------------------------------------------------------------------------------------------------------
-const {UPPER_SNAKE}_IN_PAGE = 'user:get{UpperCamel}InPage';
+const {UPPER_SNAKE}_IN_PAGE = "user:get{UpperCamel}InPage";
 
 export default function {lowerCamel}Reducer(state = null, data) {{
     switch (data.type) {{
@@ -14,80 +14,80 @@ export default function {lowerCamel}Reducer(state = null, data) {{
 }}
 
 // Actions ------------------------------------------------------------------------------------------------------------
-T.initCookiePage('{lowerCamel}Page', true);
+T.initCookiePage("{lowerCamel}Page", true);
 export function get{UpperCamel}InPage(pageNumber, pageSize, pageCondition, done) {{
-    const page = T.updatePage('{lowerCamel}Page', pageNumber, pageSize, pageCondition);
+    const page = T.updatePage("{lowerCamel}Page", pageNumber, pageSize, pageCondition);
     return dispatch => {{
         const url = `/api/{url}/page/${{page.pageNumber}}/${{page.pageSize}}`;
         T.get(url, {{ condition: page.pageCondition ? JSON.parse(page.pageCondition) : {{}} }}, data => {{
             if (data.error) {{
-                T.notify('Lấy dữ liệu bị lỗi!', 'danger');
-                console.error('GET: ' + url + '. ' + data.error);
+                T.notify("Lấy dữ liệu bị lỗi!", "danger");
+                console.error("GET: " + url + ". " + data.error);
             }} else {{
                 if (page.pageCondition) data.page.pageCondition = JSON.parse(page.pageCondition);
                 if (done) done(data.page);
                 dispatch({{ type: {UPPER_SNAKE}_IN_PAGE, page: data.page }});
             }}
-        }}, error => T.notify('Lấy dữ liệu bị lỗi!', 'danger'));
+        }}, error => T.notify("Lấy dữ liệu bị lỗi!", "danger"));
     }}
 }}
 
 export function update{UpperCamel}(_id, changes, done) {{
     return dispatch => {{
-        const url = '/api/{url}';
+        const url = "/api/{url}";
         T.put(url, {{ _id, changes }}, data => {{
             if (data.error) {{
-                T.notify('Cập nhật dữ liệu bị lỗi!', 'danger');
-                console.error('PUT: ' + url + '. ' + data.error);
+                T.notify("Cập nhật dữ liệu bị lỗi!", "danger");
+                console.error("PUT: " + url + ". " + data.error);
             }} else {{
                 done && done(data.item);
                 dispatch(get{UpperCamel}InPage());
             }}
-        }}, () => T.notify('Cập nhật dữ liệu bị lỗi!', 'danger'));
+        }}, () => T.notify("Cập nhật dữ liệu bị lỗi!", "danger"));
     }}
 }}
 
 export function createMulti{UpperCamel}({lowerCamel}, done) {{
     return dispatch => {{
-        const url = '/api/{url}/multiple';
+        const url = "/api/{url}/multiple";
         T.post(url, {{ {lowerCamel} }}, data => {{
             if (data.error && data.error.length) {{
-                T.notify('Cập nhật dữ liệu bị lỗi!', 'danger');
-                console.error('PUT: ' + url + '. ' + data.error.toString());
+                T.notify("Cập nhật dữ liệu bị lỗi!", "danger");
+                console.error("PUT: " + url + ". " + data.error.toString());
             }} else {{
                 done && done(data.item);
             }}
-        }}, () => T.notify('Cập nhật dữ liệu bị lỗi!', 'danger'))
+        }}, () => T.notify("Cập nhật dữ liệu bị lỗi!", "danger"))
     }}
 }}
 
 export function create{UpperCamel}({lowerCamel}, done) {{
     return dispatch => {{
-        const url = '/api/{url}';
+        const url = "/api/{url}";
         T.post(url, {{ {lowerCamel} }}, data => {{
             if (data.error) {{
-                T.notify(data.error.message ? data.error.message : 'Tạo mới bị lỗi!', 'danger');
-                console.error('POST: ' + url + '. ' + data.error);
+                T.notify(data.error.message ? data.error.message : "Tạo mới bị lỗi!", "danger");
+                console.error("POST: " + url + ". " + data.error);
             }} else {{
                 dispatch(get{UpperCamel}InPage());
                 if (done) done(data);
             }}
-        }}, error => T.notify('Tạo mới bị lỗi!', 'danger'));
+        }}, error => T.notify("Tạo mới bị lỗi!", "danger"));
     }}
 }}
 
 export function delete{UpperCamel}(_id, done) {{
     return dispatch => {{
-        const url = '/api/{url}';
+        const url = "/api/{url}";
         T.delete(url, {{ _id }}, data => {{
             if (data.error) {{
-                T.notify('Xóa bị lỗi!', 'danger');
-                console.error('DELETE: ' + url + '. ' + data.error);
+                T.notify("Xóa bị lỗi!", "danger");
+                console.error("DELETE: " + url + ". " + data.error);
             }} else {{
-                T.alert('Xóa thành công!', 'success', false, 800);
+                T.alert("Xóa thành công!", "success", false, 800);
                 dispatch(get{UpperCamel}InPage());
             }}
             done && done();
-        }}, error => T.notify('Xóa bị lỗi!', 'danger'));
+        }}, error => T.notify("Xóa bị lỗi!", "danger"));
     }}
 }}

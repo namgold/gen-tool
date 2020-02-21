@@ -1,6 +1,6 @@
 module.exports = app => {{
     const schema = app.db.Schema({schemaMongo});
-    const model = app.db.model('{lowerCamel}', schema);
+    const model = app.db.model("{lowerCamel}", schema);
 
     app.model.{lowerCamel} = {{
         create: (data, done) => {{
@@ -32,7 +32,7 @@ module.exports = app => {{
                 model.find(condition).exec(done) :
                 model.find({{}}).exec(condition),
 
-        get: (condition, done) => typeof condition == 'object' ?
+        get: (condition, done) => typeof condition == "object" ?
                 model.findOne(condition, done) :
                 model.findById(condition, done), // condition is _id
 
@@ -44,7 +44,7 @@ module.exports = app => {{
                     }} else if (!item || item._id == _id) {{
                         model.findOneAndUpdate({{ _id }}, {{ $set: changes }}, {{ new: true }}, done)
                     }} else {{
-                        done && done('{key} is duplicated');
+                        done && done("{key} is duplicated");
                     }}
                 }});
             }} else {{
@@ -56,7 +56,7 @@ module.exports = app => {{
             if (error) {{
                 done(error);
             }} else if (item == null) {{
-                done('Invalid Id!');
+                done("Invalid Id!");
             }} else {{
                 item.remove(done);
             }}

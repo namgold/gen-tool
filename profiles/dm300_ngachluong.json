@@ -1,0 +1,15 @@
+{
+    "fullname": "Danh mục ngạch lương",
+    "name": "Ngạch lương",
+    "keyword": ["dm", "ngach", "luong"],
+    "schema": {
+        "MA_NGACH": {"type": "text", "title": "Mã ngạch"},
+        "MASO_CDNN": {"type": "text", "title": "Mã số chức danh nghề nghiệp"},
+        "HESO_LUONG": {"type": "text", "title": "Hệ số lương"},
+        "BAC_LG": {"type": "text", "title": "Bậc lương"}
+    },
+    "key": "_id",
+    "searchFields": ["MA_NGACH", "MASO_CDNN"],
+    "ExcelStartRow": 2,
+    "menuNum": 300
+}

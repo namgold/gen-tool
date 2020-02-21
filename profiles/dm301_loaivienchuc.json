@@ -1,0 +1,13 @@
+{
+    "fullname": "Danh mục loại viên chức",
+    "name": "Loại viên chức",
+    "keyword": ["dm", "loai", "vien", "chuc"],
+    "schema": {
+        "MA_LOAIVC": { "type": "text", "title": "Mã loại viên chức"},
+        "DIEN_GIAI": { "type": "text", "title": "Diễn giải"}
+    },
+    "key": "MA_LOAIVC",
+    "searchFields": ["MA_LOAIVC", "DIEN_GIAI"],
+    "ExcelStartRow": 2,
+    "menuNum": 301
+}
