@@ -1,14 +1,15 @@
 {
-    "fullname": "Danh mục hỗ trợ học phí",
-    "name": "Hỗ trợ học phí",
-    "keyword": ["dm", "htro","hoc","phi"],
+    "fullname": "Quá trình chức vụ kiêm nhiệm",
+    "name": "Chức vụ kiêm nhiệm",
+    "keyword": ["qt", "chuc","vu","kiem", "nhiem"],
     "schema": {
         "MA_HTRO": { "type": "text", "title": "Mã hỗ trợ"},
         "TYLE_HO_TRO_HPHI": { "type": "number", "title": "Tỷ lệ hỗ trợ học phí", "step": 5},
         "GHI_CHU": { "type": "text", "title": "Ghi chú"}
+        //Bo sung them
     },
     "key": "MA_HTRO",
     "searchFields": ["TYLE_HO_TRO_HPHI","GHI_CHU"],
     "ExcelStartRow": 2,
-    "menuNum": 375
+    "menuNum": 1
 }
