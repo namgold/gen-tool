@@ -1,9 +1,17 @@
+import json
 from generate import *
-# from profiles.dm303_bomon import *
 
 repoDirectory = "C:\\Thesis\\hcmut"
 copyOutputFilesToRepo = True
-resetOutputFolder()
-#runAllProfiles(repoDirectory, copyOutputFilesToRepo)
-#generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, repoDirectory, copyOutputFilesToRepo)
-# print("Done", menuNum, name, end="")
+runAll = True
+
+if runAll:
+    resetOutputFolder()
+    runAllProfiles(repoDirectory, copyOutputFilesToRepo)
+    print("ok")
+else:
+    content = json.loads(open("profiles/dm303_bomon.json", encoding="utf8").read())
+    generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"],
+            content["searchFields"], content["ExcelStartRow"], repoDirectory, copyOutputFilesToRepo, True)
+    print("Done", content["menuNum"], content["name"])
+

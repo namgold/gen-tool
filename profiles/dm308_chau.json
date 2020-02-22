@@ -5,10 +5,10 @@
     "schema": {
         "MA_CHAU": { "type": "text", "title": "Mã châu"},
         "TEN_CHAU": { "type": "text", "title": "Tên châu"},
-        "TERRITORY": { "type": "date", "title": "Tên tiếng anh"}
+        "TERRITORY": { "type": "text", "title": "Tên tiếng anh"}
     },
-    "key": "SO_KYHIEU_QD_KNHIEM",
-    "searchFields": ["SHCC", "MS_KNHIEM", "SO_KYHIEU_QD_KNHIEM", "BO_MON_KNHIEM"],
+    "key": "MA_CHAU",
+    "searchFields": ["MA_CHAU", "TEN_CHAU", "TERRITORY"],
     "ExcelStartRow": 2,
     "menuNum": 308
 }

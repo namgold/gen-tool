@@ -10,10 +10,35 @@ typeMongoMap = {
 }
 
 def resetOutputFolder():
-    shutil.rmtree("./output")
-    shutil.rmtree("./output_add")
+    if os.path.exists("./output") and os.path.isdir("./output"):
+        shutil.rmtree("./output")
+    if os.path.exists("./output_add") and os.path.isdir("./output_add"):
+        shutil.rmtree("./output_add")
     SafeOpen("./output/.placeholder","w").close()
     SafeOpen("./output_add/.placeholder","w").close()
+
+def createTableBody(key, schema):
+    a = ''
+    for i in schema:
+        q = ''
+        if schema[i]['type'] == "bool":
+            q = (f'                                <td className="toggle" style={{{{ textAlign: "center" }}}}>\n'
+                 f'                                    <label>\n'
+                 f'                                        <input type="checkbox" checked={{item["{i}"]}} onChange={{() => this.changeActive(item, "{i}")}} />\n'
+                 f'                                        <span className="button-indecator" />\n'
+                 f'                                    </label>\n'
+                 f'                                </td>\n')
+        else:
+            q = '                                <td>{}</td>\n'
+            if i == key:
+                q = q.format(f'<a href="#" onClick={{e => this.edit(e, item)}}>{{item["{i}"]}}</a>')
+            else:
+                if schema[i]['type'] == "date":
+                    q = q.format(f'{{item["{i}"] ? new Date(item["{i}"]).ddmmyyyy() : ""}}')
+                else:
+                    q = q.format(f'{{item["{i}"]}}')
+        a+=q
+    return a
 
 def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo="", copy=False, isMulti=False):
     # Initing names
@@ -27,6 +52,8 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
 
     # Initing data
     schemaMongo = {i: typeMongoMap[schema[i]["type"]] for i in schema}
+    tableHeader = ''.join(f'                            <th style={{{{ minWidth: "30%", whiteSpace: "nowrap" }}}}>{schema[i]["title"]}</th>\n' for i in schema)
+    tableBody = createTableBody(key, schema)
     formatItems = {
         "url" : url,
         "UpperCamel" : UpperCamel,
@@ -41,7 +68,9 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         "lowername": lowername,
         "key": key,
         "ExcelStartRow": ExcelStartRow,
-        "searchFields": searchFields
+        "searchFields": searchFields,
+        "tableHeader": tableHeader,
+        'tableBody': tableBody
     }
 
     mapping = {

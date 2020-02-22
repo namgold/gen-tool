@@ -4,7 +4,6 @@ import {{ get{UpperCamel}InPage, create{UpperCamel}, update{UpperCamel}, delete{
 import {{ Link }} from "react-router-dom";
 import Pagination from "../../common/Pagination.jsx";
 
-const width = (100 / 6) + "%";
 const schema = {schema};
 
 class EditModal extends React.Component {{
@@ -174,7 +173,7 @@ class {UpperCamel}Page extends React.Component {{
     changeActive = (item, key) => {{
         let change = {{}}
         change[key] = !item[key];
-        this.props.updateDMBoMon(item._id, change, () => {{
+        this.props.update{UpperCamel}(item._id, change, () => {{
             T.notify("Cập nhật {lowername} thành công!", "success");
         }});
     }};
@@ -189,35 +188,14 @@ class {UpperCamel}Page extends React.Component {{
                     <thead>
                         <tr>
                             <th style={{{{ width: "auto", textAlign: "center" }}}}>#</th>
-                            {{Object.keys(schema).map((key, index) => (<th key={{index}} style={{{{ width: width, whiteSpace: "nowrap" }}}}>{{schema[key].title}}</th>))}}
-                            <th style={{{{ width: "auto", textAlign: "center", whiteSpace: "nowrap" }}}}>Thao tác</th>
+{tableHeader}                            <th style={{{{ width: "auto", textAlign: "center", whiteSpace: "nowrap" }}}}>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{list.map((item, index) => (
                             <tr key={{index}}>
                                 <td style={{{{ textAlign: "right" }}}}>{{(pageNumber - 1) * pageSize + index + 1}}</td>
-                                {{Object.keys(schema).map((key, colIndex) =>
-                                    schema[key].type === "bool" ?
-                                    <td key={{colIndex}} className="toggle" style={{{{ textAlign: "center" }}}}>
-                                        <label>
-                                            <input type="checkbox" checked={{item[key]}} onChange={{() => this.changeActive(item, key)}} />
-                                            <span className="button-indecator" />
-                                        </label>
-                                    </td> :
-                                    <td key={{colIndex}} style={{{{ width: width }}}}>
-                                        {{
-                                            key == "{key}" ?
-                                            <a href="#" onClick={{e => this.edit(e, item)}}>{{item[key]}}</a> :
-                                                (schema[key].type === "date"?
-                                                    (item[key] ?
-                                                    new Date(item[key]).getDateText() :
-                                                    "") :
-                                                item[key])
-                                        }}
-                                    </td>
-                                )}}
-                                <td>
+{tableBody}                                <td>
                                     <div className="btn-group" style={{{{ display: "flex" }}}}>
                                         <a className="btn btn-primary" href="#" onClick={{e => this.edit(e, item)}}>
                                             <i className="fa fa-lg fa-edit" />
