@@ -60,7 +60,7 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         "UPPER_SNAKE": UPPER_SNAKE,
         "schemaArray": list(schema.keys()),
         "schema": json.dumps(schema, indent="    "),
-        "schemaMongo": json.dumps(schemaMongo, indent=8),
+        "schemaMongo": json.dumps(schemaMongo, indent=8).replace('}','    }'),
         "name": name,
         "fullname": fullname,
         "lowername": lowername,

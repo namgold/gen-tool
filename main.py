@@ -2,7 +2,7 @@ import json
 from generate import *
 
 repoDirectory = "C:\\Thesis\\hcmut"
-copyOutputFilesToRepo = False
+copyOutputFilesToRepo = True
 runAll = True
 
 if runAll:
