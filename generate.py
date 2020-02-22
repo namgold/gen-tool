@@ -14,8 +14,6 @@ def resetOutputFolder():
         shutil.rmtree("./output")
     if os.path.exists("./output_add") and os.path.isdir("./output_add"):
         shutil.rmtree("./output_add")
-    SafeOpen("./output/.placeholder","w").close()
-    SafeOpen("./output_add/.placeholder","w").close()
 
 def createTableBody(key, schema):
     a = ''
@@ -149,11 +147,14 @@ def addAdmin(formatItems, src, dst):
     open(dst, "w", encoding="utf8").write(dstContent)
 
 def runAllProfiles(repoDirectory, copyOutputFilesToRepo):
+    def run(dir):
+        for i in os.listdir(dir+"/"):
+            if os.path.isfile(dir+"/"+i):
+                content = json.loads(open(dir+"/"+i, encoding="utf8").read())
+                generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"],
+                        content["searchFields"], content["ExcelStartRow"], repoDirectory, copyOutputFilesToRepo, True)
+                print("Done", content["menuNum"], content["name"])
     q = 0
     resetOutputFolder()
-    for i in os.listdir("profiles/"):
-        if os.path.isfile("profiles/"+i):
-            content = json.loads(open("profiles/"+i, encoding="utf8").read())
-            generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"],
-                    content["searchFields"], content["ExcelStartRow"], repoDirectory, copyOutputFilesToRepo, True)
-            print("Done", content["menuNum"], content["name"])
+    run('danhmuc')
+    run('quatrinh')

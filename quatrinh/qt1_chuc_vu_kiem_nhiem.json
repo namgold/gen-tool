@@ -6,7 +6,6 @@
         "MA_HTRO": { "type": "text", "title": "Mã hỗ trợ"},
         "TYLE_HO_TRO_HPHI": { "type": "number", "title": "Tỷ lệ hỗ trợ học phí", "step": 5},
         "GHI_CHU": { "type": "text", "title": "Ghi chú"}
-        //Bo sung them
     },
     "key": "MA_HTRO",
     "searchFields": ["TYLE_HO_TRO_HPHI","GHI_CHU"],
