@@ -68,7 +68,9 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         "ExcelStartRow": ExcelStartRow,
         "searchFields": searchFields,
         "tableHeader": tableHeader,
-        'tableBody': tableBody
+        'tableBody': tableBody,
+        'menuPrefix': 4 if keyword[0]=='qt' else 3,
+        'menuTitle': 'Quá trình' if keyword[0]=='qt' else 'Danh mục',
     }
 
     mapping = {
