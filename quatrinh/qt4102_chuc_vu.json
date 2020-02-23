@@ -1,0 +1,26 @@
+{
+    "fullname": "Quá trình chức vụ",
+    "name": "Chức vụ",
+    "keyword": ["qt", "chuc","vu"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "Mã hỗ trợ"},
+        "MA_CVU": { "type": "text", "title": "Mã chức vụ"},
+        "TEN_CHUC_VU_CHINH": { "type": "text", "title": "Tên chức vụ chính"},
+        "NGAY_BO_NHIEM": { "type": "date", "title": "Ngày bổ nhiệm"},
+        "HESO_PCCV": { "type": "text", "title": "Hệ số ... chức vụ"},
+        "SO_KYHIEU_QD_BNHIEM": { "type": "date", "title": "Số ký hiệu quyết định bổ nhiệm"},
+        "NGAY_QD_BNHIEM": { "type": "text", "title": "Ngày quyết định bổ nhiệm"},
+        "DON_VI_CHINH": { "type": "text", "title": "Đơn vị chính"},
+        "BO_MON_CHINH": { "type": "bool", "title": "Bộ môn chính", "defauls":"false"},
+        "THOI_GIU_CVU": { "type": "bool", "title": "Thôi giữ chức vụ", "defauls":"false"},
+        "NGAY_THOI_CVU": { "type": "bool", "title": "Ngày thôi chức vụ", "defauls":"false"},
+        "SO_KYHIEU_QD_THOI_CVU": { "type": "bool", "title": "Số ký hiệu quyết định thôi chức vụ", "defauls":"false"},
+        "NGAY_QD_THOI_CVU": { "type": "bool", "title": "Ngày quyết định thôi chức vụ", "defauls":"false"},
+        "GHI_CHU": { "type": "bool", "title": "Ghi chú", "defauls":"false"},
+        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+    },
+    "key": "_id",
+    "searchFields": ["SHCC","MS_KNHIEM","SO_KYHIEU_QD_KNHIEM"],
+    "ExcelStartRow": 2,
+    "menuNum": 1
+}
