@@ -10,5 +10,5 @@
     "key": "MA_HTRO",
     "searchFields": ["TYLE_HO_TRO_HPHI","GHI_CHU"],
     "ExcelStartRow": 2,
-    "menuNum": 1
+    "menuNum": 101
 }

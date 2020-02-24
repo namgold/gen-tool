@@ -2,18 +2,14 @@ import random, os, json, shutil, importlib, json
 from lib.SafeOpen import SafeOpen
 from lib.Copytree import Copytree
 
+formatItems = {}
+outputNames = {}
 typeMongoMap = {
     "text": "String",
     "number": "Number",
     "date": "Date",
     "bool": "Boolean"
 }
-
-def resetOutputFolder():
-    if os.path.exists("./output") and os.path.isdir("./output"):
-        shutil.rmtree("./output")
-    if os.path.exists("./output_add") and os.path.isdir("./output_add"):
-        shutil.rmtree("./output_add")
 
 def createTableBody(key, schema):
     a = ''
@@ -38,10 +34,11 @@ def createTableBody(key, schema):
         a+=q
     return a
 
-def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, repo="", copy=False, isMulti=False):
+def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow):
+    global formatItems, outputNames
     # Initing names
     keyword = [i.lower() for i in keyword]
-    url = "-".join(keyword)
+    url = ('danh-muc/' if keyword[0]=='dm' else 'qua-trinh/') + "-".join(keyword[1:])
     UpperCamel = "".join(map(lambda x: x.upper() if x in ["dm", "qt"] else x.capitalize(), keyword))
     lowerCamel = keyword[0].lower() + "".join(map(lambda x: x.capitalize(), keyword[1:]))
     UPPER_SNAKE = "_".join(map(lambda x: x.upper(), keyword))
@@ -72,8 +69,7 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         'menuPrefix': 4 if keyword[0]=='qt' else 3,
         'menuTitle': 'Quá trình' if keyword[0]=='qt' else 'Danh mục',
     }
-
-    mapping = {
+    outputNames = {
         "controller.js":  f"output/src/module/tchc/controller/{lowerCamel}.js",
         "model.js":       f"output/src/module/tchc/model/{lowerCamel}.js",
         "redux.js":       f"output/src/view/redux/{lowerCamel}.jsx",
@@ -82,11 +78,9 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         "admin.jsx":      "output_add/src/view/admin/admin.jsx"
     }
 
-    if not isMulti:
-        resetOutputFolder()
     # Creating files
-    for i in mapping:
-        SafeOpen(mapping[i], "w", encoding="utf8").write(SafeOpen("template/" + i, "r", encoding="utf8").read().format(**formatItems))
+    for i in outputNames:
+        SafeOpen(outputNames[i], "w", encoding="utf8").write(SafeOpen("template/" + i, "r", encoding="utf8").read().format(**formatItems))
 
     # Excel
     excelSrc = f"excel/SampleUpload{UpperCamel}.xlsx"
@@ -104,59 +98,81 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         SafeOpen(excelSrc, "w").write(defaultExcelContent)
         print(f"Excel file {excelSrc} not found, sample file created.")
 
-    # Copying to repo
-    if os.path.isdir(repo):
-        for dirpath, dirnames, filenames in os.walk("output"):
-            if filenames != [] :
-                for i in filenames:
-                    if i != ".placeholder":
-                        src = os.path.join(dirpath, i)
-                        dst = os.path.join(repo, *dirpath.split("\\")[1:], i)
-                        if not os.path.exists(dst) or open(src, "rb").read() != open(dst, "rb").read():
-                            if copy:
-                                shutil.copy(src, dst)
-                                print("Copied", src)
-                            else:
-                                print("Diff found", src)
-        if not isMulti:
-            addAdmin(formatItems, mapping["admin.jsx"], repo + "/src/view/admin/admin.jsx")
+    # if not isMulti:
 
-def addAdmin(formatItems, src, dst):
+def addAdmin(src, dst):
+    global formatItems
     items = [
-        "import {lowerCamel} from '../redux/{lowerCamel}.jsx';".format(**formatItems),
-        ", {lowerCamel}".format(**formatItems),
-        """            {{ path: "/user/{url}/upload", component: Loadable({{ loading: Loading, loader: () => import("./tchc/{UpperCamel}ImportPage.jsx") }}) }},
+        "\nimport {lowerCamel} from '../redux/{lowerCamel}.jsx';\n\n".format(**formatItems),
+        ", {lowerCamel}\n".format(**formatItems),
+        """\n            {{ path: "/user/{url}/upload", component: Loadable({{ loading: Loading, loader: () => import("./tchc/{UpperCamel}ImportPage.jsx") }}) }},
             {{ path: "/user/{url}", component: Loadable({{ loading: Loading, loader: () => import("./tchc/{UpperCamel}Page.jsx") }}) }},""".format(**formatItems)
     ]
     dstContent = open(dst, "r", encoding="utf8").read()
-    if dstContent.find(items[1]) == -1:
+    if dstContent.find(f"redux/{formatItems['lowerCamel']}.jsx") == -1:
         pos = dstContent.find("\n", dstContent.rfind("redux/"))
-        dstContent = dstContent[:pos].rstrip() + "\n" + items[0] + "\n\n" + dstContent[pos:].lstrip()
-        print("Appended import to admin.jsx")
+        dstContent = dstContent[:pos].rstrip() + items[0] + dstContent[pos:].lstrip()
+        print(f"Appended import {formatItems['lowerCamel']} to admin.jsx")
 
     reducerStart = dstContent.find("const reducers =")
     reducerEnd = dstContent.find("};", reducerStart)
-    if dstContent.find(f"{formatItems['lowerCamel']}", reducerStart, reducerEnd) == -1:
-        dstContent = dstContent[:reducerEnd].rstrip() + items[1] + "\n" + dstContent[reducerEnd:].lstrip()
-        print("Appended reducer to admin.jsx")
+    if dstContent.find(f"{formatItems['lowerCamel']},", reducerStart, reducerEnd) == -1 \
+    and dstContent.find(f"{formatItems['lowerCamel']} ", reducerStart, reducerEnd) == -1 \
+    and dstContent.find(f"{formatItems['lowerCamel']}\n", reducerStart, reducerEnd) == -1:
+        dstContent = dstContent[:reducerEnd].rstrip() + items[1] + dstContent[reducerEnd:].lstrip()
+        print(f"Appended reducer {formatItems['lowerCamel']} to admin.jsx")
 
     if dstContent.find(formatItems["url"]) == -1:
-        pos = dstContent.find("{ path: '/user/dm-chucvu', component: Loadable({ loading: Loading, loader: () => import('./tchc/DmChucVuPage.jsx') }) },")
+        pos = dstContent.find("{ path: '/user/danh-muc/dan-toc', component: Loadable({ loading: Loading, loader: () => import('./tchc/DMDanTocPage.jsx') }) },")
         pos = dstContent.find("\n", pos)
-        dstContent = dstContent[:pos] + "\n" + items[2]  + dstContent[pos:]
-        print("Appended path to admin.jsx")
+        dstContent = dstContent[:pos] + items[2]  + dstContent[pos:]
+        print(f"Appended path {formatItems['url']} to admin.jsx")
 
     open(dst, "w", encoding="utf8").write(dstContent)
 
-def runAllProfiles(repoDirectory, copyOutputFilesToRepo):
+def resetOutputFolder():
+    if os.path.exists("./output") and os.path.isdir("./output"):
+        shutil.rmtree("./output")
+    if os.path.exists("./output_add") and os.path.isdir("./output_add"):
+        shutil.rmtree("./output_add")
+
+def copyOutputToRepo(repo, isCopyOutputToRepo):
+    if os.path.isdir(repo) and os.path.basename(repo) == 'hcmut':
+        for dirpath, dirnames, filenames in os.walk("output"):
+            for i in filenames:
+                src = os.path.join(dirpath, i)
+                dst = os.path.join(repo, *dirpath.split("\\")[1:], i)
+                if not os.path.exists(dst) or open(src, "rb").read() != open(dst, "rb").read():
+                    if isCopyOutputToRepo:
+                        shutil.copy(src, dst)
+                        print("Copied", src)
+                    else:
+                        print("Diff found", src)
+        if isCopyOutputToRepo:
+            addAdmin(outputNames["admin.jsx"], os.path.join(repo, os.path.relpath(outputNames["admin.jsx"], 'output_add')))
+
+def generateAllProfiles(repoPath, isCopyOutputToRepo):
     def run(dir):
-        for i in os.listdir(dir+"/"):
-            if os.path.isfile(dir+"/"+i):
-                content = json.loads(open(dir+"/"+i, encoding="utf8").read())
-                generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"],
-                        content["searchFields"], content["ExcelStartRow"], repoDirectory, copyOutputFilesToRepo, True)
+        for i in os.listdir(dir):
+            if os.path.isfile(os.path.join(dir, i)):
+                content = json.loads(open(os.path.join(dir, i), encoding="utf8").read())
+                generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"], content["searchFields"], content["ExcelStartRow"])
+                if isCopyOutputToRepo:
+                    addAdmin(outputNames["admin.jsx"], os.path.join(repoPath, os.path.relpath(outputNames["admin.jsx"], 'output_add')))
                 print("Done", content["menuNum"], content["name"])
-    q = 0
     resetOutputFolder()
     run('danhmuc')
     run('quatrinh')
+    copyOutputToRepo(repoPath, isCopyOutputToRepo)
+    print("Done all profiles")
+
+def generateOneProfile(profilePath, repoPath, isCopyOutputToRepo):
+    try:
+        content = json.loads(open(profilePath, encoding="utf8").read())
+    except:
+        print("Can not open the file", profilePath)
+        return
+    resetOutputFolder()
+    generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"], content["searchFields"], content["ExcelStartRow"])
+    copyOutputToRepo(repoPath, isCopyOutputToRepo)
+    print("Done", content["menuNum"], content["name"])
