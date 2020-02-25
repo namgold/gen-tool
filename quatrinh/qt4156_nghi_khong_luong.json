@@ -1,0 +1,22 @@
+{
+    "fullname": "Quá trình nghỉ không lương",
+    "name": "Nghỉ không lương",
+    "keyword": ["qt", "khong","luong"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "Số hiệu công chức"},
+        "SO_KYHIEU_QD_NGHI_KLUONG": { "type": "text", "title": "Số quyết định"},
+        "NGAY_QD_NGHI_KLUONG":{"type":"date","title":"Ngày quyết định"},
+        "NGHI_TUNGAY":{"type":"date","title":"Từ ngày"},
+        "NGHI_DENNGAY":{"type":"date","title":"Đén ngày"},
+        "SO_KYHIEU_QD_TNHAN_KLUONG": { "type": "text", "title": "Số quyết định tiếp nhận lương"},
+        "NGAY_QD_TNHAN_KLUONG":{"type":"date","title":"Ngày quyết định tiếp nhận luong"},
+        "NGAY_TNHAN":{"type":"date","title":"Ngày tiếp nhận"},
+        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"},
+        "LI_DO": { "type": "text", "title": "Lý do"}
+
+    },
+    "key": "SO_KYHIEU_QD_NGHI_KLUONG",
+    "searchFields": ["SHCC","SO_KYHIEU_QD_NGHI_KLUONG","SO_KYHIEU_QD_TNHAN_KLUONG","LI_DO"],
+    "ExcelStartRow": 2,
+    "menuNum": 156
+}

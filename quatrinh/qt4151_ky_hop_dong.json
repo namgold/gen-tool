@@ -1,0 +1,19 @@
+{
+    "fullname": "Quá trình ký hợp đồng",
+    "name": "Ký hợp đồng",
+    "keyword": ["qt", "ky","hop","dong"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "Số hiệu công chức"},
+        "MA_DTUONG": { "type": "text", "title": "Mã đối tượng"},
+        "SO_HOP_DONG": { "type": "text", "title": "Số hợp đồng"},
+        "NGAY_KY_HOP_DONG":{"type":"date","title":"Ngày ký hợp đồng"},
+        "MA_LOAI_HD": { "type": "text", "title": "Mã loại hợp đồng"},
+        "HDLD_DEN_NGAY":{"type":"date","title":"HĐLĐ đến ngày"},
+        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}
+
+    },
+    "key": "SO_HOP_DONG",
+    "searchFields": ["SHCC","MA_DTUONG","SO_HOP_DONG"],
+    "ExcelStartRow": 2,
+    "menuNum": 151
+}
