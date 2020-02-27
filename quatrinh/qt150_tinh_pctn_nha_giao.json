@@ -1,16 +1,15 @@
 {
-    "fullname": "Quá trình tính PCTN nhà giáo",
-    "name": "PCTN nhà giáo",
+    "fullname": "Quá trình tính phụ cấp thâm niên nhà giáo",
+    "name": "Phụ cấp thâm niên nhà giáo",
     "keyword": ["qt", "tinh","pctn","nha", "giao"],
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "TINH_TRANG_CTAC": { "type": "text", "title": "Tình trạng công tác"},
         "TU_NGAY":{"type":"date","title":"Từ ngày"},
         "DEN_NGAY":{"type":"date","title":"Đến ngày"},
-        "TYLE_PCTN": { "type": "number", "title": "Tỷ lệ PCTN"},
-        "DTUONG_HUONG_PCTN": { "type": "text", "title": "Đối tượng hưởng PCTN"},
+        "TYLE_PCTN": { "type": "number", "title": "Tỷ lệ pctn"},
+        "DTUONG_HUONG_PCTN": { "type": "text", "title": "Đối tượng hưởng ptcn"},
         "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}
-
     },
     "key": "_id",
     "searchFields": ["SHCC","TINH_TRANG_CTAC","DTUONG_HUONG_PCTN"],

@@ -16,7 +16,7 @@
         "LUONG_VA_PHU_CAP": { "type":"text", "title": "Lương và phụ cấp"}
     },
     "key": "_id",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_DI_NNGOAI","NGAY_QD_DI_NNGOAI"],
+    "searchFields": ["SHCC","SO_KYHIEU_QD_DI_NNGOAI"],
     "ExcelStartRow": 2,
     "menuNum": 107
 }

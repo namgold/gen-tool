@@ -17,7 +17,7 @@
         "NGAY_NHAP_HS": { "type":"date", "title": "Ngày nhập hồ sơ"}
     },
     "key": "_id",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_LUONG","NGAY_QD_LUONG"],
+    "searchFields": ["SHCC","SO_KYHIEU_QD_LUONG"],
     "ExcelStartRow": 2,
     "menuNum": 106
 }

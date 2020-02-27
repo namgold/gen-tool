@@ -11,6 +11,8 @@
         "NGAY_QD_KNHIEM": { "type": "date", "title": "Ngày quyết định kiêm nhiệm"},
         "DON_VI_KNHIEM": { "type": "text", "title": "Đơn vị kiêm nhiệm"},
         "BO_MON_KNHIEM": { "type": "text", "title": "Bộ môn kiêm nhiệm"},
+        "SO_QD_THOI_KNHIEM": { "type": "text", "title": "Số quyết định thôi kiêm nhiệm"},
+        "NGAY_QD_THOI_KNHIEM": { "type": "date", "title": "Ngày quyết định thôi kiêm nhiệm"},
         "XOA_KNHIEM": { "type": "bool", "title": "Xóa kiêm nhiệm", "defauls":"false"},
         "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
     },
