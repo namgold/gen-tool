@@ -103,7 +103,7 @@ class EditModal extends React.Component {{
                                 </div> :
                                 <div key={{index}} className="form-group col-12 col-md-6">
                                     <label>{{schema[key].title}}</label>
-                                    <input ref={{this[key]}} className="form-control" type={{schema[key].type}} step={{schema[key].step}} placeholder={{schema[key].title}}/>
+                                    <input ref={{this[key]}} className="form-control" autoFocus={{true}} type={{schema[key].type}} step={{schema[key].step}} placeholder={{schema[key].title}}/>
                                 </div>
                             ))}}
                         </div>
