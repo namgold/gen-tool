@@ -1,8 +1,8 @@
 module.exports = app => {{
-    const parentMenu = {{ index: 3000, title: "Danh mục", icon: "fa-pagelines" }},
+    const parentMenu = {{ index: {menuPrefix}000, title: "{menuTitle}", icon: "fa-pagelines" }},
         menu = {{
             parentMenu,
-            menus: {{ 3{menuNum}: {{ title: "{name}", link: "/user/{url}" }} }},
+            menus: {{ {menuPrefix}{menuNum}: {{ title: "{name}", link: "/user/{url}" }} }},
         }};
     app.permission.add(
         {{ name: "{lowerCamel}:read", menu: menu }},
