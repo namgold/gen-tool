@@ -166,7 +166,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                     <tbody>
                         {{data.map((item, index) => (
                             <tr key={{index}}>
-                            <td style={{{{ textAlign: "right" }}}}>{{(pageNumber - 1) * pageSize + index + 1}}</td>
+                                <td style={{{{ textAlign: "right" }}}}>{{index + 1}}</td>
 {tableBody}                                <td>
                                     <div className="btn-group">
                                         <a className="btn btn-primary" href="#" onClick={{e => this.showEdit(e, index, item)}}>
