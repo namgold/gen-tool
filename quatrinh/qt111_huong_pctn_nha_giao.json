@@ -1,17 +1,17 @@
 {
-    "fullname": "Quá trình hướng phụ cấp thâm niên nhà giáo",
-    "name": "Hướng phụ cấp thâm niên nhà giáo",
+    "fullname": "Quá trình hưởng pctn nhà giáo",
+    "name": "Hưởng pctn nhà giáo",
     "keyword": ["qt","huong", "pctn", "nha","giao"],
     "schema": {
         "SHCC": { "type": "text", "title": "SHCC"},
         "SO_KYHIEU_QD_PCTN": { "type": "text", "title": "Số ký hiệu quyết định pctn"},
         "NGAY_QD_PCTN": { "type": "date", "title": "Ngày quyết định pctn"},
-        "TINH_TRANG_CTAC": { "type": "text", "title": "Tình trạng công tác"},
+        "TINH_TRANG_CTAC_1": { "type": "text", "title": "Tình trạng công tác"},
         "TU_NGAY": { "type": "date", "title": "Từ ngày"},
-        "TYLE_PCTN": { "type": "number", "title": "Tỷ lệ ptcn", "step":1},
-        "TINH_TRANG_CTAC": { "type": "text", "title": "Tình trạng công tác"},
+        "TYLE_PCTN_1": { "type": "number", "title": "Tỷ lệ ptcn", "step":1},
+        "TINH_TRANG_CTAC_2": { "type": "text", "title": "Tình trạng công tác"},
         "DEN_NGAY": { "type": "date", "title": "Đến ngày"},
-        "TYLE_PCTN": { "type": "number", "title": "Tỷ lệ pctn", "step":1},
+        "TYLE_PCTN_2": { "type": "number", "title": "Tỷ lệ pctn", "step":1},
         "DTUONG_HUONG_PCTN": { "type": "text", "title": "Đối tượng hưởng pctn"},
         "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
     },
