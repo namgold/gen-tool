@@ -141,7 +141,7 @@ def copyOutputToRepo(repo, isCopyOutputToRepo):
         for dirpath, dirnames, filenames in os.walk("output"):
             for i in filenames:
                 src = os.path.join(dirpath, i)
-                dst = os.path.join(repo, *dirpath.split("\\")[1:], i)
+                dst = os.path.join(repo, os.path.relpath(dirpath, 'output'), i)
                 if not os.path.exists(dst) or open(src, "rb").read() != open(dst, "rb").read():
                     if isCopyOutputToRepo:
                         shutil.copy(src, dst)
