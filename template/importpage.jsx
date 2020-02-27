@@ -160,37 +160,14 @@ class {UpperCamel}ImportPage extends React.Component {{
                     <thead>
                         <tr>
                             <th style={{{{ width: "auto" }}}}>#</th>
-                            {{Object.keys(schema).map((key, index) => (
-                                <th key={{index}} style={{{{ width: width, whiteSpace: "nowrap" }}}}>{{schema[key].title}}</th>
-                            ))}}
-                            <th style={{{{ width: "auto", textAlign: "center", whiteSpace: "nowrap" }}}}>Thao tác</th>
+{tableHeader}                            <th style={{{{ width: "auto", textAlign: "center", whiteSpace: "nowrap" }}}}>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{data.map((item, index) => (
                             <tr key={{index}}>
-                                <td style={{{{ textAlign: "right" }}}}>{{index + 1}}</td>
-                                {{Object.keys(schema).map((key, colIndex) => (
-                                    schema[key].type === "bool" ?
-                                    <td key={{colIndex}} className="toggle" style={{{{ textAlign: "center" }}}}>
-                                        <label>
-                                            <input type="checkbox" checked={{item[key]}} onChange={{() => this.changeActive(index, item, key)}} />
-                                            <span className="button-indecator" />
-                                        </label>
-                                    </td> :
-                                    <td key={{colIndex}} style={{{{ width: width }}}}>
-                                        {{
-                                            key == "{key}" ?
-                                            <a href="#" onClick={{e => this.edit(e, item)}}>{{item[key]}}</a> :
-                                                (schema[key].type === "date"?
-                                                    (item[key] ?
-                                                    new Date(item[key]).getDateText() :
-                                                    "") :
-                                                item[key])
-                                        }}
-                                    </td>
-                                ))}}
-                                <td>
+                            <td style={{{{ textAlign: "right" }}}}>{{(pageNumber - 1) * pageSize + index + 1}}</td>
+{tableBody}                                <td>
                                     <div className="btn-group">
                                         <a className="btn btn-primary" href="#" onClick={{e => this.showEdit(e, index, item)}}>
                                             <i className="fa fa-lg fa-edit" />
