@@ -8,7 +8,7 @@
         "NGAY_QDINH": { "type": "date", "title": "Ngày quyết định"},
         "NGAY_DI": { "type": "date", "title": "Ngày đi"},
         "NGAY_VE": { "type": "date", "title": "Ngày về"},
-        "MUC_DICH (New)": { "type": "text", "title": "Mục đích"},
+        "MUC_DICH_NEW": { "type": "text", "title": "Mục đích"},
         "NOI_CONG_TAC": { "type": "text", "title": "Nơi công tác"},
         "NOI_DUNG_CTAC": { "type": "text", "title": "Nội dung công tác"},
         "NGUON_KINH_PHI": { "type": "text", "title": "Nguồn kinh phí"},
