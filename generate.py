@@ -8,6 +8,7 @@ typeMongoMap = {
     "text": "String",
     "number": "Number",
     "date": "Date",
+    "month": "Date",
     "bool": "Boolean"
 }
 
