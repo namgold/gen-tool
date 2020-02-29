@@ -1,0 +1,22 @@
+{
+    "fullname": "Quá trình hưởng PCTN nhà giáo",
+    "name": "Hưởng PCTN nhà giáo",
+    "keyword": ["qt","huong", "PCTN", "nha","giao"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "SHCC"},
+        "SO_KYHIEU_QD_PCTN": { "type": "text", "title": "Số ký hiệu quyết định PCTN"},
+        "NGAY_QD_PCTN": { "type": "date", "title": "Ngày quyết định PCTN"},
+        "TINH_TRANG_CTAC_1": { "type": "text", "title": "Tình trạng công tác"},
+        "TU_NGAY": { "type": "date", "title": "Từ ngày"},
+        "TYLE_PCTN_1": { "type": "number", "title": "Tỷ lệ PCTN", "step":1},
+        "TINH_TRANG_CTAC_2": { "type": "text", "title": "Tình trạng công tác"},
+        "DEN_NGAY": { "type": "date", "title": "Đến ngày"},
+        "TYLE_PCTN_2": { "type": "number", "title": "Tỷ lệ PCTN", "step":1},
+        "DTUONG_HUONG_PCTN": { "type": "text", "title": "Đối tượng hưởng PCTN"},
+        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+    },
+    "key": "SHCC",
+    "searchFields": ["SHCC","SO_KYHIEU_QD_PCTN","NGAY_QD_PCTN"],
+    "ExcelStartRow": 2,
+    "menuNum": 111
+}

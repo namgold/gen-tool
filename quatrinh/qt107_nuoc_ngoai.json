@@ -1,0 +1,22 @@
+{
+    "fullname": "Quá trình nước ngoài",
+    "name": "Nước ngoài",
+    "keyword": ["qt", "nuoc", "ngoai"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "Số hiệu công chức"},
+        "SO_KYHIEU_QD_DI_NNGOAI": { "type": "text", "title": "Số ký hiệu quyết định đi nước ngoài"},
+        "NGAY_QD_DI_NNGOAI": { "type": "date", "title": "Ngày quyết định đi nước ngoài"},
+        "TU_NGAY": { "type": "date", "title": "Từ ngày"},
+        "DEN_NGAY": { "type": "date", "title": "Đến ngày"},
+        "MUC_DICH_DI_NNGOAI": { "type": "text", "title": "Mục đích đi nước ngoài"},
+        "CHUYEN_NGANH_HOC": { "type":"text", "title": "Chuyên ngành học"},
+        "NUOC_DEN": { "type": "text", "title": "Nước đến"},
+        "NOI_DEN": { "type": "text", "title": "Nơi đến"},
+        "KINH_PHI": { "type": "text", "title": "Kinh phí"},
+        "LUONG_VA_PHU_CAP": { "type":"text", "title": "Lương và phụ cấp"}
+    },
+    "key": "_id",
+    "searchFields": ["SHCC","SO_KYHIEU_QD_DI_NNGOAI"],
+    "ExcelStartRow": 2,
+    "menuNum": 107
+}

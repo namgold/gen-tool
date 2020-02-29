@@ -1,0 +1,20 @@
+{
+    "fullname": "Quá trình kỷ luật",
+    "name": "Kỷ luật",
+    "keyword": ["qt", "ky","luat"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "Số hiệu công chức"},
+        "MA_KLUAT": { "type": "text", "title": "Mã kỷ luật"},
+        "NAM_KLUAT": { "type": "number", "title": "Năm kỷ luật", "step":1},
+        "HINH_THUC_KLUAT": { "type": "text", "title": "Hình thức kỷ luật"},
+        "LY_DO_BI_KLUAT": { "type": "text", "title": "Lý do bị kỷ luật"},
+        "SO_KYHIEU_QD_KLUAT": { "type": "text", "title": "Số ký hiệu quyết định kỷ luật"},
+        "NGAY_QD_KLUAT": { "type":"date", "title": "Ngày quyết định kỷ luật"},
+        "HTHUC_KLUAT_DI_KEM": { "type": "text", "title": "Hình thức kỷ luật đi kèm"},
+        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+    },
+    "key": "_id",
+    "searchFields": ["SHCC","MA_KLUAT","SO_KYHIEU_QD_KLUAT"],
+    "ExcelStartRow": 2,
+    "menuNum": 105
+}

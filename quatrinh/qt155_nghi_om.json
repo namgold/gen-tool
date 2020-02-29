@@ -7,7 +7,7 @@
         "SO_KYHIEU_QD_NGHI_OM": { "type": "text", "title": "Số quyết định"},
         "NGAY_QD_NGHI_OM":{"type":"date","title":"Ngày quyết định"},
         "NGHI_TUNGAY":{"type":"date","title":"Từ ngày"},
-        "NGHI_DENNGAY":{"type":"date","title":"Đén ngày"},
+        "NGHI_DENNGAY":{"type":"date","title":"Đến ngày"},
         "SO_KYHIEU_QD_TNHAN_OM": { "type": "text", "title": "Số quyết định tiếp nhận ốm"},
         "NGAY_QD_TNHAN_OM":{"type":"date","title":"Ngày quyết định tiếp nhận ốm"},
         "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}

@@ -1,0 +1,19 @@
+{
+    "fullname": "Quá trình chuyển ngạch",
+    "name": "Chuyển ngạch",
+    "keyword": ["qt", "chuyen","ngach"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "SHCC"},
+        "SO_KYHIEU_QD_CNGACH": { "type": "text", "title": "Số ký hiệu quyết định chuyển ngạch"},
+        "NGAY_QD_CNGACH": { "type": "date", "title": "Ngày quyết định chuyển ngạch"},
+        "MA_NGACH_CU": { "type": "text", "title": "Mã ngạch cũ"},
+        "MA_NGACH_MOI": { "type": "text", "title": "Mã ngạch mới"},
+        "BAC_LUONG": { "type": "number", "title": "Bậc lương","step": 1},
+        "HESO_LUONG": { "type": "number", "title": "Hệ số lương"},
+        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+    },
+    "key": "_id",
+    "searchFields": ["SHCC","SO_KYHIEU_QD_CNGACH"],
+    "ExcelStartRow": 2,
+    "menuNum": 110
+}

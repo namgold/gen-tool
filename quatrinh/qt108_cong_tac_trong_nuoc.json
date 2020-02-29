@@ -1,0 +1,23 @@
+{
+    "fullname": "Quá trình công tác trong nước",
+    "name": "Công tác trong nước",
+    "keyword": ["qt", "cong","tac","trong","nuoc"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "SHCC"},
+        "SO_QDINH": { "type": "text", "title": "Số quyết định"},
+        "NGAY_QDINH": { "type": "date", "title": "Ngày quyết định"},
+        "NGAY_DI": { "type": "date", "title": "Ngày đi"},
+        "NGAY_VE": { "type": "date", "title": "Ngày về"},
+        "MUC_DICH_NEW": { "type": "text", "title": "Mục đích"},
+        "NOI_CONG_TAC": { "type": "text", "title": "Nơi công tác"},
+        "NOI_DUNG_CTAC": { "type": "text", "title": "Nội dung công tác"},
+        "NGUON_KINH_PHI": { "type": "text", "title": "Nguồn kinh phí"},
+        "PHUONG_TIEN_DI_VE": { "type": "text", "title": "Phương tiện đi về"},
+        "NOP_BCAO_CTAC": { "type": "bool", "title": "Nộp báo cáo công tác", "defauls":"false"},
+        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+    },
+    "key": "_id",
+    "searchFields": ["SHCC","SO_QDINH"],
+    "ExcelStartRow": 2,
+    "menuNum": 108
+}

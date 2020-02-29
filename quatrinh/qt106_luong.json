@@ -1,0 +1,23 @@
+{
+    "fullname": "Quá trình lương",
+    "name": "Lương",
+    "keyword": ["qt", "luong"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "Số hiệu công chức"},
+        "SO_KYHIEU_QD_LUONG": { "type": "text", "title": "Số ký hiệu quyết định lương"},
+        "NGAY_QD_LUONG": { "type": "date", "title": "Ngày quyết định lương"},
+        "NGACH_LUONG": { "type": "text", "title": "Ngạch lương"},
+        "BAC": { "type": "number", "title": "Bậc"},
+        "HESO_LUONG": { "type": "number", "title": "Hệ số lương", "step":1},
+        "TYLE_PCTNVK": { "type":"number", "title": "Tỷ lệ PCTNVK", "step":1},
+        "TY_LE_TAP_SU": { "type": "number", "title": "Tỷ lệ tập sự", "step":10},
+        "NGAY_HUONG_LUONG": { "type": "date", "title": "Ngày hưởng lương"},
+        "MOC_NANG_LUONG": { "type": "date", "title": "Mốc nâng lương"},
+        "LUONG_KHOAN_CHINH": { "type":"number", "title": "Lương khoản chính", "step":1},
+        "NGAY_NHAP_HS": { "type":"date", "title": "Ngày nhập hồ sơ"}
+    },
+    "key": "_id",
+    "searchFields": ["SHCC","SO_KYHIEU_QD_LUONG"],
+    "ExcelStartRow": 2,
+    "menuNum": 106
+}
