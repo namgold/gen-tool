@@ -1,18 +1,17 @@
 {
     "fullname": "Quá trình tính PCTN nhà giáo",
     "name": "Tính PCTN nhà giáo",
-    "keyword": ["qt", "tinh","PCTN","nha", "giao"],
+    "keyword": ["qt", "tinh", "PCTN", "nha", "giao"],
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "TINH_TRANG_CTAC": { "type": "text", "title": "Tình trạng công tác"},
-        "TU_NGAY":{"type":"date","title":"Từ ngày"},
-        "DEN_NGAY":{"type":"date","title":"Đến ngày"},
+        "TU_NGAY":{"type":"date", "title":"Từ ngày"},
+        "DEN_NGAY":{"type":"date", "title":"Đến ngày"},
         "TYLE_PCTN": { "type": "number", "title": "Tỷ lệ PCTN"},
-        "DTUONG_HUONG_PCTN": { "type": "text", "title": "Đối tượng hưởng PCTN"},
-        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}
+        "DTUONG_HUONG_PCTN": { "type": "text", "title": "Đối tượng hưởng PCTN"}
     },
     "key": "_id",
-    "searchFields": ["SHCC","TINH_TRANG_CTAC","DTUONG_HUONG_PCTN"],
+    "searchFields": ["SHCC", "TINH_TRANG_CTAC", "DTUONG_HUONG_PCTN"],
     "ExcelStartRow": 2,
     "menuNum": 150
 }

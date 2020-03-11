@@ -1,19 +1,18 @@
 {
     "fullname": "Quá trình chức danh nghề nghiệp",
     "name": "Chức danh nghề nghiệp",
-    "keyword": ["qt", "chuc","danh","nghe", "nghiep"],
+    "keyword": ["qt", "chuc", "danh", "nghe", "nghiep"],
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "SO_KYHIEU_QD_CDNN": { "type": "text", "title": "Số quyết định"},
-        "NGAY_QD_CDNN":{"type":"date","title":"Ngày quyết định"},
+        "NGAY_QD_CDNN":{"type":"date", "title":"Ngày quyết định"},
         "MASO_CDNN":{ "type": "text", "title": "Mã số chức danh nghề nghiệp"},
         "TEN_CDNN": { "type": "text", "title": "Tên chức danh nghề nghiệp"},
-        "NGAY_BONHIEM_CDNN":{"type":"date","title":"Ngày bổ nhiệm"},
-        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}
+        "NGAY_BONHIEM_CDNN":{"type":"date", "title":"Ngày bổ nhiệm"}
 
     },
     "key": "SHCC",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_CDNN","TEN_CDNN"],
+    "searchFields": ["SHCC", "SO_KYHIEU_QD_CDNN", "TEN_CDNN"],
     "ExcelStartRow": 2,
     "menuNum": 153
 }

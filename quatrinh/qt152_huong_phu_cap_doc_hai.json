@@ -1,20 +1,19 @@
 {
     "fullname": "Quá trình hưởng phụ cấp độc hại",
     "name": "Hưởng phụ cấp độc hại",
-    "keyword": ["qt", "huong","phu","cap", "doc","hai"],
+    "keyword": ["qt", "huong", "phu", "cap", "doc", "hai"],
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "SO_KYHIEU_QD_DOCHAI": { "type": "text", "title": "Số quyết định"},
-        "NGAY_QUYET_DINH":{"type":"date","title":"Ngày quyết định"},
+        "NGAY_QUYET_DINH":{"type":"date", "title":"Ngày quyết định"},
         "MUC_HUONG": { "type": "number", "title": "Mức hưởng"},
         "MOI_TRUONG_DOCHAI": { "type": "text", "title": "Môi trường độc hại"},
-        "TU_NGAY":{"type":"date","title":"Từ ngày"},
-        "DEN_NGAY":{"type":"date","title":"Đến ngày"},
-        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}
+        "TU_NGAY":{"type":"date", "title":"Từ ngày"},
+        "DEN_NGAY":{"type":"date", "title":"Đến ngày"}
 
     },
     "key": "SHCC",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_DOCHAI","MOI_TRUONG_DOCHAI"],
+    "searchFields": ["SHCC", "SO_KYHIEU_QD_DOCHAI", "MOI_TRUONG_DOCHAI"],
     "ExcelStartRow": 2,
     "menuNum": 152
 }

@@ -1,4 +1,4 @@
-import T from "../common/js/common";
+import T from "../../view/common/js/common.js";
 
 // Reducer ------------------------------------------------------------------------------------------------------------
 const {UPPER_SNAKE}_IN_PAGE = "user:get{UpperCamel}InPage";
@@ -22,7 +22,7 @@ export function get{UpperCamel}InPage(pageNumber, pageSize, pageCondition, done)
         T.get(url, {{ condition: page.pageCondition ? JSON.parse(page.pageCondition) : {{}} }}, data => {{
             if (data.error) {{
                 T.notify("Lấy dữ liệu bị lỗi!", "danger");
-                console.error("GET: " + url + ". " + data.error);
+                console.error("GET: " + url + ".", data.error);
             }} else {{
                 if (page.pageCondition) data.page.pageCondition = JSON.parse(page.pageCondition);
                 if (done) done(data.page);
@@ -32,13 +32,13 @@ export function get{UpperCamel}InPage(pageNumber, pageSize, pageCondition, done)
     }}
 }}
 
-export function update{UpperCamel}(_id, changes, done) {{
+export function update{UpperCamel}(changes, done) {{
     return dispatch => {{
         const url = "/api/{url}";
-        T.put(url, {{ _id, changes }}, data => {{
+        T.put(url, {{ changes }}, data => {{
             if (data.error) {{
                 T.notify("Cập nhật dữ liệu bị lỗi!", "danger");
-                console.error("PUT: " + url + ". " + data.error);
+                console.error("PUT: " + url + ".", data.error);
             }} else {{
                 done && done(data.item);
                 dispatch(get{UpperCamel}InPage());
@@ -47,16 +47,15 @@ export function update{UpperCamel}(_id, changes, done) {{
     }}
 }}
 
-export function createMulti{UpperCamel}({lowerCamel}, done) {{
+export function createMulti{UpperCamel}(multi{UpperCamel}, done) {{
     return dispatch => {{
         const url = "/api/{url}/multiple";
-        T.post(url, {{ {lowerCamel} }}, data => {{
-            if (data.error && data.error.length) {{
+        T.post(url, {{ multi{UpperCamel} }}, data => {{
+            if (data.error) {{
                 T.notify("Cập nhật dữ liệu bị lỗi!", "danger");
-                console.error("PUT: " + url + ". " + data.error.toString());
-            }} else {{
+                console.error("POST: " + url + ".", data.error);
+            }} else
                 done && done(data.item);
-            }}
         }}, () => T.notify("Cập nhật dữ liệu bị lỗi!", "danger"))
     }}
 }}
@@ -67,7 +66,7 @@ export function create{UpperCamel}({lowerCamel}, done) {{
         T.post(url, {{ {lowerCamel} }}, data => {{
             if (data.error) {{
                 T.notify(data.error.message ? data.error.message : "Tạo mới bị lỗi!", "danger");
-                console.error("POST: " + url + ". " + data.error);
+                console.error("POST: " + url + ".", data.error);
             }} else {{
                 dispatch(get{UpperCamel}InPage());
                 if (done) done(data);
@@ -82,7 +81,7 @@ export function delete{UpperCamel}(_id, done) {{
         T.delete(url, {{ _id }}, data => {{
             if (data.error) {{
                 T.notify("Xóa bị lỗi!", "danger");
-                console.error("DELETE: " + url + ". " + data.error);
+                console.error("DELETE: " + url + ".", data.error);
             }} else {{
                 T.alert("Xóa thành công!", "success", false, 800);
                 dispatch(get{UpperCamel}InPage());

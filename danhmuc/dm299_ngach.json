@@ -5,11 +5,11 @@
     "schema": {
         "MA_NGACH": { "type": "text", "title": "Mã ngạch"},
         "MASO_CDNN": { "type": "text", "title": "Mã số chức danh nghề nghiệp"},
-        "TEN_NGACH/CDNN": { "type": "text", "title": "Tên ngạch / chức danh nghề nghiệp"},
+        "TEN_NGACH_CDNN": { "type": "text", "title": "Tên ngạch / chức danh nghề nghiệp"},
         "NHOM_NGACH": { "type": "text", "title": "Nhóm ngạch"}
     },
     "key": "_id",
-    "searchFields": ["MA_NGACH", "MASO_CDNN", "TEN_NGACH/CDNN"],
+    "searchFields": ["MA_NGACH", "MASO_CDNN", "TEN_NGACH_CDNN"],
     "ExcelStartRow": 2,
     "menuNum": 299
 }

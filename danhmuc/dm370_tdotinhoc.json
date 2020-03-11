@@ -1,7 +1,7 @@
 {
     "fullname": "Danh mục trình độ tin học",
     "name": "Trình độ tin học",
-    "keyword": ["dm", "tdo","tin","hoc"],
+    "keyword": ["dm", "trinh", "do", "tin", "hoc"],
     "schema": {
         "MA_TDTH": { "type": "text", "title": "Mã trình độ tin học"},
         "TEN_TDO_TIN_HOC": { "type": "text", "title": "Tên trình độ tin học"}

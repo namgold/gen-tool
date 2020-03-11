@@ -1,19 +1,18 @@
 {
     "fullname": "Quá trình tập sự",
     "name": "Tập sự",
-    "keyword": ["qt", "tap","su"],
+    "keyword": ["qt", "tap", "su"],
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "SO_KYHIEU_QD_TAP_SU": { "type": "text", "title": "Số quyết định"},
-        "NGAY_QD_TAP_SU":{"type":"date","title":"Ngày quyết định"},
-        "TU_NGAY":{"type":"date","title":"Từ ngày"},
-        "DEN_NGAY":{"type":"date","title":"Đến ngày"},
-        "TYLE_TAP_SU":{"type":"number","title":"Tỷ lệ tập sự"},
-        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}
+        "NGAY_QD_TAP_SU":{"type":"date", "title":"Ngày quyết định"},
+        "TU_NGAY":{"type":"date", "title":"Từ ngày"},
+        "DEN_NGAY":{"type":"date", "title":"Đến ngày"},
+        "TYLE_TAP_SU":{"type":"number", "title":"Tỷ lệ tập sự"}
 
     },
     "key": "SO_KYHIEU_QD_TAP_SU",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_TAP_SU"],
+    "searchFields": ["SHCC", "SO_KYHIEU_QD_TAP_SU"],
     "ExcelStartRow": 2,
     "menuNum": 154
 }

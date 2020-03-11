@@ -7,7 +7,7 @@
         "TEN_QUOC_GIA": { "type": "text", "title": "Tên quốc gia"},
         "COUNTRY": { "type": "text", "title": "Tên tiếng anh"},
         "CODEALPHA": { "type": "text", "title": "Mã code tiếng anh"},
-        "SHORTEN NAME": { "type": "text", "title": "Tên tiếng anh ngắn"},
+        "SHORTEN_NAME": { "type": "text", "title": "Tên tiếng anh ngắn"},
         "MA_KVUC": { "type": "text", "title": "Mã khu vực"}
     },
     "key": "MA_CODE",

@@ -1,20 +1,19 @@
 {
     "fullname": "Quá trình nghỉ ốm",
     "name": "Nghỉ ốm",
-    "keyword": ["qt", "nghi","om"],
+    "keyword": ["qt", "nghi", "om"],
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "SO_KYHIEU_QD_NGHI_OM": { "type": "text", "title": "Số quyết định"},
-        "NGAY_QD_NGHI_OM":{"type":"date","title":"Ngày quyết định"},
-        "NGHI_TUNGAY":{"type":"date","title":"Từ ngày"},
-        "NGHI_DENNGAY":{"type":"date","title":"Đến ngày"},
+        "NGAY_QD_NGHI_OM":{"type":"date", "title":"Ngày quyết định"},
+        "NGHI_TUNGAY":{"type":"date", "title":"Từ ngày"},
+        "NGHI_DENNGAY":{"type":"date", "title":"Đến ngày"},
         "SO_KYHIEU_QD_TNHAN_OM": { "type": "text", "title": "Số quyết định tiếp nhận ốm"},
-        "NGAY_QD_TNHAN_OM":{"type":"date","title":"Ngày quyết định tiếp nhận ốm"},
-        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"}
+        "NGAY_QD_TNHAN_OM":{"type":"date", "title":"Ngày quyết định tiếp nhận ốm"}
 
     },
     "key": "SO_KYHIEU_QD_NGHI_OM",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_NGHI_OM"],
+    "searchFields": ["SHCC", "SO_KYHIEU_QD_NGHI_OM"],
     "ExcelStartRow": 2,
     "menuNum": 155
 }

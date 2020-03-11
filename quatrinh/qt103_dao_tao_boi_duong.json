@@ -1,26 +1,25 @@
 {
     "fullname": "Quá trình đào tạo bồi dưỡng",
     "name": "Đào tạo bồi dưỡng",
-    "keyword": ["qt", "dao","tao","boi","duong"],
+    "keyword": ["qt", "dao", "tao", "boi", "duong"],
     "schema": {
         "SHCC": { "type": "text", "title": "SHCC"},
         "SO_KYHIEU_QD_DTAO": { "type": "text", "title": "Số ký hiệu quyết định đào tạo"},
         "NGAY_QD_DTAO": { "type": "date", "title": "Ngày quyết định đào tạo"},
         "TU_THANG_NAM": { "type": "month", "title": "Từ tháng, năm"},
-        "DEN_THANG_NAM": { "type": "month", "title": "Đến tháng,năm"},
+        "DEN_THANG_NAM": { "type": "month", "title": "Đến tháng, năm"},
         "CAP_DTAO": { "type": "text", "title": "Cấp đào tạo"},
         "CHUYEN_NGANH": { "type": "text", "title": "Chuyên ngành"},
         "COSO_DTAO": { "type": "text", "title": "Cơ sở đào tạo"},
         "QUOC_GIA": { "type": "text", "title": "Quốc gia"},
         "HINH_THUC_DTAO": { "type": "text", "title": "Hình thức đào tạo"},
         "LOAI_TN": { "type": "text", "title": "Loại tốt nghiệp"},
-        "NAM_TN": { "type": "number", "title": "Năm tốt nghiệp", "step":1},
-        "NOP_VANBANG": { "type": "bool", "title": "Nộp văn bằng","defauls":"false"},
-        "GHI_CHU": { "type": "text", "title": "Ghi chú"},
-        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+        "NAM_TN": { "type": "year", "title": "Năm tốt nghiệp", "default": 2020},
+        "NOP_VANBANG": { "type": "bool", "title": "Nộp văn bằng", "default": "false"},
+        "GHI_CHU": { "type": "text", "title": "Ghi chú"}
     },
     "key": "_id",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_DTAO"],
+    "searchFields": ["SHCC", "SO_KYHIEU_QD_DTAO"],
     "ExcelStartRow": 2,
     "menuNum": 103
 }

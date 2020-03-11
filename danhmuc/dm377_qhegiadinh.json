@@ -1,7 +1,7 @@
 {
     "fullname": "Danh mục quan hệ gia đình",
     "name": "Quan hệ gia đình",
-    "keyword": ["dm", "qhe","gia","dinh"],
+    "keyword": ["dm", "quan", "he", "gia", "dinh"],
     "schema": {
         "MA_QHGD": { "type": "text", "title": "Mã QHGD"},
         "TEN_QUAN_HE_GD": { "type": "text", "title": "Tên QHGD"}

@@ -25,32 +25,22 @@ module.exports = app => {{
     app.post("/api/{url}", app.permission.check("{lowerCamel}:write"), (req, res) => {{
         const body = req.body.{lowerCamel};
         app.model.{lowerCamel}.get({{ {key}: body.{key} }}, (error, item) => {{
-            if (error) {{
-                res.send({{ error }});
-            }} else if (item) {{
-                res.send({{ error: {{ exist: true, message: "{name} " + body.{key} + " đã tồn tại" }}}});
-            }} else {{
-                app.model.{lowerCamel}.create(body, (error, item) => res.send({{ error, item }}));
-            }}
+            if (error) res.send({{ error }});
+            else if (item) res.send({{ error: {{ exist: true, message: "{name} " + body.{key} + " đã tồn tại" }}}});
+            else app.model.{lowerCamel}.create(body, (error, item) => res.send({{ error, item }}));
         }});
     }});
 
     app.post("/api/{url}/multiple", app.permission.check("{lowerCamel}:write"), (req, res) => {{
-        const {lowerCamel} = req.body.{lowerCamel}, errorList = [];
-        for (let i = 0; i <= {lowerCamel}.length; i++) {{
-            if (i == {lowerCamel}.length) {{
-                res.send({{error: errorList}});
-            }} else {{
-                const current{UpperCamel} = {lowerCamel}[i];
-                app.model.{lowerCamel}.create(current{UpperCamel}, (error, _) => {{
-                    if (error) errorList.push(error);
-                }});
-            }}
-        }}
+        const handleCreate = index => {{
+            if (index >= req.body.multi{UpperCamel}.length) res.send({{ data: "Upload success" }})
+            else app.model.{lowerCamel}.createOrUpdate(req.body.multi{UpperCamel}[index]).then(item => handleCreate(index + 1)).catch(error => res.send({{ error }}))
+        }};
+        handleCreate(0);
     }});
 
     app.put("/api/{url}", app.permission.check("{lowerCamel}:write"), (req, res) =>
-        app.model.{lowerCamel}.update(req.body._id, req.body.changes, (error, item) => res.send({{error, item}})));
+        app.model.{lowerCamel}.update(req.body.changes, (error, item) => res.send({{error, item}})));
 
     const {lowerCamel}ImportData = (req, fields, files, params, done) => {{
         if (fields.userData && fields.userData[0] && fields.userData[0] == "{lowerCamel}ImportData" && files.{UpperCamel}File && files.{UpperCamel}File.length > 0) {{

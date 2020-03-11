@@ -1,7 +1,7 @@
 {
     "fullname": "Danh mục kỷ luật",
     "name": "Kỷ luật",
-    "keyword": ["dm", "ky","luat"],
+    "keyword": ["dm", "ky", "luat"],
     "schema": {
         "MA_KL": { "type": "text", "title": "Mã kỷ luật"},
         "HTHUC_KY_LUAT": { "type": "text", "title": "Hình thức kỷ luật"}

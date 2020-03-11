@@ -7,7 +7,7 @@
         "DIEN_GIAI": { "type": "text", "title": "Diễn giải"}
     },
     "key": "MS_NGHI",
-    "searchFields": ["MA_PL","DIEN_GIAI"],
+    "searchFields": ["MA_PL", "DIEN_GIAI"],
     "ExcelStartRow": 2,
     "menuNum": 353
 }

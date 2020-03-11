@@ -1,7 +1,7 @@
 {
     "fullname": "Danh mục trình độ LLCT",
     "name": "Trình độ LLCT",
-    "keyword": ["dm", "tdo","llct"],
+    "keyword": ["dm", "trinh", "do", "llct"],
     "schema": {
         "MA_LLCT": { "type": "text", "title": "Mã LLCT"},
         "TEN_TDO_LLCT": { "type": "text", "title": "Trình độ LLCT"}

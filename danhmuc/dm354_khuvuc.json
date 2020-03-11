@@ -9,7 +9,7 @@
         "MS_CHAU": { "type": "text", "title": "Mã châu"}
     },
     "key": "MS_KVUC",
-    "searchFields": ["TEN_KHU_VUC","TERRITORY"],
+    "searchFields": ["TEN_KHU_VUC", "TERRITORY"],
     "ExcelStartRow": 2,
     "menuNum": 354
 }

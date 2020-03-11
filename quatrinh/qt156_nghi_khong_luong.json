@@ -5,18 +5,17 @@
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "SO_KYHIEU_QD_NGHI_KLUONG": { "type": "text", "title": "Số quyết định"},
-        "NGAY_QD_NGHI_KLUONG":{"type":"date","title":"Ngày quyết định"},
-        "NGHI_TUNGAY":{"type":"date","title":"Từ ngày"},
-        "NGHI_DENNGAY":{"type":"date","title":"Đến ngày"},
+        "NGAY_QD_NGHI_KLUONG":{"type":"date", "title":"Ngày quyết định"},
+        "NGHI_TUNGAY":{"type":"date", "title":"Từ ngày"},
+        "NGHI_DENNGAY":{"type":"date", "title":"Đến ngày"},
         "SO_KYHIEU_QD_TNHAN_KLUONG": { "type": "text", "title": "Số quyết định tiếp nhận lương"},
-        "NGAY_QD_TNHAN_KLUONG":{"type":"date","title":"Ngày quyết định tiếp nhận lương"},
-        "NGAY_TNHAN":{"type":"date","title":"Ngày tiếp nhận"},
-        "NGAY_NHAP_HS":{"type":"date","title":"Ngày nhập hồ sơ"},
+        "NGAY_QD_TNHAN_KLUONG":{"type":"date", "title":"Ngày quyết định tiếp nhận lương"},
+        "NGAY_TNHAN":{"type":"date", "title":"Ngày tiếp nhận"},
         "LI_DO": { "type": "text", "title": "Lý do"}
 
     },
     "key": "SO_KYHIEU_QD_NGHI_KLUONG",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_NGHI_KLUONG","SO_KYHIEU_QD_TNHAN_KLUONG"],
+    "searchFields": ["SHCC", "SO_KYHIEU_QD_NGHI_KLUONG", "SO_KYHIEU_QD_TNHAN_KLUONG"],
     "ExcelStartRow": 2,
     "menuNum": 156
 }

@@ -1,7 +1,7 @@
 {
     "fullname": "Quá trình khen thưởng",
     "name": "Khen thưởng",
-    "keyword": ["qt", "khen","thuong"],
+    "keyword": ["qt", "khen", "thuong"],
     "schema": {
         "SHCC": { "type": "text", "title": "Số hiệu công chức"},
         "MA_KT": { "type": "text", "title": "Mã khen thưởng"},
@@ -9,11 +9,10 @@
         "DANH_HIEU_KTHUONG": { "type": "text", "title": "Danh hiệu khen thưởng"},
         "SO_KYHIEU_QD_KTHUONG": { "type": "text", "title": "Số ký hiệu quyết định khen thưởng"},
         "NGAY_QD_KTHUONG": { "type": "date", "title": "Ngày quyết định khen thưởng"},
-        "CAP_KTHUONG": { "type": "text", "title": "Cấp khen thưởng"},
-        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+        "CAP_KTHUONG": { "type": "text", "title": "Cấp khen thưởng"}
     },
     "key": "_id",
-    "searchFields": ["SHCC","MA_KT","DANH_HIEU_KTHUONG"],
+    "searchFields": ["SHCC", "MA_KT", "DANH_HIEU_KTHUONG"],
     "ExcelStartRow": 2,
     "menuNum": 104
 }

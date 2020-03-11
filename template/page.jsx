@@ -1,122 +1,11 @@
 import React from "react";
 import {{ connect }} from "react-redux";
-import {{ get{UpperCamel}InPage, create{UpperCamel}, update{UpperCamel}, delete{UpperCamel} }} from "../../redux/{lowerCamel}.jsx";
+import {{ get{UpperCamel}InPage, create{UpperCamel}, update{UpperCamel}, delete{UpperCamel} }} from "./Redux.jsx";
 import {{ Link }} from "react-router-dom";
-import Pagination from "../../common/Pagination.jsx";
+import Pagination from "../../view/common/Pagination.jsx";
+import EditModal from "./EditModal.jsx";
 
 const schema = {schema};
-
-class EditModal extends React.Component {{
-    constructor(props) {{
-        super(props);
-        this.state = {{ _id: null, isUpdate: true }};
-        this.modal = React.createRef();
-        Object.keys(schema).forEach(key => this[key] = React.createRef());
-    }}
-
-    componentDidMount() {{
-        $(document).ready(() => {{
-            $(this.modal.current).on("hidden.bs.modal", () => {{
-                this.setState({{ _id: null, isUpdate: true }})
-            }});
-        }})
-    }}
-
-    show = (item) => {{
-        Object.keys(schema).forEach(key => {{
-            if (schema[key].type === "bool")
-                $(this[key].current).prop("checked", schema[key].default ? schema[key].default : false);
-            else
-                $(this[key].current).val("");
-        }});
-        if (item) {{
-            Object.keys(schema).forEach(key => {{
-                if (item[key]) {{
-                    if (schema[key].type === "bool")
-                        $(this[key].current).prop("checked", item[key]);
-                    else if (schema[key].type === "date")
-                        $(this[key].current).val(item[key] ? T.dateToText(item[key], "yyyy-mm-dd") : "");
-                    else
-                        $(this[key].current).val(item[key] ? item[key] : null);
-                }}
-            }});
-            this.setState({{
-                _id: item && item._id ? item._id : null,
-                isUpdate: true
-            }});
-        }}
-        else {{
-            this.setState({{
-                _id: null,
-                isUpdate: false
-            }});
-        }}
-        $(this.modal.current).modal("show");
-    }};
-
-    save = (e) => {{
-        e.preventDefault();
-        const changes = {{}};
-        Object.keys(schema).forEach(key => {{
-            if (schema[key].type === "bool")
-                changes[key] = this[key].current.checked
-            else if (schema[key].type === "datetime")
-                changes[key] = this[key].val() ? T.formatDate(this[key].val()) : null
-            else
-                changes[key] = $(this[key].current).val().trim()
-        }});
-        if (this.state.isUpdate) {{
-            this.props.update(this.state._id, changes, () => {{
-                T.notify("Cập nhật {lowername} thành công!", "success");
-                $(this.modal.current).modal("hide");
-            }});
-        }} else {{
-            this.props.create(changes, () => {{
-                T.notify("Tạo mới {lowername} thành công!", "success");
-                $(this.modal.current).modal("hide");
-            }});
-        }}
-    }};
-
-    render() {{
-        return (
-            <div className="modal" tabIndex="-1" role="dialog" ref={{this.modal}}>
-                <form className="modal-dialog modal-lg" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">{{this.state.isUpdate ? "Cập nhật" : "Tạo mới"}} {lowername}</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body row">
-                            {{Object.keys(schema).map((key, index) => (
-                                schema[key].type === "bool" ?
-                                <div key={{index}} className="form-group col-12 col-md-6" style={{{{ display: "inline-flex", width: "100%" }}}}>
-                                    <label htmlFor={{key + "CheckBox"}}>{{ schema[key].title }}</label>&nbsp;&nbsp;
-                                        <div className="toggle">
-                                            <label>
-                                                <input ref={{this[key]}} type="checkbox" id={{key + "CheckBox"}}/>
-                                                <span className="button-indecator" />
-                                            </label>
-                                        </div>
-                                </div> :
-                                <div key={{index}} className="form-group col-12 col-md-6">
-                                    <label>{{schema[key].title}}</label>
-                                    <input ref={{this[key]}} className="form-control" autoFocus={{true}} type={{schema[key].type}} step={{schema[key].step}} placeholder={{schema[key].title}}/>
-                                </div>
-                            ))}}
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                            <button type="submit" className="btn btn-primary" onClick={{this.save}}>Lưu</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        )
-    }}
-}}
 
 class {UpperCamel}Page extends React.Component {{
     constructor(props) {{
@@ -137,19 +26,19 @@ class {UpperCamel}Page extends React.Component {{
     }}
 
     create = (e) => {{
-        this.modal.current.show();
         e.preventDefault();
+        this.modal.current.show();
     }};
 
     edit = (e, item) => {{
-        this.modal.current.show(item);
         e.preventDefault();
+        this.modal.current.show(item);
     }};
 
     delete = (e, item) => {{
+        e.preventDefault();
         T.confirm("{name}", "Bạn có chắc bạn muốn xóa danh mục này?", "warning", true, isConfirm =>
             isConfirm && this.props.delete{UpperCamel}(item._id));
-        e.preventDefault();
     }};
 
     clearInputSearch = (e) => {{
@@ -171,12 +60,13 @@ class {UpperCamel}Page extends React.Component {{
     }};
 
     changeActive = (item, key) => {{
-        let change = {{}}
+        let change = {{ _id: item._id}}
         change[key] = !item[key];
-        this.props.update{UpperCamel}(item._id, change, () => {{
+        this.props.update{UpperCamel}(change, () => {{
             T.notify("Cập nhật {lowername} thành công!", "success");
         }});
     }};
+
 
     render() {{
         let {{ pageNumber, pageSize, pageTotal, totalItem, pageCondition, list }} = this.props.{lowerCamel} && this.props.{lowerCamel}.page ?
@@ -240,12 +130,12 @@ class {UpperCamel}Page extends React.Component {{
                 <div className="row tile">{{table}}</div>
                 <Pagination name="{lowerCamel}Page" pageNumber={{pageNumber}} pageSize={{pageSize}} pageTotal={{pageTotal}} totalItem={{totalItem}} pageCondition={{pageCondition}}
                     getPage={{this.props.get{UpperCamel}InPage}} />
-                <Link to="/user/{url}/upload" className="btn btn-success btn-circle" style={{{{ position: "fixed", right: "70px", bottom: "10px" }}}}>
+                <Link to="/user/{url}/upload" className="btn btn-success btn-circle" style={{{{ zIndex: 100, position: "fixed", right: "70px", bottom: "10px" }}}}>
                     <i className="fa fa-lg fa-cloud-upload"/>
                 </Link>
 
                 <button type="button" className="btn btn-primary btn-circle"
-                    style={{{{ position: "fixed", right: "10px", bottom: "10px" }}}} onClick={{this.create}}>
+                    style={{{{ zIndex: 100, position: "fixed", right: "10px", bottom: "10px" }}}} onClick={{this.create}}>
                     <i className="fa fa-lg fa-plus" />
                 </button>
 

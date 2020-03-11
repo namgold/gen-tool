@@ -1,104 +1,9 @@
 import React from "react";
 import {{ connect }} from "react-redux";
 import {{ Link }} from "react-router-dom";
-import FileBox from "../../common/FileBox.jsx";
-import {{ createMulti{UpperCamel} }} from "../../redux/{lowerCamel}.jsx";
-
-const width = (100 / 6) + "%";
-const schema = {schema};
-
-class {UpperCamel}Modal extends React.Component {{
-    constructor(props) {{
-        super(props);
-        this.state = {{ index: -1 }};
-        this.modal = React.createRef();
-        Object.keys(schema).forEach(key => this[key] = React.createRef());
-    }}
-
-    componentDidMount() {{
-        $(document).ready(() => {{
-            $(this.modal.current).on("hidden.bs.modal", () => {{
-                this.setState({{ index: -1 }})
-            }});
-        }})
-    }}
-
-    show = (index, item) => {{
-        Object.keys(schema).forEach(key => {{
-            if (schema[key].type === "bool")
-                $(this[key].current).prop("checked", schema[key].default ? schema[key].default : false);
-            else
-                $(this[key].current).val("");
-
-        }});
-        Object.keys(schema).forEach(key => {{
-            if (item[key]) {{
-                if (schema[key].type === "bool")
-                    $(this[key].current).prop("checked", item[key]);
-                else
-                    $(this[key].current).val(item[key] ? item[key] : null);
-            }}
-        }});
-        this.setState({{ index }});
-        $(this.modal.current).modal("show");
-    }};
-
-    save = (e) => {{
-        e.preventDefault();
-        const changes = {{}};
-        Object.keys(schema).forEach(key => {{
-            if (schema[key].type === "bool")
-                changes[key] = this[key].current.checked
-            else if (schema[key].type === "datetime")
-                changes[key] = this[key].val() ? T.formatDate(this[key].val()) : null
-            else
-                changes[key] = $(this[key].current).val().trim()
-        }});
-        this.props.update(this.state.index, changes, () => {{
-            T.notify("Cập nhật bộ môn thành công!", "success");
-            $(this.modal.current).modal("hide");
-        }});
-    }};
-
-    render() {{
-        return (
-                <div className="modal" tabIndex="-1" role="dialog" ref={{this.modal}}>
-                    <form className="modal-dialog modal-lg" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Cập nhật {lowername}</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body row">
-                                {{Object.keys(schema).map((key, index) => (
-                                    schema[key].type === "bool" ?
-                                    <div key={{index}} className="form-group col-12 col-md-6" style={{{{ display: "inline-flex", width: "100%" }}}}>
-                                        <label htmlFor={{key+"CheckBox"}}>{{ schema[key].title }}</label>&nbsp;&nbsp;
-                                            <div className="toggle">
-                                                <label>
-                                                    <input ref={{this[key]}} type="checkbox" id={{key+"CheckBox"}}/>
-                                                    <span className="button-indecator" />
-                                                </label>
-                                            </div>
-                                    </div> :
-                                    <div key={{index}} className="form-group col-12 col-md-6">
-                                        <label>{{schema[key].title}}</label>
-                                        <input ref={{this[key]}} className="form-control" type={{schema[key].type}} step={{schema[key].step}} placeholder={{schema[key].title}}/>
-                                    </div>
-                                ))}}
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                <button type="submit" className="btn btn-primary" onClick={{this.save}}>Lưu</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-        )
-    }}
-}}
+import FileBox from "../../view/common/FileBox.jsx";
+import {{ createMulti{UpperCamel} }} from "./Redux.jsx";
+import EditModal from "./EditModal.jsx";
 
 class {UpperCamel}ImportPage extends React.Component {{
     constructor(props) {{
@@ -111,18 +16,20 @@ class {UpperCamel}ImportPage extends React.Component {{
         T.ready("/user/{url}");
     }}
 
-    onSuccess = (response) => {{
-        this.setState({{ data: response.data, message: <p className="text-center" style={{{{ color: "green"}}}}>{{response.data.length}} hàng được tải lên thành công</p> }});
-    }};
+    onSuccess = (response) => this.setState({{ data: response.data, message: <p className="text-center" style={{{{ color: "green"}}}}>{{response.data.length}} hàng được tải lên thành công</p> }});
 
-    showEdit = (e, index, item) => {{
+    onError = () => T.notify("Upload file bị lỗi!", "danger");
+
+    edit = (e, importIndex, item) => {{
         e.preventDefault();
-        this.editModal.current.show(index, item);
+        item.importIndex = importIndex;
+        this.editModal.current.show(item);
     }};
 
-    update = (index, changes, done) => {{
-        const data = this.state.data, currentValue = data[index];
-        const updateValue = Object.assign({{}}, currentValue, changes);
+    update = (changes, done) => {{
+        const index = changes.importIndex,
+            data = this.state.data,
+            updateValue = Object.assign({{}}, data[index], changes);
         data.splice(index, 1, updateValue);
         this.setState({{ data }});
         done && done();
@@ -143,11 +50,10 @@ class {UpperCamel}ImportPage extends React.Component {{
         }})
     }};
 
-    changeActive = (index, item, key) => {{
-        let change = {{}}
-        change[key] = !item[key];
-        this.update(index, change, () => {{
-            T.notify("Cập nhật bộ môn thành công!", "success");
+    changeActive = (item, index, key) => {{
+        let change = {{[key]: !item[key], importIndex: index}}
+        this.update(change, () => {{
+            T.notify("Cập nhật {lowername} thành công!", "success");
         }});
     }};
 
@@ -169,7 +75,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                                 <td style={{{{ textAlign: "right" }}}}>{{index + 1}}</td>
 {tableBody}                                <td>
                                     <div className="btn-group">
-                                        <a className="btn btn-primary" href="#" onClick={{e => this.showEdit(e, index, item)}}>
+                                        <a className="btn btn-primary" href="#" onClick={{e => this.edit(e, index, item)}}>
                                             <i className="fa fa-lg fa-edit" />
                                         </a>
                                         <a className="btn btn-danger" href="#" onClick={{e => this.delete(e, index)}}>
@@ -204,7 +110,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                     <div className="col-12 col-md-6 offset-md-3">
                         <div className="tile">
                             <div className="tile-body">
-                                <FileBox ref={{this.fileBox}} postUrl="/user/upload" uploadType="{UpperCamel}File" userData="{lowerCamel}ImportData" style={{{{ width: "100%", backgroundColor: "#fdfdfd" }}}} success={{this.onSuccess}} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                                <FileBox ref={{this.fileBox}} postUrl="/user/upload" uploadType="{UpperCamel}File" userData="{lowerCamel}ImportData" style={{{{ width: "100%", backgroundColor: "#fdfdfd" }}}} success={{this.onSuccess}} error={{this.onError}} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
                                 {{this.state.message}}
                             </div>
                             <div className="tile-footer text-right">
@@ -223,11 +129,10 @@ class {UpperCamel}ImportPage extends React.Component {{
                 <Link to="/user/{url}" className="btn btn-secondary btn-circle" style={{{{ position: "fixed", bottom: "10px" }}}}>
                     <i className="fa fa-lg fa-reply" />
                 </Link>
-                <button type="button" className="btn btn-primary btn-circle"
-                        style={{{{ position: "fixed", right: "10px", bottom: "10px" }}}} onClick={{this.save}}>
+                <button type="button" className="btn btn-primary btn-circle" disabled={{!this.state.data.some(x=>x)}} style={{{{ position: "fixed", right: "10px", bottom: "10px" }}}} onClick={{this.save}}>
                     <i className="fa fa-lg fa-save"/>
                 </button>
-                <{UpperCamel}Modal ref={{this.editModal}} update={{this.update}}/>
+                <EditModal ref={{this.editModal}} update={{this.update}}/>
             </main>
         );
     }}

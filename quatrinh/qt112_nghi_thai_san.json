@@ -1,7 +1,7 @@
 {
     "fullname": "Quá trình nghỉ thai sản",
     "name": "Nghỉ thai sản",
-    "keyword": ["qt", "nghi","thai","san"],
+    "keyword": ["qt", "nghi", "thai", "san"],
     "schema": {
         "SHCC": { "type": "text", "title": "SHCC"},
         "SO_KYHIEU_QD_NGHI_TSAN": { "type": "text", "title": "Số ký hiệu quyết định nghỉ thai sản"},
@@ -10,11 +10,10 @@
         "NGHI_DENGAY": { "type": "date", "title": "Nghỉ đến ngày"},
         "SO_KYHIEU_QD_TNHAN_TSAN": { "type": "text", "title": "Số ký hiệu quyết định tiếp nhận thai sản"},
         "NGAY_QD_TNHAN_TSAN": { "type": "date", "title": "Ngày quyết định tiếp nhận thai sản"},
-        "NGAY_TNHAN": { "type": "date", "title": "Ngày tiếp nhận"},
-        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+        "NGAY_TNHAN": { "type": "date", "title": "Ngày tiếp nhận"}
     },
     "key": "_id",
-    "searchFields": ["SHCC","SO_KYHIEU_QD_NGHI_TSAN","NGAY_QD_NGHI_TSAN"],
+    "searchFields": ["SHCC", "SO_KYHIEU_QD_NGHI_TSAN", "NGAY_QD_NGHI_TSAN"],
     "ExcelStartRow": 2,
     "menuNum": 112
 }

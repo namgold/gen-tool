@@ -11,8 +11,7 @@
         "DON_VI_KNHIEM": { "type": "text", "title": "Đơn vị kiêm nhiệm"},
         "BO_MON_KNHIEM": { "type": "text", "title": "Bộ môn kiêm nhiệm"},
         "SO_NGAYQD_THOI_KNHIEM": { "type": "text", "title": "Số ngày quyết định thôi kiêm nhiệm"},
-        "XOA_KNHIEM": { "type": "bool", "title": "Xoá kiêm nhiệm"},
-        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+        "XOA_KNHIEM": { "type": "bool", "title": "Xoá kiêm nhiệm"}
     },
     "key": "SO_KYHIEU_QD_KNHIEM",
     "searchFields": ["SHCC", "MS_KNHIEM", "SO_KYHIEU_QD_KNHIEM", "BO_MON_KNHIEM"],

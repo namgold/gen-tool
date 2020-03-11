@@ -9,7 +9,7 @@
         "TEN_TINH_TP": { "type": "text", "title": "Tên tỉnh-thành phố"}
     },
     "key": "MA_QUAN_HUYEN",
-    "searchFields": ["TEN_QUAN_HUYEN","TEN_TINH_TP"],
+    "searchFields": ["TEN_QUAN_HUYEN", "TEN_TINH_TP"],
     "ExcelStartRow": 2,
     "menuNum": 357
 }

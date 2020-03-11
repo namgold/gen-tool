@@ -1,7 +1,7 @@
 {
     "fullname": "Quá trình chức danh khoa học",
     "name": "Chức danh khoa học",
-    "keyword": ["qt", "chuc","danh","khoa","hoc"],
+    "keyword": ["qt", "chuc", "danh", "khoa", "hoc"],
     "schema": {
         "SHCC": { "type": "text", "title": "SHCC"},
         "CHUC_DANH": { "type": "text", "title": "Chức danh"},
@@ -9,11 +9,10 @@
         "NGAY_QD_CDKH": { "type": "date", "title": "Ngày quyết định chức danh khoa học"},
         "NGAY_CNHAN_CDANH": { "type": "date", "title": "Ngày công nhận chức danh"},
         "SO_KYHIEU_QD_BNHIEM": { "type": "text", "title": "Số ký hiệu quyết định bổ nhiệm"},
-        "NGAY_BONHIEM_CDANH": { "type": "date", "title": "Ngày bổ nhiệm chức danh"},
-        "NGAY_NHAP_HS": { "type": "date", "title": "Ngày nhập hồ sơ"}
+        "NGAY_BONHIEM_CDANH": { "type": "date", "title": "Ngày bổ nhiệm chức danh"}
     },
     "key": "SHCC",
-    "searchFields": ["SHCC","CHUC_DANH","SO_KYHIEU_QD_CDKH"],
+    "searchFields": ["SHCC", "CHUC_DANH", "SO_KYHIEU_QD_CDKH"],
     "ExcelStartRow": 2,
     "menuNum": 109
 }
