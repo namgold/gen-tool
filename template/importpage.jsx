@@ -16,18 +16,21 @@ class {UpperCamel}ImportPage extends React.Component {{
         T.ready("/user/{url}");
     }}
 
-    onSuccess = (response) => this.setState({{ data: response.data, message: <p className="text-center" style={{{{ color: "green"}}}}>{{response.data.length}} hàng được tải lên thành công</p> }});
+    onSuccess = (response) =>
+        this.setState({{
+            data: response.data.map((item, index) => Object.assign(item, {{ ImportIndex: index }})),
+            message: <p className="text-center" style={{{{ color: "green"}}}}>{{response.data.length}} hàng được tải lên thành công</p>
+        }});
 
     onError = () => T.notify("Upload file bị lỗi!", "danger");
 
-    edit = (e, importIndex, item) => {{
+    edit = (e, item) => {{
         e.preventDefault();
-        item.importIndex = importIndex;
         this.editModal.current.show(item);
     }};
 
     update = (changes, done) => {{
-        const index = changes.importIndex,
+        const index = changes.ImportIndex,
             data = this.state.data,
             updateValue = Object.assign({{}}, data[index], changes);
         data.splice(index, 1, updateValue);
@@ -50,12 +53,7 @@ class {UpperCamel}ImportPage extends React.Component {{
         }})
     }};
 
-    changeActive = (item, index, key) => {{
-        let change = {{[key]: !item[key], importIndex: index}}
-        this.update(change, () => {{
-            T.notify("Cập nhật {lowername} thành công!", "success");
-        }});
-    }};
+    changeActive = (item, index, key) => this.update({{[key]: !item[key], ImportIndex: index}}, () => T.notify("Cập nhật {lowername} thành công!", "success"));
 
     render() {{
         const {{ data }} = this.state;

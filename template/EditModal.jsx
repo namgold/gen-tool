@@ -22,6 +22,7 @@ export default class EditModal extends React.Component {{
     show = (item) => {{
         if (item) this.setState({{
             {key}: item && item.{key} ? item.{key} : null,
+            ImportIndex: item && item.ImportIndex ? item.ImportIndex : null,
             isUpdate: true
         }})
         else item = {{}}
@@ -37,7 +38,8 @@ export default class EditModal extends React.Component {{
             return;
         }}
         if (this.state.isUpdate) {{
-            changes.{key} = this.state.{key};
+            if (this.state.{key}) changes.{key} = this.state.{key};
+            else if (this.state.ImportIndex) changes.ImportIndex = this.state.ImportIndex;
             this.props.update(changes, () => {{
                 T.notify("Cập nhật {lowername} thành công!", "success");
                 $(this.modal.current).modal("hide");
@@ -53,7 +55,7 @@ export default class EditModal extends React.Component {{
     handleNumberInputChange = event => {{
         let {{ value, max, id }} = event.target;
         value = Number.parseInt(value)
-        value = value && max ? Math.min(max, value) : value;
+        value = value ? (max ? Math.min(max, value) : value) : '';
         this.setState({{ [id]: value }});
     }};
 
