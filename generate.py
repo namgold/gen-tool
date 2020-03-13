@@ -1,11 +1,10 @@
 import random, os, json, shutil, importlib, json
+from threading import Thread
 from lib.SafeOpen import SafeOpen
 from lib.Copytree import Copytree
 from distutils import util
 
 
-formatItems = {}
-outputNames = {}
 typeMongoMap = {
     "text": "String",
     "number": "Number",
@@ -29,7 +28,7 @@ def createTableBody(key, schema):
         else:
             q = '                                <td>{}</td>\n'
             if i == key:
-                q = q.format(f'<a href="#" onClick={{e => this.edit(e, index, item)}}>{{item["{i}"]}}</a>')
+                q = q.format(f'<a href="#" onClick={{e => this.edit(e, item)}}>{{item["{i}"]}}</a>')
             else:
                 if schema[i]['type'] == "date":
                     q = q.format(f'{{item["{i}"] ? new Date(item["{i}"]).ddmmyyyy() : ""}}')
@@ -49,7 +48,7 @@ def createModalBody(key, schema):
                 f'                                    <label htmlFor="input{i}">{schema[i]["title"]}</label>&nbsp;&nbsp;\n'
                  '                                    <div className="toggle">\n'
                  '                                        <label>\n'
-                f'                                            <input type="checkbox" id="input{i}"/>\n'
+                f'                                            <input type="checkbox" id="input{i}" />\n'
                  '                                            <span className="button-indecator" />\n'
                  '                                        </label>\n'
                  '                                    </div>\n'
@@ -119,8 +118,34 @@ def createModalInitState(schema):
                 a += f',\n            input{i}: {schema[i]["default"]}'
     return a
 
-def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow):
-    global formatItems, outputNames
+def createBomonHeader():
+    return '''                            <th style={{minWidth: "30%", whiteSpace: "nowrap"}}>MS bộ môn</th>
+                            <th style={{minWidth: "30%", whiteSpace: "nowrap"}}>Tên bộ môn</th>
+                            <th style={{minWidth: "20%", whiteSpace: "nowrap"}}>Tên tiếng anh</th>
+                            <th style={{minWidth: "20%", whiteSpace: "nowrap"}}>Quyết định thành lập</th>
+                            <th style={{minWidth: "auto",textAlign: "left", whiteSpace: "nowrap"}}>Mã đơn vị</th>
+                            <th style={{minWidth: "16.6667%", textAlign: "center", whiteSpace: "nowrap"}}>Xoá tên</th>
+'''
+
+def createBomonBody():
+    return '''                                <td>
+                                    <a href="#" onClick={e => this.edit(e, item)}>{item["MS_BM"]}</a> 
+                                </td>
+                                <td>{item["TEN_BM"]}</td>
+                                <td>{item["TEN_TIENG_ANH"]}</td>
+                                <td>{item["SO_QD_TLAP"]} <br/>{item["NGAY_QD_TLAP"]?'('+new Date(item["NGAY_QD_TLAP"]).ddmmyyyy()+')':null}</td>
+                                <td style={{ textAlign: "left" }}>{item["MS_DVI"]}</td>
+                                <td className="toggle" style={{ textAlign: "center" }}>
+                                        <label>
+                                            <input type="checkbox" checked={item["XOA_TEN"]} onChange={() => this.changeActive(item, "XOA_TEN")} />
+                                            <span className="button-indecator" />
+                                        </label>
+                                        {item["SO_QD_XOA_TEN"] ? (<br/>,item["SO_QD_XOA_TEN"]) : ''}
+                                        {item["NGAY_QD_XOA_TEN"] ? (<br/>,item["NGAY_QD_XOA_TEN"]) : ''}
+                                    </td>
+'''
+
+def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, isCopyOutputToRepo, repo):
     # Initing names
     keyword = [i.lower() for i in keyword]
     url = ('danh-muc/' if keyword[0]=='dm' else 'qua-trinh/') + "-".join(keyword[1:])
@@ -139,6 +164,8 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
     modalSavePage = createModalSavePage(schema)
     modalSaveCondition = createModalSaveCondition(key)
     modalInitState = createModalInitState(schema)
+    bomonHeader = createBomonHeader()
+    bomonBody = createBomonBody()
     formatItems = {
         "url" : url,
         "UpperCamel" : UpperCamel,
@@ -164,6 +191,9 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         'menuPrefix': 4 if keyword[0]=='qt' else 3,
         'menuTitle': 'Quá trình' if keyword[0]=='qt' else 'Danh mục',
     }
+    if name == 'Bộ môn':
+        formatItems['tableHeader'] = bomonHeader
+        formatItems['tableBody'] = bomonBody
     outputNames = {
         "Controller.js":  f"output/src/module/{UpperCamel}/Controller.js",
         "EditModal.jsx":  f"output/src/module/{UpperCamel}/EditModal.jsx",
@@ -172,14 +202,12 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         "Model.js":       f"output/src/module/{UpperCamel}/Model.js",
         "Page.jsx":       f"output/src/module/{UpperCamel}/Page.jsx",
         "Redux.jsx":      f"output/src/module/{UpperCamel}/Redux.jsx",
-        "admin.jsx":       "output_add/src/view/admin/admin.jsx",
     }
 
     # Creating files
     for i in outputNames:
         SafeOpen(outputNames[i], "w", encoding="utf8").write(SafeOpen("template/" + i, "r", encoding="utf8").read().format(**formatItems))
-
-    # Excel
+    # Creating excel
     excelSrc = f"excel/SampleUpload{UpperCamel}.xlsx"
     excelDst = f"output/public/download/SampleUpload{UpperCamel}.xlsx"
     defaultExcelContent = "No content."
@@ -195,13 +223,11 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         SafeOpen(excelSrc, "w").write(defaultExcelContent)
         print(f"Excel file {excelSrc} not found, sample file created.")
 
-    # if not isMulti:
+    # Copying output
+    copyOutputToRepo(url, lowerCamel, UpperCamel, repo, isCopyOutputToRepo)
+    print("Done", menuNum, name)
 
-def addAdmin(src, dst):
-    global formatItems
-    UpperCamel = formatItems['UpperCamel']
-    lowerCamel = formatItems['lowerCamel']
-    url = formatItems['url']
+def addAdmin(url, lowerCamel, UpperCamel, dst):
     items = [
         f"\nimport {lowerCamel} from '../../module/{UpperCamel}/index.jsx';\n",
         f", {lowerCamel}\n",
@@ -230,35 +256,43 @@ def resetOutputFolder():
         shutil.rmtree("./output_add")
     print("Cleared output folders")
 
-def copyOutputToRepo(repo, isCopyOutputToRepo):
+def copyOutputToRepo(url, lowerCamel, UpperCamel, repo, isCopyOutputToRepo):
+    def copyFile(src, dst):
+        if not os.path.exists(dst) or open(src, "rb").read() != open(dst, "rb").read():
+            if isCopyOutputToRepo:
+                SafeOpen(dst, 'w').close()
+                shutil.copy(src, dst)
+                print("Copied", src)
+            else:
+                print("Diff found", src)
+
     if os.path.isdir(repo) and os.path.basename(repo) == 'hcmut':
-        for dirpath, dirnames, filenames in os.walk("output"):
-            for i in filenames:
-                src = os.path.join(dirpath, i)
-                dst = os.path.join(repo, os.path.relpath(dirpath, 'output'), i)
-                if not os.path.exists(dst) or open(src, "rb").read() != open(dst, "rb").read():
-                    if isCopyOutputToRepo:
-                        SafeOpen(dst, 'w').close()
-                        shutil.copy(src, dst)
-                        print("Copied", src)
-                    else:
-                        print("Diff found", src)
-        if isCopyOutputToRepo:
-            addAdmin(outputNames["admin.jsx"], os.path.join(repo, os.path.relpath(outputNames["admin.jsx"], 'output_add')))
+        dirpath = os.path.join('src', 'module', UpperCamel)
+        dirpathOutput = os.path.join('output', 'src', 'module', UpperCamel)
+        for filename in os.listdir(dirpathOutput):
+            if os.path.isfile(os.path.join(dirpathOutput, filename)):
+                src = os.path.join('output', dirpath, filename)
+                dst = os.path.join(repo, dirpath, filename)
+                copyFile(src, dst)
+            ExcelSrc = os.path.join('output', 'public', 'download', f'SampleUpload{UpperCamel}.xlsx')
+            ExcelDst = os.path.join(repo, 'public', 'download', f'SampleUpload{UpperCamel}.xlsx')
+            copyFile(ExcelSrc, ExcelDst)
+    if isCopyOutputToRepo:
+        addAdmin(url, lowerCamel, UpperCamel, os.path.join(repo, 'src', 'view', 'admin', 'admin.jsx'))
+
 
 def generateAllProfiles(repoPath, isCopyOutputToRepo):
+    threadPool = []
     def run(dir):
         for i in os.listdir(dir):
             if os.path.isfile(os.path.join(dir, i)):
                 content = json.loads(open(os.path.join(dir, i), encoding="utf8").read())
-                generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"], content["searchFields"], content["ExcelStartRow"])
-                if isCopyOutputToRepo:
-                    addAdmin(outputNames["admin.jsx"], os.path.join(repoPath, os.path.relpath(outputNames["admin.jsx"], 'output_add')))
-                print("Done", content["menuNum"], content["name"])
+                threadPool.append(Thread(target=generate, args=(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"], content["searchFields"], content["ExcelStartRow"], isCopyOutputToRepo, repoPath)))
     resetOutputFolder()
     run('danhmuc')
     run('quatrinh')
-    copyOutputToRepo(repoPath, isCopyOutputToRepo)
+    [i.start() for i in threadPool]
+    [i.join() for i in threadPool]
     print("Done all profiles")
 
 def generateOneProfile(profilePath, repoPath, isCopyOutputToRepo):
@@ -269,5 +303,4 @@ def generateOneProfile(profilePath, repoPath, isCopyOutputToRepo):
         return
     resetOutputFolder()
     generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"], content["searchFields"], content["ExcelStartRow"])
-    copyOutputToRepo(repoPath, isCopyOutputToRepo)
     print("Done", content["menuNum"], content["name"])

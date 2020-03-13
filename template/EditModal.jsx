@@ -4,7 +4,7 @@ export default class EditModal extends React.Component {{
     constructor(props) {{
         super(props);
         this.state = {{
-            {key}: null,
+            _id: null,
             isUpdate: false{modalInitState}
         }};
         this.modal = React.createRef();
@@ -21,11 +21,18 @@ export default class EditModal extends React.Component {{
 
     show = (item) => {{
         if (item) this.setState({{
-            {key}: item && item.{key} ? item.{key} : null,
-            ImportIndex: item && item.ImportIndex ? item.ImportIndex : null,
+            _id: item && item._id ? item._id : null,
+            ImportIndex: item && typeof item.ImportIndex == 'number' ? item.ImportIndex : null,
             isUpdate: true
         }})
-        else item = {{}}
+        else {{
+            item = {{}};
+            this.setState({{
+                _id: null,
+                ImportIndex: null,
+                isUpdate: false
+            }})
+        }}
 {modalShow}        $(this.modal.current).modal("show");
         $("input[auto-focus]").focus();
     }};
@@ -38,8 +45,8 @@ export default class EditModal extends React.Component {{
             return;
         }}
         if (this.state.isUpdate) {{
-            if (this.state.{key}) changes.{key} = this.state.{key};
-            else if (this.state.ImportIndex) changes.ImportIndex = this.state.ImportIndex;
+            if (typeof this.state.ImportIndex == 'number') changes.ImportIndex = this.state.ImportIndex;
+            else if (this.state._id) changes._id = this.state._id;
             this.props.update(changes, () => {{
                 T.notify("Cập nhật {lowername} thành công!", "success");
                 $(this.modal.current).modal("hide");
@@ -65,7 +72,7 @@ export default class EditModal extends React.Component {{
                 <form className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">{{this.state.data ? "Cập nhật" : "Tạo mới"}} {lowername}</h5>
+                            <h5 className="modal-title">{{this.state.isUpdate ? "Cập nhật" : "Tạo mới"}} {lowername}</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

@@ -53,7 +53,7 @@ class {UpperCamel}ImportPage extends React.Component {{
         }})
     }};
 
-    changeActive = (item, index, key) => this.update({{[key]: !item[key], ImportIndex: index}}, () => T.notify("Cập nhật {lowername} thành công!", "success"));
+    changeActive = (item, key) => this.update({{[key]: !item[key], ImportIndex: item.ImportIndex}}, () => T.notify("Cập nhật {lowername} thành công!", "success"));
 
     render() {{
         const {{ data }} = this.state;
@@ -73,7 +73,7 @@ class {UpperCamel}ImportPage extends React.Component {{
                                 <td style={{{{ textAlign: "right" }}}}>{{index + 1}}</td>
 {tableBody}                                <td>
                                     <div className="btn-group">
-                                        <a className="btn btn-primary" href="#" onClick={{e => this.edit(e, index, item)}}>
+                                        <a className="btn btn-primary" href="#" onClick={{e => this.edit(e, item)}}>
                                             <i className="fa fa-lg fa-edit" />
                                         </a>
                                         <a className="btn btn-danger" href="#" onClick={{e => this.delete(e, index)}}>

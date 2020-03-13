@@ -13,7 +13,17 @@
         "NUOC_DEN": { "type": "text", "title": "Nước đến"},
         "NOI_DEN": { "type": "text", "title": "Nơi đến"},
         "KINH_PHI": { "type": "text", "title": "Kinh phí"},
-        "LUONG_VA_PHU_CAP": { "type":"text", "title": "Lương và phụ cấp"}
+        "LUONG_VA_PHU_CAP": { "type":"text", "title": "Lương và phụ cấp"},
+        "TEN_KHOA": { "type":"text", "title": "Tên khoa"},
+        "TEN_BO_MON": { "type":"text", "title": "Tên bộ môn"},
+        "NGAY_PHAI_VE": { "type":"date", "title": "Ngày phải về"},
+        "NGAY_VE_THUC_TE": { "type":"date", "title": "Ngày về thực tế"},
+        "CHUONG_TRINH_HOAN_THANH": { "type":"text", "title": "Chương trình hoàn thành"},
+        "TINH_TRANG_BANG": { "type":"text", "title": "Tình trạng bằng"},
+        "SO_KYHIEU_QD_TIEP_NHAN": { "type":"text", "title": "Số ký hiệu quyết định tiếp nhận"},
+        "NGAY_QD_TIEP_NHAN": { "type":"date", "title": "Ngày quyết định tiếp nhận"},
+        "GIAY_XNHAN_DENGHI": { "type":"bool", "title": "Giấy xác nhận và đề nghị"},
+        "GHI_CHU": { "type":"text", "title": "Ghi chú"}
     },
     "key": "_id",
     "searchFields": ["SHCC", "SO_KYHIEU_QD_DI_NNGOAI"],

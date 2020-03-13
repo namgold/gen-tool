@@ -14,11 +14,11 @@ module.exports = app => {{
                 model.findOne({{ {key}: data.{key} }}).then(item => {{
                     if (item) reject({{ exist: true, message: "{name} " + data.{key} + " đã tồn tại" }});
                     else model.create(data).then(item => resolve(item)).catch(error => reject(error));
-                }})//.catch(error => reject(error))
+                }})
             )
         }},
 
-        createOrUpdate: (data, done) => {{
+        updateOrCreate: (data, done) => {{
             if (done)
                 model.findOne({{ {key}: data.{key} }}, (error, item) => {{
                     if (error) done(error);
@@ -27,7 +27,7 @@ module.exports = app => {{
                 }});
             else return new Promise((resolve, reject) =>
                 model.findOne({{ {key}: data.{key} }}).then(item => {{
-                    if (item) app.model.{lowerCamel}.update(data, (error, data) => !(error && reject(error) + ' ') && resolve(data));
+                    if (item) model.findOneAndUpdate({{ {key}: data.{key} }}, {{ $set: data }}, {{ new: true }}, (error, data) => !(error && reject(error) + ' ') && resolve(data));
                     else model.create(data).then(item => resolve(item)).catch(error => reject(error));
                 }})
             )
@@ -53,13 +53,13 @@ module.exports = app => {{
                 model.findById(condition, done), // condition is _id
 
         update: (changes, done) => {{
-            if (changes.{key})
-                model.findOne({{ {key}: changes.{key} }}, (error, item) => {{
+            if (changes._id)
+                model.findOne({{ _id: changes._id }}, (error, item) => {{
                     if (error) done && done(error);
-                    else if (item) model.findOneAndUpdate({{ {key}: changes.{key} }}, {{ $set: changes }}, {{ new: true }}, done)
-                    else done && done("{key} " + changes.{key} + " not found");
+                    else if (item) model.findOneAndUpdate({{ _id: changes._id }}, {{ $set: changes }}, {{ new: true }}, done);
+                    else done && done("Item not found");
                 }});
-            else done && done("{key} " + changes.{key} + " not found");
+            else done && done("Item not found");
         }},
 
         delete: (_id, done) => model.findById(_id, (error, item) => {{

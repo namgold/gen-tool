@@ -34,7 +34,7 @@ module.exports = app => {{
     app.post("/api/{url}/multiple", app.permission.check("{lowerCamel}:write"), (req, res) => {{
         const handleCreate = index => {{
             if (index >= req.body.multi{UpperCamel}.length) res.send({{ data: "Upload success" }})
-            else app.model.{lowerCamel}.createOrUpdate(req.body.multi{UpperCamel}[index]).then(item => handleCreate(index + 1)).catch(error => res.send({{ error }}))
+            else app.model.{lowerCamel}.updateOrCreate(req.body.multi{UpperCamel}[index]).then(item => handleCreate(index + 1)).catch(error => res.send({{ error }}))
         }};
         handleCreate(0);
     }});

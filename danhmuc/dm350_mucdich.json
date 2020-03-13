@@ -1,13 +1,13 @@
 {
     "fullname": "Danh mục mục đích nước ngoài",
     "name": "Mục đích nước ngoài",
-    "keyword": ["dm", "muc", "dich"],
+    "keyword": ["dm", "muc", "dich", "nuoc", "ngoai"],
     "schema": {
-        "MA_MD": { "type": "text", "title": "Mã mục đích"},
+        "MA_MD": { "type": "text", "title": "Mã mục đích nước ngoài"},
         "DIEN_GIAI": { "type": "text", "title": "Diễn giải"}
     },
     "key": "MA_MD",
-    "searchFields": ["MA_MD"],
+    "searchFields": ["MA_MD", "DIEN_GIAI"],
     "ExcelStartRow": 2,
     "menuNum": 350
 }

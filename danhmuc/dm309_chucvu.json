@@ -1,0 +1,25 @@
+{
+    "fullname": "Danh mục chức vụ",
+    "name": "Chức vụ",
+    "keyword": ["dm", "ngach"],
+    "schema": {
+        "maQL": { "type": "text", "title": "Mã QL" },
+        "tenChucVu": { "type": "text", "title": "Tên chức vụ" },
+        "heSoPCQL": { "type": "number", "title": "Hệ số PCQL" },
+        "phanNgachCBQL": { "type": "text", "title": "Phân ngạch CBQL" },
+        "maNhomQuanLy": { "type": "text", "title": "Mã nhóm QL" },
+        "maNhomQuanLyKhongGD": { "type": "text", "title": "Mã nhóm QL không GD" },
+        "tyLeDinhMuc": { "type": "number", "title": "Tỷ lệ định mức" },
+        "kCM": { "type": "number", "title": "Kcm", "step": 0.01 },
+        "kLD": { "type": "number", "title": "Kld", "step": 0.01 },
+        "kI": { "type": "number", "title": "Ki", "step": 0.01 },
+        "cap": { "type": "number", "title": "Cấp" },
+        "chucVuDoanThe": { "type": "number", "title": "Chức vụ đoàn thể" },
+        "note": { "type": "text", "title": "Ghi chú" },
+        "nam": { "type": "number", "title": "Năm" }
+    },
+    "key": "_id",
+    "searchFields": ["MA_NGACH", "MASO_CDNN", "TEN_NGACH_CDNN"],
+    "ExcelStartRow": 2,
+    "menuNum": 299
+}

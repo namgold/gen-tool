@@ -3,11 +3,11 @@
     "name": "Tỉnh thành phố",
     "keyword": ["dm", "tinh", "thanh", "pho"],
     "schema": {
-        "MA_TINH": { "type": "text", "title": "Mã tỉnh / thành phố"},
-        "TEN_TINH_TP": { "type": "text", "title": "Tên tỉnh / thành phố"}
+        "ma": { "type": "text", "title": "Mã tỉnh / thành phố"},
+        "ten": { "type": "text", "title": "Tên tỉnh / thành phố"}
     },
-    "key": "MA_TINH",
-    "searchFields": ["TEN_TINH_TP", "MA_TINH"],
+    "key": "ma",
+    "searchFields": ["ma", "ten"],
     "ExcelStartRow": 2,
     "menuNum": 304
 }
