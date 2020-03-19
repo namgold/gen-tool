@@ -268,8 +268,6 @@ def addAdmin(url, lowerCamel, UpperCamel, dst):
 def resetOutputFolder():
     if os.path.exists("./output") and os.path.isdir("./output"):
         shutil.rmtree("./output")
-    if os.path.exists("./output_add") and os.path.isdir("./output_add"):
-        shutil.rmtree("./output_add")
     print("Cleared output folders")
 
 def copyOutputToRepo(url, lowerCamel, UpperCamel, repo, isCopyOutputToRepo):
