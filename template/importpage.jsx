@@ -2,13 +2,13 @@ import React from "react";
 import {{ connect }} from "react-redux";
 import {{ Link }} from "react-router-dom";
 import FileBox from "../../view/common/FileBox.jsx";
-import {{ createMulti{UpperCamel} }} from "./Redux.jsx";
-import EditModal from "./EditModal.jsx";
+import {{ createMulti{UpperCamel} }} from "./redux.js";
+import EditModal from "./editModal.jsx";
 
 class {UpperCamel}ImportPage extends React.Component {{
     constructor(props) {{
         super(props);
-        this.state = {{ data: [], message: "" }};
+        this.state = {{ data: [], message: "", saving: false }};
         this.editModal = React.createRef();
     }}
 
@@ -17,10 +17,7 @@ class {UpperCamel}ImportPage extends React.Component {{
     }}
 
     onSuccess = (response) =>
-        this.setState({{
-            data: response.data.map((item, index) => Object.assign(item, {{ ImportIndex: index }})),
-            message: <p className="text-center" style={{{{ color: "green"}}}}>{{response.data.length}} hàng được tải lên thành công</p>
-        }});
+        this.setState({{ data: response.data, message: <p className="text-center" style={{{{ color: "green"}}}}>{{response.data.length}} hàng được tải lên thành công</p>}});
 
     onError = () => T.notify("Upload file bị lỗi!", "danger");
 
@@ -29,34 +26,60 @@ class {UpperCamel}ImportPage extends React.Component {{
         this.editModal.current.show(item);
     }};
 
-    update = (changes, done) => {{
-        const index = changes.ImportIndex,
-            data = this.state.data,
-            updateValue = Object.assign({{}}, data[index], changes);
-        data.splice(index, 1, updateValue);
-        this.setState({{ data }});
-        done && done();
+    update = (condition, changes, done) => {{
+        const data = JSON.parse(JSON.stringify(this.state.data));
+        for (var i = 0; i < data.length; i++)
+            if (data[i].{key} == condition.{key}) {{
+                data[i] = Object.assign({{}}, data[i], changes)
+                this.setState({{ data }});
+                done && done(null, data[i]);
+                return;
+            }}
+        done && done("Item not found")
     }};
 
     delete = (e, index) => {{
         e.preventDefault();
-        const data = this.state.data;
-        data.splice(index, 1);
-        this.setState({{ data }});
+        const ten = this.state.data[index].ten;
+        T.confirm("Tỉnh/thành phố", `Bạn có chắc bạn muốn xóa tỉnh/thành phố ${{ten ? `<b>${{ten}}</b>` : 'này' }}?`, "warning", true, isConfirm => {{
+            if (isConfirm) {{
+                const data = this.state.data;
+                data.splice(index, 1);
+                this.setState({{ data }});
+                T.alert(`Xoá tỉnh/thành phố ${{ten}} thành công!`, "success", false, 800);
+            }}
+        }});
     }};
 
     save = (e) => {{
+        var doSave = (isOverride) => {{
+            var data = JSON.parse(JSON.stringify(this.state.data));
+            this.setState({{ saving: true }});
+            this.props.createMulti{UpperCamel}(data, isOverride, (error, data) => {{
+                if (error) T.notify("Cập nhật dữ liệu bị lỗi!", "danger");
+                else {{
+                    T.notify(`Cập nhật ${{data && data.items ? data.items.length + ' ': ''}}{lowername} thành công!`, "success");
+                    this.props.history.push("/user/{url}");
+                }}
+                this.setState({{ saving: false }});
+            }})
+        }}
         e.preventDefault();
-        this.props.createMulti{UpperCamel}(this.state.data, () => {{
-            T.notify("Cập nhật {lowername} thành công!", "success");
-            this.props.history.push("/user/{url}");
+        T.confirm3("Cập nhật dữ liệu", "Bạn có muốn <b>ghi đè</b> dữ liệu đang có bằng dữ liệu mới không?<br>Nếu không rõ, hãy chọn <b>Không ghi đè</b>!", "warning", "Ghi đè", "Không ghi đè", isOverride => {{
+            if (isOverride !== null) {{
+                if (isOverride)
+                    T.confirm("Ghi đè dữ liệu", "Bạn có chắc chắn muốn ghi đè dữ liệu?", "warning", true, isConfirm => {{
+                        if (isConfirm) doSave('TRUE');
+                    }})
+                else doSave('FALSE');
+            }}
         }})
     }};
 
-    changeActive = (item, key) => this.update({{[key]: !item[key], ImportIndex: item.ImportIndex}}, () => T.notify("Cập nhật {lowername} thành công!", "success"));
+    changeActive = (item, key) => this.update({{{key}: item.{key}}}, {{[key]: !item[key]}}, () => T.notify("Cập nhật {lowername} thành công!", "success"));
 
     render() {{
-        const {{ data }} = this.state;
+        const {{ data }} = this.state, readOnly = false;
         let table = null;
         if (data && data.length > 0) {{
             table = (
@@ -127,8 +150,8 @@ class {UpperCamel}ImportPage extends React.Component {{
                 <Link to="/user/{url}" className="btn btn-secondary btn-circle" style={{{{ position: "fixed", bottom: "10px" }}}}>
                     <i className="fa fa-lg fa-reply" />
                 </Link>
-                <button type="button" className="btn btn-primary btn-circle" disabled={{!this.state.data.some(x=>x)}} style={{{{ position: "fixed", right: "10px", bottom: "10px" }}}} onClick={{this.save}}>
-                    <i className="fa fa-lg fa-save"/>
+                <button type="button" className="btn btn-primary btn-circle" disabled={{!this.state.data.some(x=>x) || this.state.saving}} style={{{{ position: "fixed", right: "10px", bottom: "10px" }}}} onClick={{this.save}}>
+                    <i className="fa fa-lg fa-save" />
                 </button>
                 <EditModal ref={{this.editModal}} update={{this.update}}/>
             </main>

@@ -1,7 +1,7 @@
 {
     "fullname": "Danh mục hình thức kỷ luật kèm theo",
     "name": "Hình thức kỷ luật kèm theo",
-    "keyword": ["dm", "htuc", "kluat", "kem", "theo"],
+    "keyword": ["dm", "hinh", "thuc", "ky", "luat", "kem", "theo"],
     "schema": {
         "MA_KL": { "type": "text", "title": "Mã kỷ luật"},
         "DIEN_GIAI": { "type": "text", "title": "Tên kỷ luật"},

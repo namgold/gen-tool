@@ -21,7 +21,7 @@ def createTableBody(key, schema):
         if schema[i]['type'] == "bool":
             q = (f'                                <td className="toggle" style={{{{ textAlign: "center" }}}}>\n'
                  f'                                    <label>\n'
-                 f'                                        <input type="checkbox" checked={{item["{i}"]}} onChange={{() => this.changeActive(item, "{i}")}} />\n'
+                 f'                                        <input type="checkbox" checked={{item.{i} ? true : false}} onChange={{() => !readOnly && this.changeActive(item, "{i}")}} />\n'
                  f'                                        <span className="button-indecator" />\n'
                  f'                                    </label>\n'
                  f'                                </td>\n')
@@ -44,15 +44,15 @@ def createModalBody(key, schema):
     autofocused = False
     for pi, i in enumerate(schema):
         if schema[i]['type'] == "bool":
-            q = ('                                <div className="form-group col-12 col-md-6" style={{ display: "inline-flex", width: "100%" }}>\n'
-                f'                                    <label htmlFor="input{i}">{schema[i]["title"]}</label>&nbsp;&nbsp;\n'
-                 '                                    <div className="toggle">\n'
-                 '                                        <label>\n'
-                f'                                            <input type="checkbox" id="input{i}" />\n'
-                 '                                            <span className="button-indecator" />\n'
-                 '                                        </label>\n'
-                 '                                    </div>\n'
-                 '                                </div>\n')
+            q = ('                            <div className="form-group col-12 col-md-6" style={{ display: "inline-flex", width: "100%" }}>\n'
+                f'                                <label htmlFor="input{i}">{schema[i]["title"]}</label>&nbsp;&nbsp;\n'
+                 '                                <div className="toggle">\n'
+                 '                                    <label>\n'
+                f'                                        <input type="checkbox" id="input{i}" disabled={{readOnly}} />\n'
+                 '                                        <span className="button-indecator" />\n'
+                 '                                    </label>\n'
+                 '                                </div>\n'
+                 '                            </div>\n')
         else:
             inputAttribute = {
                 "id": f'"input{i}"',
@@ -72,36 +72,37 @@ def createModalBody(key, schema):
                 inputAttribute["type"] = f'"{schema[i]["type"]}"'
             if 'step' in schema[i]: inputAttribute["step"] = f'{{{schema[i]["step"]}}}'
             if pi == 0: inputAttribute["auto-focus"] = '""'
+            if 'maxLength' in schema[i]: inputAttribute["maxLength"] = f'{{{schema[i]["maxLength"]}}}'
             inputAttributeString = ' '.join([key+"="+inputAttribute[key] for key in inputAttribute])
-            q = (f'                                <div className="form-group col-12 col-md-6">\n'
-                 f'                                    <label htmlFor="input{i}">{schema[i]["title"]}</label>\n'
-                 f'                                    <input className="form-control" {inputAttributeString} />\n'
-                 f'                                </div>\n')
+            q = (f'                            <div className="form-group col-12 col-md-6">\n'
+                 f'                                <label htmlFor="input{i}">{schema[i]["title"]}</label>\n'
+                 f'                                <input className="form-control" {inputAttributeString} readOnly={{readOnly}}/>\n'
+                 f'                            </div>\n')
         a += q
     return a
 
 def createModalShow(schema):
-    a = ''
+    a = []
     for i in schema:
         if schema[i]['type'] == "bool":
             defaultValue = util.strtobool(schema[i]['default']) if 'default' in schema[i] else False
-            a += f"        $('#input{i}').prop('checked', item['{i}'] ? item['{i}'] : {'true' if defaultValue else 'false'});\n"
+            a.append(f"        $('#input{i}').prop('checked', item.{i} ? true : false);")
         elif schema[i]['type'] == "date":
-            a += f"        $('#input{i}').val(item['{i}'] ? T.dateToText(item['{i}'], 'yyyy-mm-dd') : '');\n"
+            a.append(f"        $('#input{i}').val(item.{i} ? T.dateToText(item.{i}, 'yyyy-mm-dd') : '');")
         elif schema[i]['type'] == "month":
-            a += f"        $('#input{i}').val(item['{i}'] ? T.dateToText(item['{i}'], 'yyyy-mm') : '');\n"
+            a.append(f"        $('#input{i}').val(item.{i} ? T.dateToText(item.{i}, 'yyyy-mm') : '');")
         else:
-            a += f"        $('#input{i}').val(item['{i}'] ? item['{i}'] : null);\n"
-    return a
+            a.append(f"        $('#input{i}').val(item.{i} ? item.{i} : null);")
+    return '\n'.join(a)
 
 def createModalSavePage(schema):
-    a = ''
+    a = []
     for i in schema:
         if schema[i]['type'] == "bool":
-            a += f"        changes['{i}'] = $('#input{i}')[0].checked;\n"
+            a.append(f"            {i}: $('#input{i}')[0].checked ? 1 : 0")
         else:
-            a += f"        changes['{i}'] = $('#input{i}').val().trim();\n"
-    return a
+            a.append(f"            {i}: $('#input{i}').val().trim()")
+    return ',\n'.join(a)
 
 def createModalSaveCondition(key):
     return '' if key == '_id' else f" || !changes['{key}']"
@@ -124,8 +125,7 @@ def createBomonHeader():
                             <th style={{minWidth: "20%", whiteSpace: "nowrap"}}>Tên tiếng anh</th>
                             <th style={{minWidth: "20%", whiteSpace: "nowrap"}}>Quyết định thành lập</th>
                             <th style={{minWidth: "auto",textAlign: "left", whiteSpace: "nowrap"}}>Mã đơn vị</th>
-                            <th style={{minWidth: "16.6667%", textAlign: "center", whiteSpace: "nowrap"}}>Xoá tên</th>
-'''
+                            <th style={{minWidth: "16.6667%", textAlign: "center", whiteSpace: "nowrap"}}>Xoá tên</th>\n'''
 
 def createBomonBody():
     return '''                                <td>
@@ -144,8 +144,20 @@ def createBomonBody():
                                         {item["NGAY_QD_XOA_TEN"] ? (<br/>,item["NGAY_QD_XOA_TEN"]) : ''}
                                     </td>
 '''
+def createSearchCondition(searchFields):
+    return ','.join([f'\n            "{i}": value' for i in searchFields])
 
-def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelStartRow, isCopyOutputToRepo, repo):
+def createControllerUpload(schema):
+    abc = []
+    for pi, i in enumerate(schema):
+        if schema[i]['type'] == 'bool':
+            abc.append(f"                            '{i}': value[{pi+1}].toLowerCase() === 'true' ? 1 : 0")
+        else:
+            abc.append(f"                            '{i}': value[{pi+1}]")
+    return ',\n'.join(abc)
+
+def generate(content, isCopyOutputToRepo, repo):
+    (fullname, name, keyword, schema, key, represent, searchFields, ExcelStartRow, menuNum) = content.values()
     # Initing names
     keyword = [i.lower() for i in keyword]
     url = ('danh-muc/' if keyword[0]=='dm' else 'qua-trinh/') + "-".join(keyword[1:])
@@ -154,10 +166,9 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
     UPPER_SNAKE = "_".join(map(lambda x: x.upper(), keyword))
     lowername = name.lower()
     searchFields = ", ".join('{{ "{}": value }}'.format(i) for i in searchFields )
-
     # Initing data
     schemaMongo = {i: typeMongoMap[schema[i]["type"]] for i in schema}
-    tableHeader = ''.join(f'                            <th style={{{{ minWidth: "30%", whiteSpace: "nowrap" }}}}>{schema[i]["title"]}</th>\n' for i in schema)
+    tableHeader = ''.join(f'                            <th style={{{{ width: "{schema[i]["width"]}", whiteSpace: "nowrap" }}}}>{schema[i]["title"]}</th>\n' for i in schema)
     tableBody = createTableBody(key, schema)
     modalBody = createModalBody(key, schema)
     modalShow = createModalShow(schema)
@@ -166,6 +177,8 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
     modalInitState = createModalInitState(schema)
     bomonHeader = createBomonHeader()
     bomonBody = createBomonBody()
+    controllerUpload = createControllerUpload(schema)
+    searchCondition = createSearchCondition(content['searchFields'])
     formatItems = {
         "url" : url,
         "UpperCamel" : UpperCamel,
@@ -179,14 +192,17 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         "fullname": fullname,
         "lowername": lowername,
         "key": key,
+        "represent": represent,
         "ExcelStartRow": ExcelStartRow,
         "searchFields": searchFields,
         "tableHeader": tableHeader,
         'tableBody': tableBody,
         'modalBody': modalBody,
         'modalShow': modalShow,
+        'searchCondition': searchCondition,
         'modalSavePage': modalSavePage,
         'modalSaveCondition': modalSaveCondition,
+        'controllerUpload': controllerUpload,
         'modalInitState': modalInitState,
         'menuPrefix': 4 if keyword[0]=='qt' else 3,
         'menuTitle': 'Quá trình' if keyword[0]=='qt' else 'Danh mục',
@@ -195,13 +211,13 @@ def generate(name, menuNum, fullname, keyword, schema, key, searchFields, ExcelS
         formatItems['tableHeader'] = bomonHeader
         formatItems['tableBody'] = bomonBody
     outputNames = {
-        "Controller.js":  f"output/src/module/{UpperCamel}/Controller.js",
-        "EditModal.jsx":  f"output/src/module/{UpperCamel}/EditModal.jsx",
-        "ImportPage.jsx": f"output/src/module/{UpperCamel}/ImportPage.jsx",
-        "Index.jsx":      f"output/src/module/{UpperCamel}/Index.jsx",
-        "Model.js":       f"output/src/module/{UpperCamel}/Model.js",
-        "Page.jsx":       f"output/src/module/{UpperCamel}/Page.jsx",
-        "Redux.jsx":      f"output/src/module/{UpperCamel}/Redux.jsx",
+        "controller.js":  f"output/src/module/{UpperCamel}/controller.js",
+        "editModal.jsx":  f"output/src/module/{UpperCamel}/editModal.jsx",
+        "importPage.jsx": f"output/src/module/{UpperCamel}/importPage.jsx",
+        "index.jsx":      f"output/src/module/{UpperCamel}/index.jsx",
+        # "model.js":       f"output/src/module/{UpperCamel}/model.js",
+        "page.jsx":       f"output/src/module/{UpperCamel}/page.jsx",
+        "redux.jsx":      f"output/src/module/{UpperCamel}/redux.js",
     }
 
     # Creating files
@@ -280,17 +296,16 @@ def copyOutputToRepo(url, lowerCamel, UpperCamel, repo, isCopyOutputToRepo):
     if isCopyOutputToRepo:
         addAdmin(url, lowerCamel, UpperCamel, os.path.join(repo, 'src', 'view', 'admin', 'admin.jsx'))
 
-
 def generateAllProfiles(repoPath, isCopyOutputToRepo):
     threadPool = []
     def run(dir):
         for i in os.listdir(dir):
             if os.path.isfile(os.path.join(dir, i)):
                 content = json.loads(open(os.path.join(dir, i), encoding="utf8").read())
-                threadPool.append(Thread(target=generate, args=(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"], content["searchFields"], content["ExcelStartRow"], isCopyOutputToRepo, repoPath)))
+                threadPool.append(Thread(target=generate, args=(content, isCopyOutputToRepo, repoPath)))
     resetOutputFolder()
-    run('danhmuc')
-    run('quatrinh')
+    run('profiles/danhmuc')
+    run('profiles/quatrinh')
     [i.start() for i in threadPool]
     [i.join() for i in threadPool]
     print("Done all profiles")
@@ -302,5 +317,4 @@ def generateOneProfile(profilePath, repoPath, isCopyOutputToRepo):
         print("Can not open the file", profilePath)
         return
     resetOutputFolder()
-    generate(content["name"], content["menuNum"], content["fullname"], content["keyword"], content["schema"], content["key"], content["searchFields"], content["ExcelStartRow"])
-    print("Done", content["menuNum"], content["name"])
+    generate(content, isCopyOutputToRepo, repoPath)

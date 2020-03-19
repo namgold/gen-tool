@@ -1,0 +1,15 @@
+{
+    "fullname": "Danh mục tỉnh/thành phố",
+    "name": "Tỉnh/thành phố",
+    "keyword": ["dm", "tinh", "thanh", "pho"],
+    "schema": {
+        "ma": { "type": "text", "title": "Mã tỉnh/thành phố", "width": "auto", "maxLength":3},
+        "ten": { "type": "text", "title": "Tên tỉnh/thành phố", "width": "100%"},
+        "kichHoat": { "type": "bool", "title": "Kích hoạt", "width": "auto", "default": "true"}
+    },
+    "key": "ma",
+    "represent": "ten",
+    "searchFields": ["ma", "ten"],
+    "ExcelStartRow": 2,
+    "menuNum": 304
+}

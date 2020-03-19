@@ -1,0 +1,17 @@
+{
+    "fullname": "Danh mục khu vực",
+    "name": "Khu vực",
+    "keyword": ["dm", "khu", "vuc"],
+    "schema": {
+        "ma": { "type": "text", "title": "Mã khu vực", "width": "auto", "maxLength": 3},
+        "ten": { "type": "text", "title": "Tên khu vực", "width": "50%"},
+        "territory": { "type": "text", "title": "Tên tiếng anh", "width": "50%"},
+        "maChau": { "type": "text", "title": "Mã châu", "width": "auto", "maxLength": 2},
+        "kichHoat": { "type": "bool", "title": "Kích hoạt", "width": "auto", "default": "true"}
+    },
+    "key": "ma",
+    "represent": "ten",
+    "searchFields": ["ma", "ten", "territory", "maChau"],
+    "ExcelStartRow": 2,
+    "menuNum": 354
+}

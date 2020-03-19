@@ -4,7 +4,8 @@ export default class EditModal extends React.Component {{
     constructor(props) {{
         super(props);
         this.state = {{
-            _id: null,
+            {key}: null,
+            saving: false,
             isUpdate: false{modalInitState}
         }};
         this.modal = React.createRef();
@@ -14,47 +15,55 @@ export default class EditModal extends React.Component {{
     componentDidMount() {{
         $(document).ready(() => {{
             $(this.modal.current).on("hidden.bs.modal", () => {{
-                this.setState({{ _id: null, isUpdate: false }})
+                this.setState({{ {key}: null, isUpdate: false }})
             }});
         }})
     }}
 
     show = (item) => {{
         if (item) this.setState({{
-            _id: item && item._id ? item._id : null,
-            ImportIndex: item && typeof item.ImportIndex == 'number' ? item.ImportIndex : null,
+            {key}: item && item.{key} ? item.{key} : null,
             isUpdate: true
         }})
         else {{
             item = {{}};
             this.setState({{
-                _id: null,
-                ImportIndex: null,
+                {key}: null,
                 isUpdate: false
             }})
         }}
-{modalShow}        $(this.modal.current).modal("show");
+{modalShow}
+        $(this.modal.current).modal("show");
         $("input[auto-focus]").focus();
     }};
 
     save = (e) => {{
         e.preventDefault();
-        const changes = {{}};
-{modalSavePage}        if (!Object.values(changes).reduce((x, y) => x || y){modalSaveCondition}) {{
-            T.notify("Hãy điền thông tin trước khi lưu!", "danger");
+        const changes = {{
+{modalSavePage}
+        }};
+        if (!Object.values(changes).reduce((x, y) => x || y){modalSaveCondition}) {{
+            T.notify("Hãy điền đầy đủ thông tin trước khi lưu!", "danger");
             return;
         }}
+        this.setState({{ saving: true }});
         if (this.state.isUpdate) {{
-            if (typeof this.state.ImportIndex == 'number') changes.ImportIndex = this.state.ImportIndex;
-            else if (this.state._id) changes._id = this.state._id;
-            this.props.update(changes, () => {{
-                T.notify("Cập nhật {lowername} thành công!", "success");
-                $(this.modal.current).modal("hide");
+            this.props.update({{ {key}: this.state.{key} }}, changes, (error, item) => {{
+                if (error) T.notify(error.message ? error.message : `Cập nhật {lowername} ${{changes.{represent}}} bị lỗi!`, "danger");
+                else {{
+                    T.notify(`Cập nhật {lowername} ${{changes.{represent}}} thành công!`, "success");
+                    $(this.modal.current).modal("hide");
+                }}
+                this.setState({{ saving: false }});
             }});
         }} else {{
-            this.props.create(changes, () => {{
-                T.notify("Tạo mới {lowername} thành công!", "success");
-                $(this.modal.current).modal("hide");
+            this.props.create(changes, (error, item) => {{
+                if (error) T.notify(error.message ? error.message : `Tạo mới {lowername} ${{changes.{represent}}} bị lỗi!`, "danger");
+                else {{
+                    T.notify(`Tạo mới {lowername} ${{changes.{represent}}} thành công!`, "success");
+                    $(this.modal.current).modal("hide");
+                }}
+                this.setState({{ saving: false }});
             }});
         }}
     }};
@@ -67,6 +76,7 @@ export default class EditModal extends React.Component {{
     }};
 
     render() {{
+        const readOnly = this.props.readOnly ? true : false;
         return (
             <div className="modal" tabIndex="-1" role="dialog" ref={{this.modal}}>
                 <form className="modal-dialog modal-lg" role="document">
@@ -81,7 +91,7 @@ export default class EditModal extends React.Component {{
 {modalBody}                        </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                            <button type="submit" className="btn btn-primary" onClick={{this.save}}>Lưu</button>
+                            {{!readOnly && <button type="submit" className="btn btn-primary" onClick={{this.save}} disabled={{this.state.saving}}>Lưu</button>}}
                         </div>
                     </div>
                 </form>

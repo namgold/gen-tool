@@ -1,0 +1,21 @@
+{
+    "fullname": "Quá trình khen thưởng",
+    "name": "Khen thưởng",
+    "keyword": ["qt", "khen", "thuong"],
+    "schema": {
+        "shcc": { "type": "text", "title": "Số hiệu công chức", "maxLength": 10, "width": "auto"},
+        "stt": { "type": "text", "title": "Số thứ tự", "maxLength": 3, "width": "auto"},
+        "maKhenThuong": { "type": "text", "title": "Mã khen thưởng", "maxLength": 10, "width": "auto"},
+        "namKhenThuong": { "type": "text", "title": "Năm khen thưởng", "maxLength": 20, "width": "auto"},
+        "danhHieuKhenThuong": { "type": "text", "title": "Danh hiệu khen thưởng", "maxLength": 100, "width": "auto"},
+        "quyetDinhKhenThuong": { "type": "text", "title": "Số ký hiệu quyết định khen thưởng", "maxLength": 100, "width": "auto"},
+        "ngayKhenThuong": { "type": "date", "title": "Ngày quyết định khen thưởng", "width": "auto"},
+        "capKhenThuong": { "type": "text", "title": "Cấp khen thưởng", "maxLength": 20, "width": "auto"},
+        "ngayNhapHoSo": { "type": "date", "title": "Ngày nhập hồ sơ", "width": "auto"}
+    },
+    "key": "shcc",
+    "represent": "shcc",
+    "searchFields": ["shcc", "maKhenThuong", "danhHieuKhenThuong", "quyetDinhKhenThuong", "capKhenThuong"],
+    "ExcelStartRow": 2,
+    "menuNum": 104
+}
