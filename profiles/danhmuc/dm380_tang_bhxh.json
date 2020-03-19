@@ -1,0 +1,15 @@
+{
+    "fullname": "Danh mục tăng bảo hiểm xã hội",
+    "name": "Tăng bảo hiểm xã hội",
+    "keyword": ["dm", "tang", "bao", "hiem", "xa", "hoi"],
+    "schema": {
+        "ma": { "type": "text", "title": "Mã", "maxLength": 2, "width": "auto"},
+        "moTa": { "type": "text", "title": "Mô tả", "maxLength": 200, "width": "auto"},
+        "kichHoat": { "type": "bool", "title": "Kích Hoạt", "defauls": "true", "width": "auto"}
+    },
+    "key": "ma",
+    "represent": "ma",
+    "searchFields": ["ma", "moTa"],
+    "ExcelStartRow": 2,
+    "menuNum": 380
+}
