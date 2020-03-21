@@ -1,0 +1,27 @@
+{
+    "fullname": "Quá trình đào tạo",
+    "name": "Đào tạo",
+    "keyword": ["qt", "dao", "tao"],
+    "schema": {
+        "SHCC": { "type": "text", "title": "SHCC", "maxLength": 10, "width": "auto"},
+        "QUYET_DINH_DAO_TAO": { "type": "text", "title": "Quyết định đào tạo", "maxLength": 255, "width": "auto"},
+        "NGAY_QUYET_DINH_DAO_TAO": { "type": "number", "title": "Ngày quyết định đào tạo", "maxLength": 10, "width": "auto"},
+        "TU_THANG": { "type": "number", "title": "Từ tháng", "maxLength": 2, "width": "auto"},
+        "TU_NAM": { "type": "number", "title": "Từ tháng", "maxLength": 4, "width": "auto"},
+        "DEN_THANG": { "type": "number", "title": "Đến tháng",  "maxLength": 2, "width": "auto"},
+        "DEN_NAM": { "type": "number", "title": "Từ tháng", "maxLength": 4, "width": "auto"},
+        "CAP_DAO_TAO": { "type": "text", "title": "Cấp đào tạo",  "maxLength": 1000, "width": "auto"},
+        "CHUYEN_NGANH": { "type": "text", "title": "Chuyên ngành", "maxLength": 1000, "width": "auto"},
+        "CO_SO_DAO_TAO": { "type": "text", "title": "Cơ sở đào tạo", "maxLength": 1000, "width": "auto"},
+        "QUOC_GIA": { "type": "text", "title": "Quốc gia", "maxLength": 2, "width": "auto"},
+        "HINH_THUC_DAO_TAO": { "type": "text", "title": "Hình thức đào tạo", "maxLength": 1000, "width": "auto"},
+        "LOAI_TOT_NGHIEP": { "type": "text", "title": "Loại tốt nghiệp", "maxLength": 100, "width": "auto"},
+        "NAM_TOT_NGHIEP": { "type": "year", "title": "Năm tốt nghiệp", "maxLength": 4, "width": "auto"},
+        "GHI_CHU": { "type": "text", "title": "Ghi chú", "maxLength": 1000, "width": "auto"},
+        "NGAY_NHAP_HO_SO": { "type": "number", "title": "Ghi chú", "maxLength": 20, "width": "auto"}
+    },
+    "key": "_id",
+    "searchFields": ["SHCC", "QUYET_DINH_DAO_TAO"],
+    "ExcelStartRow": 2,
+    "menuNum": 103
+}
